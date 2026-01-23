@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="LOL">
+    <title>脚本.top</title>
+    <meta name="shenma-site-verification" content="60202685e7327fafe342c095202f078a_1686057438">
+    <meta name="keywords" content="test">
+    <meta name="description" content="test">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../favicon.ico">
+    
+    <!-- Critical CSS (inline for faster rendering) -->
+    <style>
+        /* Critical above-the-fold styles */
+        .page-body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .page-container { display: flex; min-height: 100vh; }
+        .sidebar-menu { width: 250px; background: #2c3e50; position: fixed; height: 100vh; z-index: 1000; }
+        .main-content { margin-left: 250px; flex: 1; }
+        .navbar { background: #fff; padding: 10px 20px; border-bottom: 1px solid #eee; }
+        .loading { display: none; }
+        /* Language switcher button - now uses SVG icons */
+        .fk_service_bx { background: #fff; }
+        .fk_service_bx:hover { border: 0; background: #4f7cfc; cursor: pointer; }
+    </style>
+    
+    <!-- Critical CSS (load immediately) -->
+    <link rel="stylesheet" href="../css/style.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../font-awesome/4.7.0/css/font-awesome.css">
+    
+    <!-- Fallback removed - using direct stylesheet links -->
+    
+    <!-- Non-critical CSS (load normally to avoid bandwidth competition) -->
+    <link rel="stylesheet" href="../css/dark.min.css">
+    <link rel="stylesheet" href="../css/animation.min.css">
+    <link rel="stylesheet" href="../css/mobile.min.css">
+    <link rel="stylesheet" href="../css/loading.min.css">
+    <link rel="stylesheet" href="../css/iziToast.min.css">
+    <link rel="stylesheet" href="../bfs/static/jinkela/long/font/regular.css">
+    
+    <!-- Critical JavaScript (load directly) -->
+    
+    <!-- Critical JavaScript (jQuery must load first) -->
+    <script src="../jquery/3.6.0/jquery.min.js"></script>
+    
+    <!-- Additional Scripts (jQuery already loaded) -->
+    <script src="../js/hes.min.js"></script>
+    <script src="../js/theme-mode.min.js"></script>
+    <script src="../js/language-switcher.min.js"></script>
+    <script src="../js/enhanced-translation.min.js"></script>
+    <script src="../js/performance-analyzer.min.js" async></script>
+    <script>
+        // ConsoleBan placeholder to prevent errors
+        window.ConsoleBan = window.ConsoleBan || { init: function() {} };
+    </script>
+    
+    <!-- Meta Tags -->
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="/nav/index.html">
+    <meta property="og:title" content="test">
+    <meta property="og:description" content="test">
+    <meta property="og:site_name" content="test">
+    <meta property="og:image" content="/images/webstack_banner_cn.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="test">
+    <meta name="twitter:description" content="test">
+    <meta name="twitter:image" content="/images/webstack_banner_cn.png">
+    <meta name="generator" content="Hexo 5.4.2">
+    
+    <!-- Custom Fonts -->
+    <style>
+        @font-face {
+            font-family: custom;
+            src: url(css/bt.ttf) format('truetype');
+        }
+        @font-face {
+            font-family: MyFont;
+            src: url(screens/2023/09/14/xDP3923q4EY409jwlKp14/nhyawbve23fq764v/7fd2e13c-8889-4df9-8e16-940b065f4d1a.png) format("woff2"),
+                url(screens/2023/09/14/xDP3923q4EY409jwlKp14/nhyawbve23fq764v/e46ef2a7-10b7-4146-aee6-c3896d9c4175.png) format("woff");
+        }
+        .title {
+            width: 60px;
+            height: 20.7px;
+        }
+    </style>
+    
+    <!-- Console Protection -->
+    <script>ConsoleBan.init({redirect: "about:blank"});</script>
+    
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="page-body">
+    <!-- Load Data Configuration -->
+    <script src="nav-data.min.js" defer></script>
+    
+    <div class="page-container">
+        <!-- Sidebar Menu -->
+        <div class="fixed sidebar-menu toggle-others">
+            <div class="sidebar-menu-inner">
+                <header class="logo-env">
+                    <div class="logo">
+                        <a rel="go-top">
+                            <i class="fa-solid fa-compass"></i>
+                        </a>
+                        <div class="logo-text">
+                            <a rel="go-top" style="font-family: custom; font-size: 28px;">test</a>
+                        </div>
+                    </div>
+                    <div class="mobile-menu-toggle visible-xs">
+                        <a onclick="themeMode.toggleMode()" title="切换主题模式">
+                            <i id="theme-icon" class="fa-solid fa-circle-half-stroke"></i>
+                        </a>
+                        <a href="" data-toggle="mobile-menu">
+                            <i class="fa-solid fa-bars"></i>
+                        </a>
+                    </div>
+                </header>
+                
+                <ul class="main-menu" id="main-menu">
+                    <!-- Menu items will be generated by JavaScript -->
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Navigation Bar -->
+            <nav class="navbar user-info-navbar" id="navbar" role="navigation">
+                <ul class="left-links list-inline list-unstyled user-info-menu">
+                    <li class="menu-item">
+                        <a href="/#" target="_black">
+                            <i class="fa-solid fa-house"></i>
+                            <span>主站</span>
+                        </a>
+                        
+                        <i class="fa fa-area-chart" style="margin-right: 6px; margin-left: 20px; margin-top: 2px;"></i>
+                        <span>在线人数：
+                            <span id="online_user" style="color: red;"></span>
+                        </span>
+                        
+
+                        
+                        <i class="fa fa-clock-o" style="margin-right: 6px; margin-left: 20px; margin-top: 2px;"></i>
+                        <span>更新时间：</span>
+                        <span id="sitetime" style="color: red;"></span>
+                    </li>
+                    
+                    <li class="menu-item" style="margin-left: auto; margin-right: 10px;">
+                        <i class="fa fa-calendar-check" style="margin-right: 6px; margin-left: 26px; margin-top: 2px;"></i>
+                        <span class="hitokoto" id="time"></span>
+                        <div class="box"></div>
+                    </li>
+                </ul>
+            </nav>
+            
+
+            
+            <!-- Bulletin Box -->
+            <div class="alert alert-primary" id="bulletin_box" role="alert">
+                <div class="d-flex text-muted">
+                    <div>
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <div class="bulletin mx-1 mx-md-2">
+                        <ul class="bulletin-ul" id="bulletin-content">
+                            <!-- Bulletin content will be loaded from nav-data.js -->
+                        </ul>
+                    </div>
+                    <a href="javascript:;" rel="external nofollow" onclick='$("#bulletin_box").slideUp("slow")' style="margin-left: auto;" title="关闭公告">
+                        <i class="fa-solid fa-xmark"></i>
+                    </a>
+                </div>
+            </div>
+            
+
+            
+            <!-- Search Section -->
+            <div class="s-search" style="position: relative;" id="search">
+                <div class="hide-type-list" id="search-list"></div>
+                <label id="ss" style="position: relative; width: 60%;">
+                    <input autocomplete="off" id="search-text" onchange="txtSearch()" placeholder=" 输入关键字按回车键快捷搜索..." style="outline: 0;">
+                    <button onclick="txtSearch()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </label>
+                
+                <!-- Notice Section -->
+                <div class="gg" id="gg">
+                    <div class="notice" id="notice">
+                        <div>
+                            <i class="fa-solid fa-bullhorn" style="position: absolute; top: 1px; left: 1px; bottom: 1px; background: rgb(255,255,255,0); border: 0; font-size: 15px; margin: 8px; line-height: 20px; border-radius: 3px; transition: .3s;"></i>
+                        </div>
+                        <ul style="position: absolute; padding: 0 40px;">
+                            <li>页面将永久存在 失效请邮箱反馈</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search Styles -->
+            <style>
+                div, li, ul {
+                    margin: 0;
+                    padding: 0;
+                }
+                .gg {
+                    position: absolute;
+                    display: inline-block;
+                    width: 40%;
+                    height: 38px;
+                    overflow: hidden;
+                }
+                .notice {
+                    position: absolute;
+                    right: 0;
+                    display: inline-block;
+                    width: 98%;
+                    height: 38px;
+                    overflow: hidden;
+                    font-size: 13px;
+                    border: 0;
+                    border-radius: 3px;
+                    background-color: #fff;
+                    padding: 0;
+                }
+                .notice ul li {
+                    list-style: none;
+                    line-height: 38px;
+                    display: block;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+                .changestyle {
+                    color: red;
+                    font-weight: 600;
+                }
+            </style>
+            
+            <!-- Modal Elements -->
+            <a class="white_content" id="light" onclick='document.getElementById("light").style.display="none"; document.getElementById("fade").style.display="none";'></a>
+            <div class="black_overlay" onclick='document.getElementById("light").style.display="none"; document.getElementById("fade").style.display="none";' id="fade"></div>
+            
+            <!-- Content Sections Container -->
+            <div id="content-sections">
+                <!-- Content will be generated by JavaScript from nav-data.js -->
+            </div>
+            
+            <!-- Search Function -->
+            <script>
+                function txtSearch() {
+                    var txt = $("#search-text").val();
+                    
+                    if ($.trim(txt) != "") {
+                        jQuery.expr[':'].contains = function(a, i, m) {
+                            return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+                        };
+                        $(".col-sm-3").hide().filter(":contains('" + txt + "')").show();
+                    } else {
+                        $(".col-sm-3").show();
+                    }
+                }
+            </script>
+            
+            <!-- Modal Script -->
+            <script>
+                function scrollx(e) {
+                    var l, t = document, o = t.documentElement, n = t.body, s = window, i = t.getElementById(e.id), c = /msie 6/i.test(navigator.userAgent);
+                    i && (i.style.cssText += ";position:" + (e.f && !c ? "fixed" : "absolute") + ";" + (null == e.l ? "left:0;" : "left:50%;") + (null != e.t ? "top:15%" : "bottom:0"), e.f && c ? (i.style.cssText += ";left:expression(documentElement.scrollLeft + " + (null == e.l ? o.clientWidth - i.offsetWidth : e.l) + ' + "px");top:expression(documentElement.scrollTop +' + (null == e.t ? o.clientHeight - i.offsetHeight : e.t) + '+ "px" );', o.style.cssText += ";background-image: url(about:blank);background-attachment:fixed;") : e.f || (s.onresize = s.onscroll = function() {
+                        clearInterval(l), l = setInterval(function() {
+                            var t;
+                            0 != (t = (o.scrollTop || n.scrollTop) - i.offsetTop + (null != e.t ? e.t : (s.innerHeight || o.clientHeight) - i.offsetHeight)) ? i.style.top = i.offsetTop + Math.ceil(Math.abs(t) / 10) * (t < 0 ? -1 : 1) + "px" : clearInterval(l);
+                        }, 10);
+                    }));
+                }
+                scrollx({id: "light", t: 40, l: 600, f: 1});
+            </script>
+            
+            <!-- Content Generation Script -->
+            <script>
+                // 生成菜单和内容的函数
+                function generateContent() {
+                    if (typeof navData === 'undefined') {
+                        console.error('navData not loaded. Please ensure nav-data.js is included.');
+                        return;
+                    }
+                    
+                    // 生成侧边栏菜单
+                    const mainMenu = document.getElementById('main-menu');
+                    let menuHTML = '';
+                    
+                    navData.sections.forEach(section => {
+                        menuHTML += `
+                            <li>
+                                <a class="smooth" href="#${section.id}">
+                                    <i class="${section.icon}"></i>
+                                    <span class="title">${section.title}</span>
+                                </a>
+                            </li>`;
+                    });
+                    
+                    menuHTML += `
+                        <hr style="margin-bottom: 32px; border-top: none;">
+                        <li class="submit-tag">
+                            <a href="/about.html">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span class="tooltip-blue" style="width: 60px;">关于本站</span>
+                            </a>
+                        </li>`;
+                    
+                    mainMenu.innerHTML = menuHTML;
+                    
+                    // 生成公告内容
+                    const bulletinContent = document.getElementById('bulletin-content');
+                    bulletinContent.innerHTML = `
+                        <li class="overflowClip_1 scrolltext-title">
+                            <a rel="bulletin">当前游戏版本:</a>
+                            <a style="color: red;">${navData.gameInfo.version}</a>
+                            <a rel="bulletin">更新时间:</a>
+                            <a style="color: red;">${navData.gameInfo.updateDate}</a>
+                            <a rel="bulletin">预计下版本更新时间:</a>
+                            <a style="color: red;">${navData.gameInfo.nextUpdateDate}</a>
+                            <a rel="bulletin">未找到新FF或地址失效反馈邮箱:</a>
+                            <a href="mailto:${navData.gameInfo.feedbackEmail}" target="_blank" style="color: red;">${navData.gameInfo.feedbackEmail}</a>
+                        </li>`;
+                    
+                    // 生成内容区域
+                    const contentSections = document.getElementById('content-sections');
+                    let contentHTML = '';
+                    
+                    navData.sections.forEach(section => {
+                        contentHTML += `
+                            <h4 class="text-gray">
+                                <i class="fa-solid fa-tags" style="margin-right: 7px;" id="${section.id}"></i>
+                                ${section.title}
+                            </h4>
+                            <div class="row">`;
+                        
+                        section.items.forEach(item => {
+                            contentHTML += `
+                                <div class="col-sm-3">
+                                    <div class="box2 label-info xe-conversations xe-widget" 
+                                         onclick='window.open("${item.url}", "_blank")' 
+                                         data-original-title="${item.tooltip}" 
+                                         data-placement="bottom" 
+                                         data-toggle="tooltip">
+                                        <div class="xe-comment-entry">
+                                            <a class="xe-user-img">
+                                                <div class="user-avatar" 
+                                                     style="background-color: #007bff; color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                                    ${item.avatar}
+                                                </div>
+                                            </a>
+                                            <div class="xe-comment">
+                                                <a class="overflowClip_1 xe-user-name" href="#">
+                                                    <strong>${item.title}</strong>
+                                                </a>
+                                                <p class="overflowClip_2">${item.description}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                        });
+                        
+                        contentHTML += `</div><br>`;
+                    });
+                    
+                    contentSections.innerHTML = contentHTML;
+                }
+                
+                // 页面加载完成后生成内容
+                $(document).ready(function() {
+                    generateContent();
+                });
+            </script>
+            
+        </div>
+    </div>
+    
+    <!-- Theme Mode and Language Toggle Buttons -->
+    <div class="fk_service">
+        <ul>
+            <li>
+                <div class="fk_service_box fk_service_ax" onclick="themeMode.toggleMode()" title="切换主题模式">
+                    <img id="theme-icon-img" src="../images/ico/auto-theme-icon.svg" alt="主题" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
+                    <span id="theme-text" class="fk_service_ax_cont">切换主题模式</span>
+                </div>
+            </li>
+            <li style="margin-top: 10px;">
+                <div class="fk_service_box fk_service_bx" onclick="languageSwitcher.switchLanguage()" title="切换语言">
+                    <img id="lang-icon-img" src="../images/ico/chinese-icon.svg" alt="语言" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
+                    <span id="lang-text" class="fk_service_bx_cont">切换为英文</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Optimized Scripts (loaded at bottom for better performance with callbacks) -->
+    <script src="../js/header.min.js" defer onload="if(window.pageLoadingState)pageLoadingState.resourceLoaded()" onerror="if(window.pageLoadingState)pageLoadingState.resourceLoaded()"></script>
+
+    <script src="../js/footer.max.js" defer onload="if(window.pageLoadingState)pageLoadingState.resourceLoaded()" onerror="if(window.pageLoadingState)pageLoadingState.resourceLoaded()"></script>
+    <script src="../js/header.max.js" defer onload="if(window.pageLoadingState)pageLoadingState.resourceLoaded()" onerror="if(window.pageLoadingState)pageLoadingState.resourceLoaded()"></script>
+    <script src="../js/xenon-custom.min.js" defer onload="if(window.pageLoadingState)pageLoadingState.resourceLoaded()" onerror="if(window.pageLoadingState)pageLoadingState.resourceLoaded()"></script>
+
+    
+    <!-- Consolidated JavaScript Functions -->
+    <script>
+        // Wait for DOM and jQuery to be ready
+        $(document).ready(function() {
+            // Time Display Function
+            function getTime() {
+                var e = new Date,
+                    t = e.getFullYear(),
+                    n = e.getMonth() + 1,
+                    r = e.getDate(),
+                    g = e.getHours();
+                g = g < 10 ? "0" + g : g;
+                var a = e.getMinutes();
+                a = a < 10 ? "0" + a : a;
+                var o = e.getSeconds();
+                return t + "年" + n + "月" + r + "日&nbsp;" + g + ":" + a + ":" + (o = o < 10 ? "0" + o : o) + "&nbsp星期" + ["日", "一", "二", "三", "四", "五", "六"][e.getDay()];
+            }
+            
+            // Update Time Function
+            function updateUpdateTime() {
+                const lastUpdate = new Date();
+                const now = new Date();
+                const diffTime = now - lastUpdate;
+                const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+                
+                if (diffHours === 0) {
+                    document.getElementById("sitetime").textContent = "今天更新";
+                } else {
+                    document.getElementById("sitetime").textContent = `${diffHours}小时前更新`;
+                }
+            }
+            
+            // Auto Scroll Function
+            function AutoScroll(i, n) {
+                $(i).find("ul:first").animate({
+                    marginTop: "-" + n + "px"
+                }, 500, function() {
+                    $(this).css({
+                        marginTop: "0px"
+                    }).find("li:first").appendTo(this);
+                });
+            }
+            
+            // Scroll Handler (optimized with throttling)
+            let scrollTimeout;
+            $(window).scroll(function() {
+                if (scrollTimeout) {
+                    clearTimeout(scrollTimeout);
+                }
+                scrollTimeout = setTimeout(function() {
+                    let top = $(window).scrollTop();
+                    $("black_overlay").css("top", 6 + top + "px");
+                    $("light").css("top", 6 + top + "px");
+                }, 16); // ~60fps
+            });
+            
+            // Initialize time display
+            if (document.querySelector(".box")) {
+                setInterval(function() {
+                    document.querySelector(".box").innerHTML = getTime();
+                }, 1000);
+            }
+            
+            // Initialize update time
+            setInterval(updateUpdateTime, 1000);
+            updateUpdateTime();
+            
+            // Initialize auto scroll for bulletin
+            var bulletinItems = $(".bulletin-ul").children();
+            if (bulletinItems.length > 1) {
+                var itemHeight = $(bulletinItems[0]).height();
+                setInterval(function() {
+                    AutoScroll(".bulletin", itemHeight);
+                }, 1000);
+            }
+            
+            // Generate content
+            generateContent();
+        });
+        
+        // Simplified page loading management
+        window.addEventListener('load', function() {
+            // Hide loading indicator
+            const loadingElement = document.getElementById('loading');
+            if (loadingElement) {
+                loadingElement.style.display = 'none';
+            }
+            
+            // Show main content
+            const mainContent = document.querySelector('main, .main-content, body > .container');
+            if (mainContent) {
+                mainContent.style.opacity = '1';
+            }
+        });
+        
+        // WAU Script removed - no CDN usage
+    </script>
+    
+    <!-- WAU External Library removed - no CDN usage -->
+    
+    <!-- Resource Loading Callbacks - Optimized -->
+    <script>
+        // Add loading callbacks for async CSS
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize page loading state as early as possible
+            if (window.pageLoadingState) {
+                window.pageLoadingState.init();
+            }
+            
+            // Add event listeners to all preloaded resources
+            var preloadedResources = document.querySelectorAll('link[rel="preload"]');
+            preloadedResources.forEach(function(resource) {
+                resource.addEventListener('load', function() {
+                    if (window.pageLoadingState) window.pageLoadingState.resourceLoaded();
+                });
+                resource.addEventListener('error', function() {
+                    if (window.pageLoadingState) window.pageLoadingState.resourceLoaded();
+                });
+            });
+            
+            // Force check completion after a short delay
+            setTimeout(function() {
+                if (window.pageLoadingState) window.pageLoadingState.checkLoadingComplete();
+            }, 1000); // Reduced fallback timeout
+        });
+    </script>
+    
+</body>
+</html>
