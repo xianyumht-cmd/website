@@ -27,20 +27,22 @@ export default defineConfig({
       plugins: [
         javascriptObfuscator({
           compact: true,
-          controlFlowFlattening: false, // Disabled for performance/simplicity
-          deadCodeInjection: false,     // Disabled to reduce size
-          debugProtection: false,       // Disabled per user request
-          debugProtectionInterval: 0,
-          disableConsoleOutput: true,   // Keep this to hide logs
-          identifierNamesGenerator: 'mangled', // Shorten variable names (a, b, c)
+          controlFlowFlattening: true,        // Enable control flow flattening
+          controlFlowFlatteningThreshold: 1,  // Maximize the effect
+          deadCodeInjection: true,            // Inject dead code
+          deadCodeInjectionThreshold: 0.2,
+          debugProtection: true,              // Enable anti-debugging
+          debugProtectionInterval: 4000,      // Check every 4 seconds
+          disableConsoleOutput: true,         // Disable console output
+          identifierNamesGenerator: 'hexadecimal', // Use hex names for harder reading
           log: false,
           renameGlobals: false,
           rotateStringArray: true,
-          selfDefending: false,         // Disabled per user request
+          selfDefending: true,                // Enable self-defending code
           stringArray: true,
-          stringArrayEncoding: ['none'], // Light encoding
-          stringArrayThreshold: 0.75,
-          transformObjectKeys: false,
+          stringArrayEncoding: ['rc4'],       // Stronger string encryption
+          stringArrayThreshold: 1,            // Encrypt all strings
+          transformObjectKeys: true,
           unicodeEscapeSequence: false
         })
       ]
