@@ -122,9 +122,14 @@ window.txtSearch = function() {
  * Safe Content Generation
  * Uses DOM API instead of innerHTML for structural generation
  */
-function generateContentSafe() {
+function generateContentSafe(retryCount = 0) {
     if (typeof navData === 'undefined') {
-        console.error('navData not loaded.');
+        if (retryCount < 50) { // Retry for 5 seconds (50 * 100ms)
+            // console.log('navData not loaded yet, retrying... ' + (retryCount + 1));
+            setTimeout(() => generateContentSafe(retryCount + 1), 100);
+            return;
+        }
+        console.error('navData failed to load after multiple retries.');
         return;
     }
 
