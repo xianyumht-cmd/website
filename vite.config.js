@@ -11,7 +11,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         nav: resolve(__dirname, 'down/nav/index.html'),
-        tdr: resolve(__dirname, 'down/tdr/index.html')
+        tdr: resolve(__dirname, 'down/tdr/index.html'),
+        privacy: resolve(__dirname, 'privacy.html')
       },
       output: {
         // Manual chunking to ensure code splitting works as expected
