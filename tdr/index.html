@@ -1,12 +1,26 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 	<head>
-		<meta charset="utf8">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>吃豆人 ・ Pac-Man</title>
 		<meta name="description" content="吃豆人（Pac-Man）是上世纪80年代一款经典街机游戏，游戏的主角小精灵的形象甚至被作为一种大众文化符号。本游戏使用HTML5完美移植该游戏，设置了多个关卡并改良了幽灵的寻路算法，可作为Canvas游戏学习的案例演示。">
 		<meta name="keywords" content="吃豆人,FC吃豆子,吃豆游戏,Pac-Man,HTML5游戏,Javascript游戏引擎">
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-CYJJGB5JK6"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'G-CYJJGB5JK6');
+		</script>
 		<link rel="shortcut icon" href="favicon.png">
+		<script src="/shared/responsive-base.js"></script>
+		<link rel="stylesheet" href="/shared/responsive.css">
 		<link rel="stylesheet" href="./static/style/index.css">
-		<script type="text/javascript">
+		<script src="../js/error-guard.js" defer></script>
+		<script>
     if(location.protocol!='file:'){
         setTimeout(function(){
             // 删除跳转到passer-by.com的代码
@@ -44,6 +58,6 @@
 		</div>
 		<script src="./static/script/game.js"></script>
 		<script src="./static/script/index.js"></script>
-		<script async defer src="https://buttons.github.io/buttons.js"></script>
+		
 	</body>
 </html>
