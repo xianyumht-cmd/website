@@ -76,7 +76,21 @@
         })();
     </script>
     <script>
-        // ConsoleBan removed for better debugging experience
+        (function() {
+            // 51.la 统计代码 - 异步加载
+            var script = document.createElement('script');
+            script.src = "//sdk.51.la/js-sdk-pro.min.js";
+            script.id = "LA_COLLECT";
+            script.charset = "UTF-8";
+            script.defer = true;
+            document.head.appendChild(script);
+
+            script.onload = function() {
+                try {
+                    LA.init({id: "KE7cuB0azh8JFmk0", ck: "KE7cuB0azh8JFmk0"});
+                } catch(e) { console.warn("LA init failed", e); }
+            };
+        })();
     </script>
     <script src="../js/error-guard.js" defer></script>
     
