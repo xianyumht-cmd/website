@@ -249,6 +249,31 @@ function generateContentSafe() {
                 avatarDiv.style.cssText = 'background-color: #007bff; color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;';
                 avatarDiv.textContent = item.avatar; // Safe text
                 
+                // Lazy Load Image logic
+                if (item.imgUrl) {
+                     const img = document.createElement('img');
+                     img.dataset.src = item.imgUrl;
+                     img.className = 'lazy-load';
+                     img.style.display = 'none'; // Hide initially
+                     img.onload = () => {
+                         img.style.display = 'block';
+                         avatarDiv.style.display = 'none'; // Hide text avatar if image loads
+                     };
+                     userImgLink.appendChild(img);
+                     
+                     // Create intersection observer for lazy loading
+                     const observer = new IntersectionObserver((entries, obs) => {
+                         entries.forEach(entry => {
+                             if (entry.isIntersecting) {
+                                 const i = entry.target;
+                                 i.src = i.dataset.src;
+                                 obs.unobserve(i);
+                             }
+                         });
+                     });
+                     observer.observe(img);
+                }
+
                 userImgLink.appendChild(avatarDiv);
                 
                 const commentDiv = document.createElement('div');
