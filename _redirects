@@ -1,8 +1,0 @@
-/static/js/*     /:splat   200
-/static/css/*    /:splat   200
-/static/picture/* /:splat  200
-/*.woff   /:splat   200
-/*.woff2  /:splat   200
-/*.ttf    /:splat   200
-
-/*        /index.html   200
