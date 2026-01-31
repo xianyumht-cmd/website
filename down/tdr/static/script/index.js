@@ -579,7 +579,7 @@
 			x:game.width-10,
 			y:game.height-5,
 			draw:function(context){
-				var text = '© passer-by.com';
+				var text = '© 脚本.top';
 				context.font = '12px/20px PressStart2P';
 				context.textAlign = 'left';
 				context.textBaseline = 'top';
@@ -590,7 +590,7 @@
 				context.fillText(text,this.x,this.y);
 			}
 		}).bind('click',function(){
-			window.open('https://passer-by.com');
+			// window.open('https://passer-by.com');
 		});
 		//事件绑定
 		stage.bind('keydown',function(e){
