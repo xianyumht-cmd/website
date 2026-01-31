@@ -2,6 +2,7 @@
 <html lang="zh-CN" data-default-lang="zh-CN">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="LOL">
@@ -10,14 +11,15 @@
     <meta name="keywords" content="导航,资源导航,脚本导航,游戏辅助,软件下载">
     <meta name="description" content="脚本.top资源导航站，收录全网优质脚本、辅助、软件资源，提供便捷的导航服务。">
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CYJJGB5JK6"></script>
+    <!-- 统计代码 -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-CYJJGB5JK6');
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?201ec7af011a8e9dc6b1b66ddb73b4db";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
     </script>
 
     <!-- Favicon -->
@@ -73,23 +75,6 @@
                     document.head.appendChild(s);
                 }
             } catch (e) {}
-        })();
-    </script>
-    <script>
-        (function() {
-            // 51.la 统计代码 - 异步加载
-            var script = document.createElement('script');
-            script.src = "//sdk.51.la/js-sdk-pro.min.js";
-            script.id = "LA_COLLECT";
-            script.charset = "UTF-8";
-            script.defer = true;
-            document.head.appendChild(script);
-
-            script.onload = function() {
-                try {
-                    LA.init({id: "KE7cuB0azh8JFmk0", ck: "KE7cuB0azh8JFmk0"});
-                } catch(e) { console.warn("LA init failed", e); }
-            };
         })();
     </script>
     <script src="../js/error-guard.js" defer></script>
@@ -244,7 +229,7 @@
                     <div class="footer-text">
                         <p>本站收录的资源均来源于互联网，版权归原作者所有。</p>
                         <p>温馨提示：本站仅提供导航服务，不参与任何第三方交易。在第三方平台交易时请选择官方担保渠道，谨防诈骗。</p>
-                        <p>&copy; 2026 脚本.top | <a href="../../about.html" target="_blank">关于我们</a> | <a href="../../privacy.html" target="_blank">隐私政策</a></p>
+                        <p>&copy; 2026 脚本.top | <a href="../../about.html" target="_blank">关于我们</a> | <a href="../../privacy.html" target="_blank">隐私政策</a> | <a href="../tdr/index.html" target="_blank">吃豆人</a></p>
                         <p style="margin-top: 10px; opacity: 0.8; font-size: 12px;">富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善</p>
                     </div>
                 </div>
