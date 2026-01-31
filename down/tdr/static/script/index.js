@@ -1075,5 +1075,8 @@
 	myFont.load().then(font => {
 	  	document.fonts.add(font);
 		game.init();
+	}).catch(e => {
+		console.log('字体加载失败，使用默认字体启动游戏', e);
+		game.init();
 	});
 })();
