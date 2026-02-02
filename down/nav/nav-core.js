@@ -169,10 +169,7 @@ function generateContentSafe(retryCount = 0) {
                 Object.assign(hr.style, { marginBottom: '32px', borderTop: 'none' });
                 mainMenu.appendChild(hr);
 
-                const gameLi = document.createElement('li');
-        gameLi.className = 'submit-tag';
-        gameLi.innerHTML = `<a href="/down/games/index.html"><i class="fa-solid fa-gamepad"></i><span class="tooltip-blue" style="width: 60px;">游戏资源</span></a>`;
-        container.appendChild(gameLi);
+
 
         const aboutLi = document.createElement('li');
                 aboutLi.className = 'submit-tag';
