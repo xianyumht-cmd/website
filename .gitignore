@@ -33,3 +33,5 @@ src-wasm/target/
 # Misc
 down.zip
 *.lnk
+tools/node-v*
+*.zip
