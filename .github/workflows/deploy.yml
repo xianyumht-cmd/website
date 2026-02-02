@@ -28,6 +28,9 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Copy anti-debug.js (Custom Step)
+        run: cp shared/anti-debug.js dist/anti-debug.js
+
       - name: Deploy to main branch
         uses: peaceiris/actions-gh-pages@v4
         with:
