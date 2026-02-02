@@ -1,0 +1,27 @@
+# Cloudflare Pages Custom Caching Rules
+# These rules override the default caching behavior to ensure the site is both fast and always up-to-date.
+
+# 1. HTML Files: NEVER CACHE
+# Ensures users always get the latest version (which points to the correct hashed JS/CSS files).
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# 2. Root path (Home page)
+# Explicitly disabling cache for the root URL.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# 3. Static Assets (Vite generated): CACHE FOREVER
+# These files have hashes in their names (e.g., style.a1b2c3.css), so they never change.
+# We can safely cache them for 1 year.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 4. Data Files (if any exist directly): CHECK FOR UPDATES
+# If you have JSON or other data files that don't get hashed, ensure they are revalidated.
+/*.json
+  Cache-Control: public, max-age=0, must-revalidate
+/*.xml
+  Cache-Control: public, max-age=0, must-revalidate
+/*.txt
+  Cache-Control: public, max-age=0, must-revalidate

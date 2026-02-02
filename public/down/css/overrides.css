@@ -1,0 +1,207 @@
+body {
+    background-image: none !important;
+}
+
+body.night {
+    background-image: none !important;
+}
+
+.fk_service_ax,
+.fk_service_bx {
+    background-image: none !important;
+}
+
+.night .fk_service_ax,
+.night .fk_service_bx {
+    background-image: none !important;
+}
+
+.xe-widget {
+    content-visibility: auto;
+    contain-intrinsic-size: 220px 320px;
+}
+
+#search {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+#search #ss {
+    flex: 1 1 360px;
+    width: 60%;
+}
+
+#search #gg {
+    position: static !important;
+    flex: 1 1 260px;
+    width: 40% !important;
+    height: 38px;
+}
+
+#search #notice {
+    position: relative !important;
+    right: auto !important;
+    width: 100% !important;
+}
+
+@media (width <= 768px) {
+    #search {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #search #ss {
+        width: 100% !important;
+    }
+
+    #search #gg {
+        width: 100% !important;
+        margin-top: 6px;
+    }
+}
+
+#content-sections {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+@media (width >= 1920px) {
+    #content-sections {
+        padding: 0 20px;
+    }
+}
+
+@media (width < 480px) {
+    #search {
+        gap: 10px;
+    }
+
+    #content-sections {
+        padding: 0 12px;
+    }
+}
+
+/* Font Size Adjustments */
+.logo-env .logo-text a {
+    font-size: 20px !important; /* Reduced further from 22px */
+}
+
+#navbar .menu-item span {
+    font-size: 13px; /* Reduced from 14px */
+}
+
+#online_user, #sitetime, #time {
+    font-size: 12px !important; /* Reduced from 14px */
+    font-weight: 500;
+}
+
+/* 51.LA Widget Styling - CSS Trick to Hide Text */
+#LA-DATA-WIDGET {
+    font-size: 0 !important; /* Hide all text by making it size 0 */
+    color: transparent !important;
+}
+
+/* Restore the number */
+/* We target 'b', 'span', or any bold element which usually holds the number */
+#LA-DATA-WIDGET b, 
+#LA-DATA-WIDGET strong, 
+#LA-DATA-WIDGET .la-number { 
+    font-size: 12px !important; /* Restore font size for number */
+    color: red !important; /* Set number color */
+    font-weight: 500 !important;
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
+#LA-DATA-WIDGET a {
+    text-decoration: none !important;
+    cursor: default !important; /* Optional: remove pointer cursor */
+}
+
+/* Ensure the widget container aligns properly */
+#online_user_container {
+    display: inline-flex;
+    align-items: center;
+}
+
+#navbar .menu-item i {
+    font-size: 13px; /* Reduced from 14px */
+}
+
+/* Hitokoto Styling */
+.hitokoto {
+    font-size: 12px !important; /* Reduced from 13px */
+    color: #999;
+}
+
+/* 移动端响应式修复 */
+@media (max-width: 767px) {
+    /* 恢复默认缩放，防止文字过小或布局错乱 */
+    #time, #sitetime, #online_user {
+        transform: none !important;
+        font-size: 13px !important; /* 手机端稍微大一点点更易读 */
+    }
+
+    #navbar .menu-item .hitokoto {
+        transform: none !important;
+        font-size: 13px !important;
+    }
+
+    /* 确保导航栏元素在手机上不换行，或者优雅换行 */
+    #navbar .menu-item {
+        font-size: 13px !important;
+        white-space: nowrap;
+    }
+
+    /* 针对 51.la 挂件在手机上的显示 */
+    #online_user_container {
+        display: inline-flex;
+        transform: none !important;
+    }
+}
+
+/* PC 端保留精细化缩放 */
+@media (min-width: 768px) {
+    #time, #sitetime, #online_user {
+        transform: scale(0.9);
+        transform-origin: left center;
+    }
+
+    #navbar .menu-item .hitokoto {
+        transform: scale(0.9) !important;
+        transform-origin: right center !important;
+    }
+}
+
+/* If the date is just text inside .menu-item, we target the li directly */
+#navbar .menu-item {
+    font-size: 12px !important;
+}
+
+.hitokoto {
+    font-size: 12px !important; /* Reduced from 13px */
+}
+
+/* Sidebar Adjustments */
+.sidebar-menu .main-menu a {
+    font-size: 14px !important; /* Force smaller font size for sidebar items */
+    padding: 10px 20px !important; /* Reduce padding for tighter look */
+}
+
+.sidebar-menu .main-menu a i {
+    font-size: 15px !important; /* Slightly smaller icons */
+    margin-right: 8px !important;
+}
+
+.sidebar-menu .main-menu li.has-sub > a:before {
+    font-size: 14px !important; /* Adjust submenu arrow if present */
+}
+
+/* Adjust date/time container spacing */
+#navbar .menu-item {
+    display: flex;
+    align-items: center;
+}

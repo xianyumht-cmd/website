@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+  <defs>
+    <linearGradient id="dayNightGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFA500;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#87CEEB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4A90E2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle cx="12" cy="12" r="10" fill="url(#dayNightGradient)" stroke="#666" stroke-width="1"/>
+  <!-- Sun rays on left -->
+  <g stroke="#FFA500" stroke-width="1.5" stroke-linecap="round">
+    <line x1="4" y1="12" x2="6" y2="12"/>
+    <line x1="5.05" y1="8.05" x2="6.46" y2="9.46"/>
+    <line x1="5.05" y1="15.95" x2="6.46" y2="14.54"/>
+  </g>
+  <!-- Moon crescent on right -->
+  <path d="M16 8 A4 4 0 0 1 16 16 A3 3 0 0 0 16 8" fill="#E6F3FF" opacity="0.9"/>
+  <circle cx="17" cy="10" r="0.5" fill="#E6F3FF" opacity="0.7"/>
+</svg>

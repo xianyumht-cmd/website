@@ -1,0 +1,12 @@
+{
+  "name": "nav-logic",
+  "version": "0.1.0",
+  "files": [
+    "nav_logic_bg.wasm",
+    "nav_logic.js"
+  ],
+  "module": "nav_logic.js",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

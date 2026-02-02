@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - 脚本.top</title>
+    <link rel="canonical" href="https://xn--8pv109c.top/about.html">
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "脚本.top",
+      "url": "https://xn--8pv109c.top",
+      "logo": "https://xn--8pv109c.top/favicon.ico",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "xianyumht@gmail.com",
+        "contactType": "customer service"
+      }
+    }
+    </script>
+    <!-- 引入Font Awesome图标 (使用BootCDN加速) -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #475569;
+            --accent: #f97316;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            background-color: #fff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i { color: var(--primary); }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 24px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        /* Content Sections */
+        .section { padding: 60px 0; }
+        .section-bg { background-color: var(--bg-light); }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+        
+        .divider {
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent);
+            margin: 0 auto;
+        }
+
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .value-card {
+            background: #fff;
+            padding: 32px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .value-card:hover { transform: translateY(-5px); }
+
+        .icon-circle {
+            width: 64px;
+            height: 64px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        /* Footer */
+        footer {
+            background: #111827;
+            color: #fff;
+            padding: 48px 0 24px;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 48px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li { margin-bottom: 12px; }
+
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: #fff; }
+
+        .copyright {
+            border-top: 1px solid #374151;
+            padding-top: 24px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <a href="/" class="logo">
+                <i class="fa-solid fa-cube"></i>
+                <span>脚本.top</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="down/nav/index.html">资源导航</a>
+                <a href="about.html" style="color: var(--primary);">关于我们</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>专注优质资源分享</h1>
+            <p>致力于为用户提供高效、安全、便捷的脚本资源与工具导航服务</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>平台简介</h2>
+                <div class="divider"></div>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p style="font-size: 1.1rem; color: var(--text-light);">
+                    脚本.top 是一个聚合类资源导航平台，我们精选全网优质的游戏辅助、实用脚本、效率工具及虚拟资源。
+                    无论您是游戏玩家、开发者还是普通用户，都能在这里找到提升效率的利器。
+                    我们坚持"宁缺毋滥"的收录原则，确保每一个推荐的资源都经过严格筛选。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-bg">
+        <div class="container">
+            <div class="section-title">
+                <h2>我们的优势</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-check-double"></i>
+                    </div>
+                    <h3>严格筛选</h3>
+                    <p style="color: var(--text-light);">人工审核每一个收录项目，拒绝劣质、失效资源，确保用户体验。</p>
+                </div>
+                <div class="value-card">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3>极速访问</h3>
+                    <p style="color: var(--text-light);">优化全球节点，采用轻量化架构，为您提供丝滑的浏览体验。</p>
+                </div>
+                <div class="value-card">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3>安全可靠</h3>
+                    <p style="color: var(--text-light);">所有资源均来自官方或可信第三方，致力于构建绿色的资源生态。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="margin-top: 40px;">
+        <h2><i class="fa-solid fa-handshake"></i> 商业合作与定制</h2>
+        <div class="card">
+            <p><strong>想拥有同款资源站？</strong></p>
+            <p>我们提供专业的网站搭建与技术支持服务。无论是游戏脚本分发、虚拟资源自动发卡，还是专属品牌官网，我们都能为您量身定制。</p>
+            <p>同时，我们欢迎各类游戏辅助作者、资源商入驻合作，共创双赢。</p>
+            <div style="margin-top: 20px;">
+                <a href="mailto:xianyumht@gmail.com" class="btn"><i class="fa-solid fa-envelope"></i> 联系客服</a>
+                <a href="https://xn--8pv109c.top" class="btn" style="background-color: #28a745;"><i class="fa-solid fa-user-plus"></i> 加入代理</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>联系我们</h2>
+                <div class="divider"></div>
+            </div>
+            <div style="text-align: center;">
+                <p style="margin-bottom: 24px; color: var(--text-light);">有商务合作意向或建议反馈？欢迎通过邮件与我们联系。</p>
+                <a href="mailto:xianyumht@gmail.com" style="display: inline-flex; align-items: center; background: var(--primary); color: white; padding: 12px 32px; border-radius: 6px; text-decoration: none; font-weight: 500;">
+                    <i class="fa-solid fa-envelope" style="margin-right: 8px;"></i>
+                    xianyumht@gmail.com
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="color: #fff; margin-bottom: 16px;">
+                        <i class="fa-solid fa-cube"></i>
+                        <span>脚本.top</span>
+                    </div>
+                    <p style="color: #9ca3af; font-size: 0.9rem;">
+                        全网优质脚本资源聚合平台，让效率触手可及。
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h3>快速导航</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="down/nav/index.html">资源导航</a></li>
+                        <li><a href="privacy.html">隐私政策</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>联系方式</h3>
+                    <ul class="footer-links">
+                        <li><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i> xianyumht@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 脚本.top 版权所有 | <a href="privacy.html" style="color: inherit; text-decoration: none;">隐私政策</a> | <a href="down/tdr/index.html" style="color: inherit; text-decoration: none;">吃豆人</a></p>
+                <p style="margin-top: 8px; opacity: 0.7; font-size: 0.85rem;">富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

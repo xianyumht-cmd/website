@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脚本.top 升级公告图</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;500;700;900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .poster-container {
+            width: 800px;
+            height: 1000px; /* 4:5 比例，适合朋友圈 */
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        /* 背景装饰 */
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+        }
+        .c1 { width: 400px; height: 400px; background: #3b82f6; top: -100px; left: -100px; }
+        .c2 { width: 500px; height: 500px; background: #8b5cf6; bottom: -100px; right: -100px; }
+        .grid-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* 内容区域 */
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 60px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            margin-bottom: 50px;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 700;
+            color: #38bdf8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .title {
+            font-size: 64px;
+            font-weight: 900;
+            line-height: 1.1;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            color: #94a3b8;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+
+        .comparison-box {
+            display: flex;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card.new {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            position: relative;
+        }
+        
+        .card.new::after {
+            content: "NEW";
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: #3b82f6;
+            color: white;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .old .card-title { color: #94a3b8; }
+        .new .card-title { color: #38bdf8; }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list li i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 20px;
+            margin-top: auto;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+
+        .tech-item {
+            background: rgba(255,255,255,0.05);
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .tech-item i { color: #38bdf8; }
+
+        .footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .url-box {
+            background: #fff;
+            color: #0f172a;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 18px;
+        }
+
+        .slogan {
+            font-size: 16px;
+            color: #94a3b8;
+            letter-spacing: 1px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="poster-container">
+        <div class="bg-circle c1"></div>
+        <div class="bg-circle c2"></div>
+        <div class="grid-bg"></div>
+
+        <div class="content">
+            <div class="header">
+                <div class="brand">
+                    <i class="fa-solid fa-code"></i> 脚本.top
+                </div>
+                <h1 class="title">焕新升级</h1>
+                <div class="title" style="font-size: 40px; color: #38bdf8; -webkit-text-fill-color: #38bdf8;">2.0 版本发布</div>
+                <p class="subtitle">极致速度 · 现代架构 · 全新起点</p>
+            </div>
+
+            <div class="comparison-box">
+                <div class="card old">
+                    <div class="card-title">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        1.0 时代
+                    </div>
+                    <ul class="feature-list">
+                        <li><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> HTML/CSS/JS 明文</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> 手工作坊式开发</li>
+                        <li><i class="fa-solid fa-weight-hanging" style="color: #ef4444;"></i> 资源体积臃肿</li>
+                        <li><i class="fa-solid fa-gauge-high" style="color: #ef4444;"></i> 加载速度缓慢</li>
+                    </ul>
+                </div>
+
+                <div class="card new">
+                    <div class="card-title">
+                        <i class="fa-solid fa-rocket"></i>
+                        2.0 时代
+                    </div>
+                    <ul class="feature-list">
+                        <li><i class="fa-solid fa-check" style="color: #22c55e;"></i> Vite + ES6 现代化</li>
+                        <li><i class="fa-solid fa-check" style="color: #22c55e;"></i> Rust 部署架构</li>
+                        <li><i class="fa-solid fa-compress" style="color: #22c55e;"></i> 代码极致压缩</li>
+                        <li><i class="fa-solid fa-bolt" style="color: #22c55e;"></i> 秒级加载体验</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <div class="tech-item"><i class="fa-brands fa-html5"></i> HTML5</div>
+                <div class="tech-item"><i class="fa-brands fa-css3-alt"></i> CSS3</div>
+                <div class="tech-item"><i class="fa-brands fa-js"></i> ES6+</div>
+                <div class="tech-item"><i class="fa-brands fa-rust"></i> Rust</div>
+            </div>
+
+            <div class="footer">
+                <div class="url-box">xn--8pv109c.top</div>
+                <div class="slogan">优质资源聚合平台</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
