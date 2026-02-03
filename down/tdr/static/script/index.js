@@ -7,6 +7,8 @@
  * https://github.com/mumuy/pacman/blob/master/LICENSE
 */
 
+import Game from './game.js';
+
 //主程序,业务逻辑
 (function(){
 	var _COIGIG = [		//关卡
@@ -515,11 +517,11 @@
 			}
 		}
 	];
-	_COLOR = ['#F00','#F93','#0CF','#F9C'],	//NPC颜色
-	_COS = [1,0,-1,0],
-	_SIN = [0,1,0,-1],
-	_LIFE = 5,				//玩家生命值
-	_SCORE = 0;				//玩家得分
+	const _COLOR = ['#F00','#F93','#0CF','#F9C'];	//NPC颜色
+	const _COS = [1,0,-1,0];
+	const _SIN = [0,1,0,-1];
+	let _LIFE = 5;				//玩家生命值
+	let _SCORE = 0;				//玩家得分
 
 	var game = new Game('canvas');
 	//启动页

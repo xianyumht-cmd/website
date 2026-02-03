@@ -36,7 +36,7 @@ Date.now = function() { return new Date().getTime(); };
     }
 }());
 
-function Game(id,params){
+export default function Game(id,params){
     var _ = this;
     var settings = {
         width:960,						//画布宽度

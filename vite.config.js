@@ -7,10 +7,35 @@ import javascriptObfuscator from 'rollup-plugin-javascript-obfuscator';
 export default defineConfig({
   plugins: [
     wasm(),
-    topLevelAwait()
+    topLevelAwait(),
+    javascriptObfuscator({
+      // Scope: Only obfuscate your own code, ignore libraries to prevent errors and slow performance
+      include: ["src/**/*.js", "down/**/*.js", "static/**/*.js", "shared/**/*.js"],
+      exclude: [/node_modules/, /\.min\.js$/],
+      
+      // High Obfuscation Settings
+      compact: true,
+      controlFlowFlattening: true,
+      controlFlowFlatteningThreshold: 1,
+      deadCodeInjection: true,
+      deadCodeInjectionThreshold: 0.2,
+      debugProtection: true,
+      debugProtectionInterval: 4000,
+      disableConsoleOutput: true,
+      identifierNamesGenerator: 'hexadecimal',
+      log: false,
+      renameGlobals: false,
+      rotateStringArray: true,
+      selfDefending: true,
+      stringArray: true,
+      stringArrayEncoding: ['rc4'],
+      stringArrayThreshold: 1,
+      transformObjectKeys: true,
+      unicodeEscapeSequence: false
+    })
   ],
   root: '.',
-  base: './', // Relative paths for static deployment
+  base: './', 
   build: {
     outDir: 'dist',
     rollupOptions: {
@@ -24,7 +49,6 @@ export default defineConfig({
         notFound: resolve(__dirname, '404.html')
       },
       output: {
-        // Manual chunking to ensure code splitting works as expected
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
             return 'vendor';
@@ -33,29 +57,7 @@ export default defineConfig({
             return 'shared';
           }
         }
-      },
-      plugins: [
-        javascriptObfuscator({
-          compact: true,
-          controlFlowFlattening: true,        // Enable control flow flattening
-          controlFlowFlatteningThreshold: 1,  // Maximize the effect
-          deadCodeInjection: true,            // Inject dead code
-          deadCodeInjectionThreshold: 0.2,
-          debugProtection: true,              // Enable anti-debugging
-          debugProtectionInterval: 4000,      // Check every 4 seconds
-          disableConsoleOutput: true,         // Disable console output
-          identifierNamesGenerator: 'hexadecimal', // Use hex names for harder reading
-          log: false,
-          renameGlobals: false,
-          rotateStringArray: true,
-          selfDefending: true,                // Enable self-defending code
-          stringArray: true,
-          stringArrayEncoding: ['rc4'],       // Stronger string encryption
-          stringArrayThreshold: 1,            // Encrypt all strings
-          transformObjectKeys: true,
-          unicodeEscapeSequence: false
-        })
-      ]
+      }
     },
     minify: 'terser',
     terserOptions: {
