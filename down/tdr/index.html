@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+        <meta name="robots" content="all">
+        <meta name="referrer" content="always">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="Cache-Control" content="no-transform" />
+        <meta name="format-detection" content="telephone=no"/>
+        <meta name="description" content="吃豆人（Pac-Man）是上世纪80年代一款经典街机游戏，游戏的主角小精灵的形象甚至被作为一种大众文化符号。本游戏使用HTML5完美移植该游戏，设置了多个关卡并改良了幽灵的寻路算法，可作为Canvas游戏学习的案例演示。">
+        <meta name="keywords" content="吃豆人,FC吃豆子,吃豆游戏,Pac-Man,HTML5游戏,Javascript游戏引擎">
+        <!-- 统计代码 -->
+        <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?201ec7af011a8e9dc6b1b66ddb73b4db";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+        <title>吃豆人 ・ Pac-Man</title>
+        <link rel="shortcut icon" href="../../assets/favicon-GHb4rha6.png">
+      <script type="module" crossorigin src="../../assets/tdr-9OhlAgiu.js"></script>
+      <link rel="modulepreload" crossorigin href="../../assets/modulepreload-polyfill-YP0FEG5d.js">
+      <link rel="stylesheet" crossorigin href="../../assets/tdr-CthcZcql.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <div class="mod-head">
+                    <div class="inner">
+                        <div class="bd">
+                            <div class="logo">
+                                <a href="/" style="font-size: 24px; color: #fff; text-decoration: none; font-weight: bold;">脚本.top</a>
+                            </div>
+                            <nav>
+                                <li class="active"><a href="/">首页</a></li>
+                                <li><a href="/down/nav/">资源导航</a></li>
+                                <li><a href="/about.html">关于我们</a></li>
+                            </nav>
+                            <div class="operation">
+                                <!-- Operation buttons removed -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mod-bg">
+                    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                        <defs>
+                            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+                        </defs>
+                        <g class="parallax">
+                            <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.4)"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.6)"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.2)"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(255,255,255,1)"></use>
+                        </g>
+                    </svg>
+                </div>
+            </header>
+            <div class="container">
+                <div class="mod-panel">
+                    <div class="inner">
+                        <div class="bd">
+                            <canvas id="canvas" width="960" height="640">不支持画布</canvas>
+                        </div>
+                        <div class="ft">
+                            <div class="info">
+                                <p>按 [空格键] 暂停或继续</p>
+                                <p>Press [space] to pause or continue</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mod-introtion">
+                    <div class="inner">
+                        <div class="hd">
+                            <h3 class="title">吃豆人游戏</h3>
+                            <p class="subtitle">Pac-Man</p>
+                        </div>
+                        <div class="bd">
+                            <p>这款吃豆人游戏的开发是我在学习和探索HTML5游戏的一次尝试，也是对这款儿时经典街机游戏的致敬。游戏大致还原了我印象中Pac-Man的样子，在移植关卡和玩法规则的同时，在游戏中加入了游戏角色动画管理和幽灵的智能寻址算法，实现了幽灵对玩家的围堵。在你玩的过程中，你会发现这些精灵似乎很有想法，它们知道如何彼此协作对你穷追不舍。</p>
+                            <p>如果你对此感兴趣，可以在Github上关注此项目。我希望能通过游戏和代码与你分享一些我对游戏开发的感悟。</p>
+                        </div>
+                    </div>
+                </div>
+			<div class="mod-button">
+				<a class="btn" href="/">返回首页</a>
+                <a class="btn" href="/about.html" style="margin-left: 10px;">关于我们</a>
+                <a class="btn" href="/privacy.html" style="margin-left: 10px;">隐私政策</a>
+			</div>
+			<div style="text-align: center; margin-top: 20px; color: #999; font-size: 12px;">
+				<p>富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善</p>
+			</div>
+		</div>
+		</div>
+    </body>
+</html>
