@@ -9,20 +9,25 @@
     <link rel="stylesheet" href="../../static/css/index.css">
     <style>
         body { background: #f5f5f5; color: #333; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; background: #fff; min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
-        header { text-align: center; padding: 40px 0; border-bottom: 1px solid #eee; }
-        h1 { font-size: 24px; margin-bottom: 10px; color: #2c3e50; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; background: transparent; min-height: 100vh; }
+        header { text-align: center; padding: 40px 0; border-bottom: none; }
+        h1 { font-size: 24px; margin-bottom: 10px; color: #2c3e50; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .subtitle { color: #666; font-size: 14px; }
         .features { display: flex; flex-wrap: wrap; justify-content: space-around; margin: 40px 0; }
-        .feature-item { width: 45%; margin-bottom: 20px; padding: 20px; background: #f9f9f9; border-radius: 8px; text-align: center; }
+        .feature-item { width: 45%; margin-bottom: 20px; padding: 20px; background: #fff; border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .feature-item:hover { transform: translateY(-5px); }
         .feature-item h3 { color: #e74c3c; margin-bottom: 10px; font-size: 18px; }
         .feature-item p { font-size: 13px; color: #666; }
-        .cta-section { text-align: center; margin: 50px 0; padding: 30px; background: #e8f4fd; border-radius: 10px; }
-        .cta-btn { display: inline-block; padding: 15px 40px; background: #3498db; color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; transition: all 0.3s; cursor: pointer; border: none; }
-        .cta-btn:hover { background: #2980b9; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(52,152,219,0.3); }
-        .seo-text { font-size: 12px; color: #999; margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px; }
-        .back-link { display: block; margin-bottom: 20px; color: #666; text-decoration: none; }
-        .back-link:hover { color: #333; }
+        .cta-section { text-align: center; margin: 50px 0; padding: 40px; background: #fff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .cta-btn { display: inline-block; padding: 15px 40px; background: #3498db; color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; transition: all 0.3s; cursor: pointer; border: none; box-shadow: 0 5px 15px rgba(52,152,219,0.3); }
+        .cta-btn:hover { background: #2980b9; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(52,152,219,0.4); }
+        .seo-text { font-size: 12px; color: #999; margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px; display: none; } /* Hidden as per new footer design */
+        .back-link { display: inline-block; margin-bottom: 20px; color: #666; text-decoration: none; padding: 5px 10px; background: #fff; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); font-size: 14px; }
+        .back-link:hover { color: #333; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        
+        @media (max-width: 768px) {
+            .feature-item { width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -91,5 +96,21 @@
             }
         });
     </script>
+    <!-- Footer Disclaimer -->
+    <footer style="position: fixed; bottom: 0; width: 100%; text-align: center; color: #999; font-size: 12px; padding: 10px 0; pointer-events: none; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px);">
+        <div style="margin-bottom: 5px; pointer-events: auto;">
+            <p style="margin: 0; font-size: 12px; display: inline-block;">
+                &copy; 2026 脚本.top | 
+                <a href="../../about.html" target="_blank" style="color: #999; text-decoration: none;">关于我们</a> | 
+                <a href="../../privacy.html" target="_blank" style="color: #999; text-decoration: none;">隐私政策</a> | 
+                <a href="../tdr/index.html" target="_blank" style="color: #999; text-decoration: none;">吃豆人</a>
+                <span style="margin: 0 5px; color: #ddd;">|</span>
+                <a href="../rent/" style="color: #bbb; text-decoration: none;">LOL租号</a> · 
+                <a href="../shop/" style="color: #bbb; text-decoration: none;">LOL发卡</a> · 
+                <a href="../shop/" style="color: #bbb; text-decoration: none;">韩服账号</a>
+            </p>
+        </div>
+        <p style="margin: 0; font-size: 12px; opacity: 0.8; transform: scale(0.9);">富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善</p>
+    </footer>
 </body>
 </html>
