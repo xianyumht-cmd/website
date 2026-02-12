@@ -56,6 +56,7 @@
             <h2>寻找心仪陪玩 / 提取卡密</h2>
             <p style="margin-bottom: 20px;">点击下方按钮前往选购，支持微信/支付宝快捷支付</p>
             <button id="shop-btn" class="cta-btn">进入发卡/陪玩中心</button>
+            <button id="backup-shop-btn" class="cta-btn" style="background: #95a5a6; margin-left: 10px;">备用发卡</button>
         </section>
 
         <section class="seo-text">
@@ -83,6 +84,28 @@
                         setTimeout(function() {
                              if (window.locationApp && window.locationApp.getUrl) {
                                 var url = window.locationApp.getUrl('qunliao1');
+                                if (url) window.locationApp.openLink(url);
+                             }
+                        }, 500);
+                    }
+                });
+            }
+            
+            var backupBtn = document.getElementById('backup-shop-btn');
+            if (backupBtn) {
+                backupBtn.addEventListener('click', function() {
+                    if (window.locationApp && window.locationApp.getUrl) {
+                        var url = window.locationApp.getUrl('qunliao5');
+                        if (url) {
+                            window.locationApp.openLink(url);
+                        } else {
+                            alert('跳转链接配置错误，请联系管理员');
+                        }
+                    } else {
+                        console.warn('LocationApp not ready');
+                        setTimeout(function() {
+                             if (window.locationApp && window.locationApp.getUrl) {
+                                var url = window.locationApp.getUrl('qunliao5');
                                 if (url) window.locationApp.openLink(url);
                              }
                         }, 500);
