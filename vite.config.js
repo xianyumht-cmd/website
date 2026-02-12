@@ -10,8 +10,8 @@ export default defineConfig({
     topLevelAwait(),
     javascriptObfuscator({
       // Scope: Only obfuscate your own code, ignore libraries to prevent errors and slow performance
-      include: ["src/**/*.js", "down/**/*.js", "static/**/*.js", "shared/**/*.js"],
-      exclude: [/node_modules/, /\.min\.js$/],
+      include: ["src/**/*.js", "down/**/*.js", "shared/**/*.js"],
+      exclude: [/node_modules/, /\.min\.js$/, "static/**/*.js"],
       
       // High Obfuscation Settings
       compact: true,

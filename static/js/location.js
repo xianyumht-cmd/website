@@ -1,5 +1,9 @@
 (function() {
     'use strict';
+    
+    // Explicitly define window.locationApp immediately to ensure it's available
+    window.locationApp = window.locationApp || {};
+    
     const linkConfig = {
         fuqiang: 'https://baike.baidu.com/item/%E8%A2%81%E9%9A%86%E5%B9%B3',
         minzhu: 'https://baike.baidu.com/item/%E9%9B%B7%E9%94%8B',
@@ -82,14 +86,16 @@
         initializeLinks();
         console.log('Location.js initialized successfully');
     }
+    
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
-    window.locationApp = {
-        init: init,
-        openLink: openLink,
-        getUrl: getUrl
-    };
+    
+    // Assign methods to global object
+    window.locationApp.init = init;
+    window.locationApp.openLink = openLink;
+    window.locationApp.getUrl = getUrl;
+    
 })();
