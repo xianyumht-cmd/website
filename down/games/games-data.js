@@ -1,62 +1,479 @@
 // 游戏资源数据配置文件
-const navDataTranslations = {
+const gamesDataTranslations = {
     zh: {
         gameInfo: {
-            version: "1.0",
-            updateDate: "2026年2月2日",
-            nextUpdateDate: "持续更新",
-            feedbackEmail: "xianyumht@gmail.com"
+            version: "16.1", // 与 Nav 保持一致或独立维护
+            updateDate: "2026年1月22日",
+            nextUpdateDate: "2026年2月5日",
+            feedbackEmail: "xianyumht" + "@" + "gmail.com"
         },
         sections: [
             {
-                id: "热门推荐",
-                title: "🔥 热门推荐",
-                icon: "fa-solid fa-fire",
+                id: "官方资源",
+                title: "官方资源",
+                icon: "fa-solid fa-star",
                 items: [
                     {
-                        title: "幻兽帕鲁 (学习版)",
-                        description: "2025最新整合包 | 这是一个关于抓宠、建造、射击的游戏... [点击转存]",
-                        avatar: "帕",
-                        url: "#", 
-                        tooltip: "解压码：666"
+                        title: "台服客户端 (TW2)",
+                        description: "低延迟首选，官方原生繁体中文。适合不想折腾汉化的玩家。",
+                        avatar: "TW2",
+                        url: "https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.tw2.exe",
+                        tooltip: "直接下载"
+                    },
+                    {
+                        title: "PBE 美测服",
+                        description: "抢先体验新英雄/新版本，自带全英雄。需专门账号。",
+                        avatar: "PBE",
+                        url: "https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/pbe.pbe.exe",
+                        tooltip: "直接下载"
+                    },
+                    {
+                        title: "台服官网",
+                        description: "查看最新活动和公告",
+                        avatar: "官",
+                        url: "https://www.leagueoflegends.com/zh-tw/",
+                        tooltip: "台服官网"
+                    },
+                    {
+                        title: "账号管理中心",
+                        description: "修改密码、更换邮箱、查看地区",
+                        avatar: "号",
+                        url: "https://account.riotgames.com/account",
+                        tooltip: "账号管理"
+                    },
+                    {
+                        title: "通用注册入口",
+                        description: "注册拳头通用账号（台服/国际服）",
+                        avatar: "注",
+                        url: "https://signup.leagueoflegends.com/zh-tw/signup/index#/",
+                        tooltip: "通用注册"
+                    },
+                    {
+                        title: "PBE 注册入口",
+                        description: "专门注册美测服账号（需资格）",
+                        avatar: "PBE",
+                        url: "https://xsso.leagueoflegends.com/logout?uri=https%3A%2F%2Fxsso.leagueoflegends.com%2Flogin%3Fprompt%3Dsignup%26uri%3Dhttps%253A%252F%252Fsignup.leagueoflegends.com%252FpbeSignup",
+                        tooltip: "PBE注册"
+                    },
+                    {
+                        title: "服务器状态查询",
+                        description: "进不去游戏先看这个，是不是服务器炸了",
+                        avatar: "状",
+                        url: "https://status.riotgames.com/lol?region=tw2",
+                        tooltip: "状态查询"
+                    },
+                    {
+                        title: "IP 归属地查询",
+                        description: "查看你当前梯子的 IP 是否被拳头识别为正确地区",
+                        avatar: "IP",
+                        url: "https://sspd.playersupport.riotgames.com/geo_info/ip",
+                        tooltip: "IP查询"
+                    },
+                    {
+                        title: "充值中心",
+                        description: "官方充值入口",
+                        avatar: "充",
+                        url: "https://re.pay.riotgames.com/",
+                        tooltip: "充值"
+                    },
+                    {
+                        title: "账号找回",
+                        description: "账号被盗或忘记密码点这里",
+                        avatar: "找",
+                        url: "https://recovery.riotgames.com/zh-Hant/",
+                        tooltip: "账号找回"
+                    },
+                    {
+                        title: "账号复原支持",
+                        description: "官方账号复原文档",
+                        avatar: "复",
+                        url: "https://support-leagueoflegends.riotgames.com/hc/zh-tw/articles/360037644973-%E5%B8%B3%E8%99%9F%E5%BE%A9%E5%8E%9F",
+                        tooltip: "账号复原"
                     }
                 ]
             },
             {
-                id: "海外精选",
-                title: "🌍 海外精选",
-                icon: "fa-solid fa-globe",
+                id: "数据与百科",
+                title: "数据与百科",
+                icon: "fa-solid fa-chart-line",
                 items: [
                     {
-                        title: "Lethal Company",
-                        description: "致命公司 | 多人联机恐怖拾荒游戏，汉化补丁已打好",
-                        avatar: "L",
-                        url: "#",
-                        tooltip: "点击下载"
+                        title: "OP.GG 战绩",
+                        description: "全球最权威的战绩与数据网",
+                        avatar: "OP",
+                        url: "https://www.op.gg/summoners/",
+                        tooltip: "OP.GG"
+                    },
+                    {
+                        title: "TFT 云顶查询",
+                        description: "OP.GG 云顶之弈专区",
+                        avatar: "TFT",
+                        url: "https://tft.op.gg/",
+                        tooltip: "云顶查询"
+                    },
+                    {
+                        title: "Teemo.GG 模型",
+                        description: "3D 查看英雄与皮肤模型",
+                        avatar: "模",
+                        url: "https://teemo.gg/model-viewer",
+                        tooltip: "模型查看"
+                    },
+                    {
+                        title: "SkinSpotlights",
+                        description: "最新皮肤特效展示 (B站)",
+                        avatar: "皮",
+                        url: "https://space.bilibili.com/3493083209533523",
+                        tooltip: "皮肤特效"
+                    },
+                    {
+                        title: "超高清原画",
+                        description: "4K、8K超清原画 (Wallhaven)",
+                        avatar: "画",
+                        url: "https://wallhaven.cc/user/Luiisgz/uploads",
+                        tooltip: "超清原画"
+                    },
+                    {
+                        title: "语音试听",
+                        description: "在线试听英雄联盟语音",
+                        avatar: "音",
+                        url: "https://voice.buguoguo.cn/#/",
+                        tooltip: "语音试听"
+                    },
+                    {
+                        title: "LOL Wiki (英)",
+                        description: "最全的游戏机制资料库 (Fandom)",
+                        avatar: "Wi",
+                        url: "https://leagueoflegends.fandom.com/",
+                        tooltip: "Wiki"
+                    },
+                    {
+                        title: "LOL Wiki (新)",
+                        description: "官方新版 Wiki",
+                        avatar: "Wi",
+                        url: "https://wiki.leagueoflegends.com/en-us/",
+                        tooltip: "Wiki"
+                    },
+                    {
+                        title: "头像表情预览",
+                        description: "查看所有的召唤师头像和表情",
+                        avatar: "头",
+                        url: "https://league-fan.github.io/",
+                        tooltip: "头像预览"
+                    },
+                    {
+                        title: "无狗牌皮肤",
+                        description: "查看所有的无狗牌皮肤图片",
+                        avatar: "牌",
+                        url: "https://www.skinexplorer.lol/",
+                        tooltip: "无狗牌"
+                    },
+                    {
+                        title: "Tracker.gg",
+                        description: "数据统计网站",
+                        avatar: "Tr",
+                        url: "https://tracker.gg/lol",
+                        tooltip: "Tracker"
+                    },
+                    {
+                        title: "LeagueOfGraphs",
+                        description: "数据统计网站",
+                        avatar: "LG",
+                        url: "https://www.leagueofgraphs.com/",
+                        tooltip: "LeagueOfGraphs"
+                    },
+                    {
+                        title: "Blitz.gg",
+                        description: "数据统计网站",
+                        avatar: "Bl",
+                        url: "https://blitz.gg/lol",
+                        tooltip: "Blitz"
+                    },
+                    {
+                        title: "Lolalytics",
+                        description: "数据统计网站",
+                        avatar: "Lo",
+                        url: "https://lolalytics.com/",
+                        tooltip: "Lolalytics"
+                    },
+                    {
+                        title: "LOL.ps",
+                        description: "数据统计网站",
+                        avatar: "PS",
+                        url: "https://lol.ps",
+                        tooltip: "LOL.ps"
+                    },
+                    {
+                        title: "国服官方资料",
+                        description: "101.qq.com 国服官方数据",
+                        avatar: "国",
+                        url: "https://101.qq.com/",
+                        tooltip: "国服资料"
                     }
                 ]
-            }
-        ]
-    },
-    en: {
-        gameInfo: {
-            version: "1.0",
-            updateDate: "Feb 2, 2026",
-            nextUpdateDate: "Ongoing",
-            feedbackEmail: "xianyumht@gmail.com"
-        },
-        sections: [
-             {
-                id: "热门推荐",
-                title: "🔥 Hot Picks",
-                icon: "fa-solid fa-fire",
+            },
+            {
+                id: "黑科技工具",
+                title: "黑科技工具",
+                icon: "fa-solid fa-toolbox",
                 items: [
                     {
-                        title: "Palworld (Cracked)",
-                        description: "2025 Latest Pack | Catching, building, shooting... [Click to Save]",
-                        avatar: "P",
-                        url: "#", 
-                        tooltip: "Password: 666"
+                        title: "快速汉化启动",
+                        description: "一键修改客户端汉化配置，支持一键登录",
+                        avatar: "汉",
+                        url: "https://1019088775.lanzout.com/iihQp1xgm3lc",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "封号原因查询",
+                        description: "【外服专属】查询封号的具体原因",
+                        avatar: "封",
+                        url: "https://www.bilibili.com/read/cv22227820",
+                        tooltip: "查看教程"
+                    },
+                    {
+                        title: "商城退款工具",
+                        description: "对已购买商品退款 (密码: ABC)",
+                        avatar: "退",
+                        url: "https://1019088775.lanzout.com/b012xzdza",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "一键重启大厅",
+                        description: "解决卡主或页面大小异常，无需重登",
+                        avatar: "启",
+                        url: "https://1019088775.lanzout.com/iISqW0x7z2ve",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "清理进程工具",
+                        description: "一键彻底关闭拳头和LOL客户端",
+                        avatar: "清",
+                        url: "https://1019088775.lanzout.com/ijgSi0xbo00j",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "清除礼物通知",
+                        description: "一键清理礼物的通知消息",
+                        avatar: "礼",
+                        url: "https://1019088775.lanzout.com/iKwuG14w33fe",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "好友管理器",
+                        description: "批量删除/拉黑/同意/拒绝好友",
+                        avatar: "友",
+                        url: "https://1019088775.lanzout.com/ilSnN2vgml0d",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "房间创建工具",
+                        description: "快速创建自定义房间",
+                        avatar: "房",
+                        url: "https://1019088775.lanzout.com/i3sEk1y6numh",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "强制观战工具",
+                        description: "输入ID即可观战，无需加好友",
+                        avatar: "观",
+                        url: "https://1019088775.lanzout.com/i8Iww1zd1vif",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "生涯背景修改",
+                        description: "一键修改生涯背景、领取斗魂旗帜等",
+                        avatar: "背",
+                        url: "https://1019088775.lanzout.com/idPvV2h3ydwh",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "修复客户端大小",
+                        description: "过卡结算、热重载客户端 (Fix LCU)",
+                        avatar: "修",
+                        url: "https://github.com/LeagueTavern/fix-lcu-window",
+                        tooltip: "Github"
+                    },
+                    {
+                        title: "阿狸妖姬签名",
+                        description: "一键设置阿狸/妖姬签名皮肤为生涯背景",
+                        avatar: "签",
+                        url: "https://1019088775.lanzout.com/i7wwL2h4jfle",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "斗魂模式工具",
+                        description: "Ban掉勇敢举动选项 (可能失效)",
+                        avatar: "斗",
+                        url: "https://1019088775.lanzout.com/b0j0dp67g",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "LeagueTavern合集",
+                        description: "战绩助手、观战、精粹宝箱等合集 (密码: ilol)",
+                        avatar: "合",
+                        url: "https://wwp.lanzoul.com/b0e9qabwd",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "大乱斗助手",
+                        description: "查看大乱斗英雄Buff",
+                        avatar: "乱",
+                        url: "https://www.bilibili.com/video/BV1WZyRBMELz/",
+                        tooltip: "查看视频"
+                    }
+                ]
+            },
+            {
+                id: "战利品与资产",
+                title: "战利品与资产",
+                icon: "fa-solid fa-gift",
+                items: [
+                    {
+                        title: "战利品开启教程",
+                        description: "批量开启紫色/蓝色宝箱",
+                        avatar: "箱",
+                        url: "https://www.bilibili.com/opus/1054945479465369609",
+                        tooltip: "查看教程"
+                    },
+                    {
+                        title: "精粹批量兑换",
+                        description: "神话精粹批量兑换橙/蓝精粹",
+                        avatar: "粹",
+                        url: "https://www.bilibili.com/read/cv25997793",
+                        tooltip: "查看教程"
+                    },
+                    {
+                        title: "快速分解合成",
+                        description: "战利品批量合成/分解",
+                        avatar: "解",
+                        url: "https://www.bilibili.com/read/cv18259103",
+                        tooltip: "查看教程"
+                    },
+                    {
+                        title: "批量修改密码",
+                        description: "【外服专属】批量修改拳头账号密码",
+                        avatar: "密",
+                        url: "https://github.com/Yudaotor/Riot-Accounts-AutoChangePassword",
+                        tooltip: "Github"
+                    },
+                    {
+                        title: "一键购买490皮肤",
+                        description: "【外服专属】购买490点券随机皮肤",
+                        avatar: "49",
+                        url: "https://www.bilibili.com/video/BV1wp4y1g7Sn/",
+                        tooltip: "查看视频"
+                    },
+                    {
+                        title: "精粹商店购买",
+                        description: "批量购买炫彩皮肤、随机头像",
+                        avatar: "购",
+                        url: "https://www.bilibili.com/video/BV1zj411i7WX/",
+                        tooltip: "查看视频"
+                    },
+                    {
+                        title: "卡炫彩皮肤",
+                        description: "有炫彩无原皮使用工具 (可能已和谐)",
+                        avatar: "炫",
+                        url: "https://1019088775.lanzout.com/iwyH71y6o0kb",
+                        tooltip: "下载工具"
+                    },
+                    {
+                        title: "皮肤详情查询",
+                        description: "一键查询/导出皮肤拥有情况",
+                        avatar: "详",
+                        url: "https://www.bilibili.com/read/cv36489490/",
+                        tooltip: "查看教程"
+                    },
+                    {
+                        title: "PBE批量购买",
+                        description: "PBE快速购买皮肤和炫彩",
+                        avatar: "PBE",
+                        url: "https://1019088775.lanzout.com/b0j0ovj4d",
+                        tooltip: "下载工具"
+                    }
+                ]
+            },
+            {
+                id: "远程与通知",
+                title: "远程与通知",
+                icon: "fa-solid fa-mobile-screen",
+                items: [
+                    {
+                        title: "手机APP通知",
+                        description: "FWAlert 通知服务",
+                        avatar: "FW",
+                        url: "https://fwalert.com/",
+                        tooltip: "FWAlert"
+                    },
+                    {
+                        title: "向日葵 (旧版)",
+                        description: "旧版本可能支持关闭显示器操作",
+                        avatar: "向",
+                        url: "https://1019088775.lanzout.com/iqboe0xkz5rg",
+                        tooltip: "下载旧版"
+                    },
+                    {
+                        title: "向日葵 (官网)",
+                        description: "远程控制软件官网",
+                        avatar: "向",
+                        url: "https://sunlogin.oray.com/",
+                        tooltip: "官网"
+                    },
+                    {
+                        title: "ToDesk",
+                        description: "流畅的远程控制软件",
+                        avatar: "To",
+                        url: "https://www.todesk.com/",
+                        tooltip: "ToDesk"
+                    },
+                    {
+                        title: "UU远程",
+                        description: "网易出品，不限速免费",
+                        avatar: "UU",
+                        url: "https://uuyc.163.com/",
+                        tooltip: "UU远程"
+                    }
+                ]
+            },
+            {
+                id: "故障修复",
+                title: "故障修复",
+                icon: "fa-solid fa-bug",
+                items: [
+                    {
+                        title: "官方修复工具",
+                        description: "Hextech Repair Tool 官方修复",
+                        avatar: "修",
+                        url: "https://cdn.playersupport.riotgames.com/riot-repair-tool/Riot+Repair+Tool.exe",
+                        tooltip: "直接下载"
+                    },
+                    {
+                        title: "VAN报错解决",
+                        description: "Vanguard 错误代码官方指南 (VAN-68/128)",
+                        avatar: "VA",
+                        url: "https://support-leagueoflegends.riotgames.com/hc/zh-tw/articles/26932165816851-Vanguard%E9%8C%AF%E8%AA%A4%E4%BB%A3%E7%A2%BC%E8%88%87%E8%A7%A3%E6%B1%BA%E8%BE%A6%E6%B3%95-%E8%8B%B1%E9%9B%84%E8%81%AF%E7%9B%9F",
+                        tooltip: "官方文档"
+                    },
+                    {
+                        title: "瓦罗兰特支持",
+                        description: "Valorant 相关支持文档 1",
+                        avatar: "瓦",
+                        url: "https://support-valorant.riotgames.com/hc/zh-tw/articles/360045132434",
+                        tooltip: "支持文档"
+                    },
+                    {
+                        title: "瓦罗兰特支持",
+                        description: "Valorant 相关支持文档 2",
+                        avatar: "瓦",
+                        url: "https://support-valorant.riotgames.com/hc/zh-tw/articles/360047379834",
+                        tooltip: "支持文档"
+                    },
+                    {
+                        title: "越南服解决",
+                        description: "越南归属地接码问题解决方法",
+                        avatar: "越",
+                        url: "https://www.bilibili.com/opus/1084294777746227218",
+                        tooltip: "查看教程"
                     }
                 ]
             }
@@ -65,27 +482,26 @@ const navDataTranslations = {
 };
 
 const navData = {
-    gameInfo: navDataTranslations.zh.gameInfo,
-    sections: navDataTranslations.zh.sections
+    gameInfo: gamesDataTranslations.zh.gameInfo,
+    sections: gamesDataTranslations.zh.sections
 };
 
 // 暴露给全局，确保 nav-core.js 可以访问
 window.navData = navData;
 window.getNavData = function(lang) {
-    if (lang && navDataTranslations[lang]) {
+    if (lang && gamesDataTranslations[lang]) {
         return {
-            gameInfo: navDataTranslations[lang].gameInfo,
-            sections: navDataTranslations[lang].sections
+            gameInfo: gamesDataTranslations[lang].gameInfo,
+            sections: gamesDataTranslations[lang].sections
         };
     }
     return navData;
 };
 
-// 全局变量设置
-window.navDataTranslations = navDataTranslations;
+// 兼容 nav-core.js 的事件监听
+window.navDataTranslations = gamesDataTranslations;
 window.currentNavLanguage = "zh";
 
-// 兼容 nav-core.js 的事件
 document.addEventListener("navLanguageChanged", function(event) {
     const language = event.detail.language;
     window.currentNavLanguage = language;
