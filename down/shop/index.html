@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOL自动发卡网 - 30级小号/韩服账号/自动发货 - 脚本.top</title>
+    <meta name="description" content="脚本.top专业提供LOL英雄联盟账号购买服务，24小时自动发卡。包含30级未定级小号、韩服账号、美测服PBE账号、人机号等。已过人脸验证，安全不找回。">
+    <meta name="keywords" content="LOL发卡网,英雄联盟账号购买,LOL30级账号,韩服账号购买,美测服账号,PBE账号,自动发卡">
+    <link rel="stylesheet" href="../../static/css/index.css">
+    <style>
+        body { background: #f5f5f5; color: #333; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; background: #fff; min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
+        header { text-align: center; padding: 40px 0; border-bottom: 1px solid #eee; }
+        h1 { font-size: 24px; margin-bottom: 10px; color: #2c3e50; }
+        .subtitle { color: #666; font-size: 14px; }
+        .features { display: flex; flex-wrap: wrap; justify-content: space-around; margin: 40px 0; }
+        .feature-item { width: 45%; margin-bottom: 20px; padding: 20px; background: #f9f9f9; border-radius: 8px; text-align: center; }
+        .feature-item h3 { color: #e74c3c; margin-bottom: 10px; font-size: 18px; }
+        .feature-item p { font-size: 13px; color: #666; }
+        .cta-section { text-align: center; margin: 50px 0; padding: 30px; background: #e8f4fd; border-radius: 10px; }
+        .cta-btn { display: inline-block; padding: 15px 40px; background: #3498db; color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; transition: all 0.3s; cursor: pointer; border: none; }
+        .cta-btn:hover { background: #2980b9; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(52,152,219,0.3); }
+        .seo-text { font-size: 12px; color: #999; margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px; }
+        .back-link { display: block; margin-bottom: 20px; color: #666; text-decoration: none; }
+        .back-link:hover { color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 返回首页</a>
+        <header>
+            <h1>LOL自动发卡网</h1>
+            <p class="subtitle">24小时自动发货 / 安全防找回 / 售后无忧</p>
+        </header>
+
+        <section class="features">
+            <div class="feature-item">
+                <h3>30级未定级小号</h3>
+                <p>纯手工/高质量人机号，30级满级，无排位记录，可直接打排位，自带精粹。</p>
+            </div>
+            <div class="feature-item">
+                <h3>韩服/外服账号</h3>
+                <p>提供韩服、美服、欧服、日服等各区账号，支持改密，赠送语音包和加速器教程。</p>
+            </div>
+            <div class="feature-item">
+                <h3>美测服PBE账号</h3>
+                <p>无限点券，抢先体验新版本云顶之弈和新英雄，独家注册渠道，稳定不封。</p>
+            </div>
+            <div class="feature-item">
+                <h3>安全防找回保障</h3>
+                <p>所有账号均已过人脸验证或提供资料，承诺找回包赔，让您买得放心。</p>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>全网低价 货源充足 自动发货</h2>
+            <p style="margin-bottom: 20px;">点击下方按钮进入发卡中心，提取卡密</p>
+            <button id="shop-btn" class="cta-btn">进入发卡中心</button>
+        </section>
+
+        <section class="seo-text">
+            <h3>热门搜索</h3>
+            <p>LOL发卡网 | 英雄联盟账号购买 | LOL30级账号 | 英雄联盟小号 | 韩服账号购买 | 韩服账号注册 | 美测服PBE账号 | 云顶之弈手游账号 | LOL手游账号 | 英雄联盟租号 | 自动发卡平台 | 游戏账号交易 | LOL防沉迷账号 | 已过人脸验证账号</p>
+            <p>本站提供一站式游戏账号交易服务，主营英雄联盟(LOL)各区服账号。无论您是需要30级小号打排位，还是想去韩服体验高水平对局，我们都能满足您的需求。平台采用自动发卡系统，付款后立即显示账号密码，方便快捷。</p>
+        </section>
+    </div>
+
+    <script src="../../static/js/location.js"></script>
+    <script>
+        document.getElementById('shop-btn').addEventListener('click', function() {
+            var url = window.locationApp.getUrl('qunliao1');
+            if (url) {
+                window.locationApp.openLink(url);
+            } else {
+                alert('跳转链接配置错误，请联系管理员');
+            }
+        });
+    </script>
+</body>
+</html>

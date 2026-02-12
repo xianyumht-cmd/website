@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOL高端租号平台 - 艾欧尼亚王者号/全皮肤/防顶号 - 脚本.top</title>
+    <meta name="description" content="脚本.top专业提供LOL英雄联盟租号服务，包含艾欧尼亚王者号、全皮肤账号、绝版皮肤号。支持防顶号系统，到时下线，安全靠谱的租号体验。">
+    <meta name="keywords" content="LOL租号,英雄联盟租号,艾欧尼亚租号,全皮肤账号,防顶号,租号平台">
+    <link rel="stylesheet" href="../../static/css/index.css">
+    <style>
+        body { background: #f5f5f5; color: #333; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; background: #fff; min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
+        header { text-align: center; padding: 40px 0; border-bottom: 1px solid #eee; }
+        h1 { font-size: 24px; margin-bottom: 10px; color: #2c3e50; }
+        .subtitle { color: #666; font-size: 14px; }
+        .features { display: flex; flex-wrap: wrap; justify-content: space-around; margin: 40px 0; }
+        .feature-item { width: 45%; margin-bottom: 20px; padding: 20px; background: #f9f9f9; border-radius: 8px; text-align: center; }
+        .feature-item h3 { color: #e74c3c; margin-bottom: 10px; font-size: 18px; }
+        .feature-item p { font-size: 13px; color: #666; }
+        .cta-section { text-align: center; margin: 50px 0; padding: 30px; background: #e8f4fd; border-radius: 10px; }
+        .cta-btn { display: inline-block; padding: 15px 40px; background: #3498db; color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; transition: all 0.3s; cursor: pointer; border: none; }
+        .cta-btn:hover { background: #2980b9; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(52,152,219,0.3); }
+        .seo-text { font-size: 12px; color: #999; margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px; }
+        .back-link { display: block; margin-bottom: 20px; color: #666; text-decoration: none; }
+        .back-link:hover { color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 返回首页</a>
+        <header>
+            <h1>LOL高端租号平台</h1>
+            <p class="subtitle">极品账号 / 安全防顶 / 极致体验</p>
+        </header>
+
+        <section class="features">
+            <div class="feature-item">
+                <h3>艾欧尼亚王者号</h3>
+                <p>大量一区艾欧尼亚高端账号，王者/宗师/大师段位任选，体验顶尖对局。</p>
+            </div>
+            <div class="feature-item">
+                <h3>全皮肤/至臻/龙瞎</h3>
+                <p>全英雄全皮肤账号，包含各种绝版限定、至臻皮肤、龙的传人，视觉盛宴。</p>
+            </div>
+            <div class="feature-item">
+                <h3>专业防顶号系统</h3>
+                <p>采用先进的上号器登录，屏蔽恶意顶号，保障您的游戏体验不被中断。</p>
+            </div>
+            <div class="feature-item">
+                <h3>超低价体验</h3>
+                <p>特设1元体验区，几毛钱也能玩神号。支持时租、包夜、包周多种模式。</p>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>海量优质账号 随时随地开黑</h2>
+            <p style="margin-bottom: 20px;">点击下方按钮前往选购，支持微信/支付宝快捷支付</p>
+            <button id="rent-btn" class="cta-btn">立即前往选购</button>
+        </section>
+
+        <section class="seo-text">
+            <h3>热门搜索</h3>
+            <p>LOL租号平台 | 英雄联盟租号 | 艾欧尼亚租号 | 黑色玫瑰租号 | 峡谷之巅账号 | LOL全皮肤账号租号 | LOL至臻皮肤号 | 英雄联盟租号防顶号 | 1元租号体验 | LOL特价租号 | 租号玩 | 虚贝租号 | 英雄联盟账号交易 | LOL买号 | 30级未定级账号</p>
+            <p>本站提供专业的英雄联盟(LOL)租号服务，致力于打造安全、便捷、便宜的租号平台。无论您是想体验全皮肤的快感，还是想在艾欧尼亚高端局证明自己，这里都有适合您的账号。24小时自动发货，售后无忧。</p>
+        </section>
+    </div>
+
+    <script src="../../static/js/location.js"></script>
+    <script>
+        document.getElementById('rent-btn').addEventListener('click', function() {
+            var url = window.locationApp.getUrl('qunliao3');
+            if (url) {
+                window.locationApp.openLink(url);
+            } else {
+                alert('跳转链接配置错误，请联系管理员');
+            }
+        });
+    </script>
+</body>
+</html>
