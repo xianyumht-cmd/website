@@ -42,6 +42,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         nav: resolve(__dirname, 'down/nav/index.html'),
+        rent: resolve(__dirname, 'down/rent/index.html'),
+        shop: resolve(__dirname, 'down/shop/index.html'),
         games: resolve(__dirname, 'down/games/index.html'),
         tdr: resolve(__dirname, 'down/tdr/index.html'),
         privacy: resolve(__dirname, 'privacy.html'),
