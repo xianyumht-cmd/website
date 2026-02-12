@@ -10,7 +10,7 @@ const linkConfig = {
     hexie: 'https://baike.baidu.com/item/%E5%B1%A0%E5%91%A6%E5%91%A6',
     ziyou: 'https://baike.baidu.com/item/%E6%9D%A8%E5%88%A9%E4%BC%9F',
     qunliao1: 'https://an.207qk.cn/s',
-    qunliao2: 'https://www.liyan666.com/shop/2DA2BFD5',
+    qunliao2: 'https://blog.xn--8pv109c.top/',
     qunliao3: 'https://kkk.45io.cn/shop/99BA0CEF',
     qunliao4: 'down/nav/',
     qunliao5: 'https://an.24vv.cn/s/'
