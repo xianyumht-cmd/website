@@ -62,6 +62,11 @@ function generateSitemap() {
         // 计算相对路径
         let relativePath = path.relative(rootDir, filePath).replace(/\\/g, '/');
         
+        // Handle src/pages mapping to down/
+        if (relativePath.startsWith('src/pages/')) {
+            relativePath = relativePath.replace('src/pages/', 'down/');
+        }
+        
         // 转换为 URL
         let urlPath = relativePath;
         if (urlPath.endsWith('index.html')) {
