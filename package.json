@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint:html": "html-validate down/nav/index.html down/tdr/index.html",
-    "lint:css": "stylelint \"down/**/*.css\"",
+    "lint:html": "html-validate src/pages/nav/index.html src/pages/tdr/index.html",
+    "lint:css": "stylelint \"src/assets/css/**/*.css\"",
     "lint": "npm run lint:html && npm run lint:css",
     "dev": "vite",
     "build": "vite build",

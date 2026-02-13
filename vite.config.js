@@ -10,7 +10,7 @@ export default defineConfig({
     topLevelAwait(),
     javascriptObfuscator({
       // Scope: Only obfuscate your own code, ignore libraries to prevent errors and slow performance
-      include: ["src/**/*.js", "down/**/*.js", "shared/**/*.js"],
+      include: ["src/**/*.js", "shared/**/*.js"],
       exclude: [/node_modules/, /\.min\.js$/, "static/**/*.js"],
       
       // High Obfuscation Settings
@@ -41,11 +41,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        nav: resolve(__dirname, 'down/nav/index.html'),
-        rent: resolve(__dirname, 'down/rent/index.html'),
-        shop: resolve(__dirname, 'down/shop/index.html'),
-        games: resolve(__dirname, 'down/games/index.html'),
-        tdr: resolve(__dirname, 'down/tdr/index.html'),
+        nav: resolve(__dirname, 'src/pages/nav/index.html'),
+        rent: resolve(__dirname, 'src/pages/rent/index.html'),
+        shop: resolve(__dirname, 'src/pages/shop/index.html'),
+        games: resolve(__dirname, 'src/pages/games/index.html'),
+        tdr: resolve(__dirname, 'src/pages/tdr/index.html'),
         privacy: resolve(__dirname, 'privacy.html'),
         about: resolve(__dirname, 'about.html'),
         notFound: resolve(__dirname, '404.html')

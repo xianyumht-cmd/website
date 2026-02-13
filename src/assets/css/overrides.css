@@ -98,6 +98,34 @@ body.night {
     font-weight: 500;
 }
 
+/* Global Theme Transition */
+body,
+.navbar,
+.sidebar-menu,
+.logo-env,
+footer,
+.fk_service_box,
+.fk_service_ax_cont, 
+.fk_service_bx_cont,
+.s-search input,
+#bulletin_box,
+.white_content,
+.xe-widget .xe-header .xe-title,
+.board,
+.panel,
+.user-info-menu li a,
+.user-info-menu li i,
+.main-menu a,
+.main-menu i,
+.main-menu span {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Ensure link colors transition smoothly */
+a, i, span, p, h1, h2, h3, h4, h5, h6 {
+    transition: color 0.3s ease;
+}
+
 /* 51.LA Widget Styling - CSS Trick to Hide Text */
 #LA-DATA-WIDGET {
     font-size: 0 !important; /* Hide all text by making it size 0 */

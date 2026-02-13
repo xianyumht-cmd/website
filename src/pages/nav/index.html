@@ -46,7 +46,7 @@
     </script>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <!-- 51.LA Analytics (Protected with Error Handling) -->
     <script>
@@ -59,9 +59,9 @@
         }
     </script>
 
-    <script type="module" src="../../shared/responsive-base.js"></script>
-    <script type="module" src="../../shared/anti-debug.js"></script>
-    <link rel="stylesheet" href="../../shared/responsive.css">
+    <script type="module" src="../../../shared/responsive-base.js"></script>
+    <script type="module" src="../../../shared/anti-debug.js"></script>
+    <link rel="stylesheet" href="../../../shared/responsive.css">
     
     <!-- Critical CSS (inline for faster rendering) -->
     <style>
@@ -84,35 +84,35 @@
         .changestyle { color: red; font-weight: 600; }
     </style>
     
-    <link rel="stylesheet" href="../css/style.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../css/bootstrap.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../css/dark.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../css/animation.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../css/mobile.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="../css/style.min.css"></noscript>
-    <noscript><link rel="stylesheet" href="../css/bootstrap.min.css"></noscript>
-    <noscript><link rel="stylesheet" href="../css/dark.min.css"></noscript>
-    <noscript><link rel="stylesheet" href="../css/animation.min.css"></noscript>
-    <noscript><link rel="stylesheet" href="../css/mobile.min.css"></noscript>
-    <link rel="stylesheet" href="../css/overrides.css">
+    <link rel="stylesheet" href="../../assets/css/style.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../../assets/css/dark.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../../assets/css/animation.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../../assets/css/mobile.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="../../assets/css/style.min.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/css/bootstrap.min.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/css/dark.min.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/css/animation.min.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/css/mobile.min.css"></noscript>
+    <link rel="stylesheet" href="../../assets/css/overrides.css">
     
-    <script type="module" src="../js/theme-mode.min.js"></script>
-    <script type="module" src="../js/language-switcher.min.js"></script>
-    <script type="module" src="../js/enhanced-translation.min.js"></script>
+    <script type="module" src="../../assets/js/theme-mode.min.js"></script>
+    <script type="module" src="../../assets/js/language-switcher.min.js"></script>
+    <script type="module" src="../../assets/js/enhanced-translation.min.js"></script>
     <script>
         (function() {
             try {
                 var params = new URLSearchParams(location.search);
                 if (params.has('perf')) {
                     var s = document.createElement('script');
-                    s.src = '../js/performance-analyzer.min.js';
+                    s.src = '../../assets/js/performance-analyzer.min.js';
                     s.async = true;
                     document.head.appendChild(s);
                 }
             } catch (e) {}
         })();
     </script>
-    <script type="module" src="../js/error-guard.js"></script>
+    <script type="module" src="../../assets/js/error-guard.js"></script>
     
     <!-- Meta Tags -->
 
@@ -143,7 +143,7 @@
 <body class="page-body">
     <!-- Load Data Configuration -->
     <script type="module" src="nav-data.min.js?v=fix01" data-cfasync="false"></script>
-    <script type="module" src="nav-core.js"></script>
+    <script type="module" src="../../assets/js/nav-core.js"></script>
     
     <div class="page-container">
         <!-- Sidebar Menu -->
@@ -155,7 +155,7 @@
                             <i class="fa-solid fa-compass"></i>
                         </a>
                         <div class="logo-text">
-                            <a href="#navbar" style="font-family: custom;">test</a>
+                            <a href="#navbar" style="font-family: custom;">脚本.top</a>
                         </div>
                     </div>
                     <div class="mobile-menu-toggle visible-xs">
@@ -263,26 +263,26 @@
             
             <!-- Footer Disclaimer -->
             <!-- Footer Disclaimer -->
-            <footer style="width: 100%; text-align: center; color: #999; font-size: 12px; padding: 20px 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); border-top: 1px solid #eee; margin-top: 40px;">
+            <footer style="width: 100%; text-align: center; color: #555; font-size: 12px; padding: 20px 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); border-top: 1px solid #eee; margin-top: 40px;">
                 <div style="margin-bottom: 5px;">
-                    <p style="margin: 0; font-size: 12px; display: inline-block;">
+                    <p style="margin: 0; font-size: 12px; display: inline-block; color: #333;">
                         &copy; 2026 脚本.top | 
-                        <a href="../../about.html" target="_blank" style="color: #999; text-decoration: none;">关于我们</a> | 
-                        <a href="../../privacy.html" target="_blank" style="color: #999; text-decoration: none;">隐私政策</a> | 
-                        <a href="../tdr/index.html" target="_blank" style="color: #999; text-decoration: none;">吃豆人</a> |
-                        <a href="../../sitemap.xml" target="_blank" style="color: #999; text-decoration: none;">XML 地图</a>
-                        <span style="margin: 0 5px; color: #ddd;">|</span>
-                        <a href="../rent/" style="color: #bbb; text-decoration: none;">租号</a> · 
-                        <a href="../shop/" style="color: #bbb; text-decoration: none;">陪玩</a>
+                        <a href="../../../about.html" target="_blank" style="color: #333; text-decoration: none;">关于我们</a> | 
+                        <a href="../../../privacy.html" target="_blank" style="color: #333; text-decoration: none;">隐私政策</a> | 
+                        <a href="../../../sitemap.xml" target="_blank" style="color: #333; text-decoration: none;">XML 地图</a> |
+                        <a href="../tdr/index.html" target="_blank" style="color: #333; text-decoration: none;">吃豆人</a>
+                        <span style="margin: 0 5px; color: #999;">|</span>
+                        <a href="../rent/" style="color: #333; text-decoration: none;">租号</a> · 
+                        <a href="../shop/" style="color: #333; text-decoration: none;">陪玩</a>
                     </p>
                 </div>
-                <div style="margin-bottom: 5px; font-size: 12px;">
+                <div style="margin-bottom: 5px; font-size: 12px; color: #333;">
                     友情链接：
-                    <a href="https://www.baidu.com" target="_blank" rel="nofollow" style="color: #999; text-decoration: none; margin: 0 5px;">百度搜索</a>
-                    <a href="https://www.so.com" target="_blank" rel="nofollow" style="color: #999; text-decoration: none; margin: 0 5px;">360搜索</a>
-                    <a href="https://www.sogou.com" target="_blank" rel="nofollow" style="color: #999; text-decoration: none; margin: 0 5px;">搜狗搜索</a>
+                    <a href="https://www.baidu.com" target="_blank" rel="nofollow" style="color: #333; text-decoration: none; margin: 0 5px;">百度搜索</a>
+                    <a href="https://www.so.com" target="_blank" rel="nofollow" style="color: #333; text-decoration: none; margin: 0 5px;">360搜索</a>
+                    <a href="https://www.sogou.com" target="_blank" rel="nofollow" style="color: #333; text-decoration: none; margin: 0 5px;">搜狗搜索</a>
                 </div>
-                <p style="margin: 0; font-size: 12px; opacity: 0.8; transform: scale(0.9);">富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善</p>
+                <p style="margin: 0; font-size: 12px; opacity: 0.8; transform: scale(0.9); color: #333;">富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善</p>
             </footer>
             
         </div>
@@ -300,13 +300,17 @@
         <ul>
             <li>
                 <div class="fk_service_box fk_service_ax" onclick="themeMode.toggleMode()" title="切换主题模式">
-                    <i id="theme-icon" class="fa-solid fa-circle-half-stroke" style="font-size: 20px; margin-right: 8px;"></i>
+                    <span id="theme-icon" style="margin-right: 8px; display: inline-flex; align-items: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20" fill="currentColor"><path d="M448 256c0-106-86-192-192-192V448c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg>
+                    </span>
                     <span id="theme-text" class="fk_service_ax_cont">自动模式</span>
                 </div>
             </li>
             <li style="margin-top: 10px;">
                 <div class="fk_service_box fk_service_bx" onclick="languageSwitcher.switchLanguage()" title="切换语言">
-                    <i id="lang-icon" class="fa-solid fa-language" style="font-size: 20px; margin-right: 8px;"></i>
+                    <span id="lang-icon" style="margin-right: 8px; display: inline-flex; align-items: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="20" height="20" fill="currentColor"><path d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64h185.4c2.2 20.4 3.3 41.8 3.3 64zm28.8-64h123.1c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6 78.3 20.7 142 77.5 171.9 151.6zm-149.1 0H167.7c6.1-36.4 15.5-68.6 27-94.7 10.5-23.6 22.2-40.7 33.5-51.5C238.9 78.7 258.9 64 280 64c21.1 0 41.1 14.7 51.8 29.8 11.3 10.8 23 27.9 33.5 51.5 11.6 26 20.9 58.2 27 94.7zm-209 0H18.6c30-74.1 93.6-130.9 172-151.6-25.5 34.2-45.2 87.7-55.3 151.6zM8.1 192h123.1c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64H8.1C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zm186.6 254.6c-11.6-26-20.9-58.2-27-94.6h176.6c-6.1 36.4-15.5 68.6-27 94.6-10.5 23.6-22.2 40.7-33.5 51.5-10.7 15-30.7 29.8-51.8 29.8-21.1 0-41.1-14.7-51.8-29.8-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6-78.4-20.7-142-77.5-172-151.6h116.7zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6 25.5-34.2 45.2-87.7 55.3-151.6h116.6z"/></svg>
+                    </span>
                     <span id="lang-text" class="fk_service_bx_cont">Switch to English</span>
                 </div>
             </li>

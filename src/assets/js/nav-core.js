@@ -3,7 +3,7 @@
  * Replaces inline scripts and unsafe innerHTML usage.
  */
 
-import init, { generate_menu_html } from './pkg/nav_logic.js';
+import init, { generate_menu_html } from '../../pages/nav/pkg/nav_logic.js';
 
 // Initialize Wasm
 const wasmReady = init().catch(err => {
@@ -158,7 +158,7 @@ function generateContentSafe(retryCount = 0) {
                 // Append 'Game Resources' link (static)
                 const gameLi = document.createElement('li');
                 gameLi.className = 'submit-tag';
-                gameLi.innerHTML = `<a href="/down/games/index.html">
+                gameLi.innerHTML = `<a href="/src/pages/games/index.html">
                     <i class="fa-solid fa-gamepad"></i>
                     <span class="tooltip-blue" style="width: 60px;">游戏资源</span>
                 </a>`;
@@ -251,7 +251,7 @@ function generateContentSafe(retryCount = 0) {
     if (contentSections) {
         contentSections.textContent = '';
         
-        const tasks = navData.sections.map(section => () => {
+        const tasks = navData.sections.filter(section => section.items && section.items.length > 0).map(section => () => {
             const sectionHeader = document.createElement('h4');
             sectionHeader.className = 'text-gray';
             
