@@ -8,6 +8,17 @@ export default defineConfig({
   plugins: [
     wasm(),
     topLevelAwait(),
+    {
+      name: 'rewrite-down-path',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url.startsWith('/down/')) {
+            req.url = req.url.replace('/down/', '/src/pages/');
+          }
+          next();
+        });
+      }
+    },
     javascriptObfuscator({
       // Scope: Only obfuscate your own code, ignore libraries to prevent errors and slow performance
       include: ["src/**/*.js", "shared/**/*.js"],

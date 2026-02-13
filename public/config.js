@@ -12,7 +12,7 @@ const linkConfig = {
     qunliao1: 'https://an.207qk.cn/s',
     qunliao2: 'https://blog.xn--8pv109c.top/',
     qunliao3: 'https://kkk.45io.cn/shop/99BA0CEF',
-    qunliao4: 'src/pages/nav/',
+    qunliao4: 'down/nav/',
     qunliao5: 'https://an.24vv.cn/s/'
 };
 

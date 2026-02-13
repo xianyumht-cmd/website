@@ -8,7 +8,7 @@
     "lint:css": "stylelint \"src/assets/css/**/*.css\"",
     "lint": "npm run lint:html && npm run lint:css",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/organize-dist.mjs",
     "build:wasm": "wasm-pack build src-wasm --target web --out-dir ../public/wasm --no-typescript",
     "preview": "vite preview",
     "test:unit": "jest",
