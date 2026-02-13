@@ -16,32 +16,91 @@
         .main-wrapper {
             flex: 1;
             display: flex;
+            flex-direction: column; /* Changed back to column */
             justify-content: center;
             align-items: center;
             width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            gap: 60px; /* Space between buttons and text */
+        }
+        .buttons-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .seo-area {
+            width: 700px; 
+            max-width: 100%;
+            padding: 20px; 
+            text-align: center; 
+            color: #888; /* Slightly lighter text */
+            font-size: 13px; /* Slightly smaller font */
+            background: transparent; /* Remove background */
+            backdrop-filter: none; /* Remove blur */
+            border-radius: 0;
+            box-shadow: none; /* Remove shadow */
+            border: none;
+            margin-top: 20px;
+        }
+        .seo-area h3 {
+            color: #555;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.05); /* Subtle separator */
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            display: inline-block; /* Only underline text */
+        }
+        .seo-content-wrapper {
+             /* New wrapper for content to control width/layout if needed */
+        }
+        @media (max-width: 900px) {
+            .buttons-area {
+                gap: 30px;
+            }
+            .seo-area {
+                width: 90%;
+                text-align: left; 
+            }
+            .seo-area h3 {
+                display: block;
+                text-align: left;
+            }
         }
     </style>
 </head>
 <body>
     <div class="main-wrapper">
-        <div class="container">
+        <div class="buttons-area container">
             <div class="box" id="qunliao1">
                 <div class="img"><img src="static/picture/1.svg" alt="Icon"></div>
-                <p>Loading...</p>
-            </div>
-            <div class="box" id="qunliao2">
-                <div class="img"><img src="static/picture/2.svg" alt="Icon"></div>
                 <p>Loading...</p>
             </div>
             <div class="box" id="qunliao3">
                 <div class="img"><img src="static/picture/3.svg" alt="Icon"></div>
                 <p>Loading...</p>
             </div>
-            <div class="box" id="qunliao4">
-                <div class="img"><img src="static/picture/4.svg" alt="Icon"></div>
-                <p>Loading...</p>
+        </div>
+        
+        <!-- SEO Content Section -->
+        <div class="seo-area">
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #333; margin-bottom: 10px; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 5px;">🏆 超凡自动发卡</h3>
+                <p style="font-size: 13px; line-height: 1.6;">24小时自动发货，大神带飞、美女陪玩、语音开黑。支持微信/支付宝快捷支付，安全靠谱，体验极佳。</p>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #333; margin-bottom: 10px; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 5px;">🎮 LOL高端租号</h3>
+                <p style="font-size: 13px; line-height: 1.6;">全区王者号/30级小号/全皮肤账号任选。1元体验，防顶号系统保障，随时随地享受极品账号。</p>
             </div>
             
+            <div style="font-size: 12px; color: #999; text-align: left; border-top: 1px solid #eee; padding-top: 15px;">
+                <p style="margin-bottom: 5px;"><strong>热门搜索：</strong>LOL陪玩 | 英雄联盟租号 | 自动发卡网 | 30级小号 | 艾欧尼亚租号 | 游戏辅助购买 | 1元陪玩体验 | 峡谷之巅大神</p>
+                <p>本站专业提供英雄联盟(LOL)相关服务，致力于打造安全、便捷、靠谱的游戏服务平台。无论是寻找大神带飞、购买游戏资源，还是体验高端全皮肤账号，这里都能满足您的需求。</p>
+            </div>
         </div>
     </div>
     
@@ -49,13 +108,12 @@
         <div style="margin-bottom: 5px;">
             <p style="margin: 0; font-size: 12px; display: inline-block; color: #999; transform: scale(0.9);">
                 &copy; 2026 脚本.top | 
+                <a href="https://blog.xn--8pv109c.top/" target="_blank" style="color: #999; text-decoration: none;">博客文章</a> | 
+                <a href="src/pages/nav/" target="_blank" style="color: #999; text-decoration: none;">网址导航</a> | 
                 <a href="about.html" target="_blank" style="color: #999; text-decoration: none;">关于我们</a> | 
                 <a href="privacy.html" target="_blank" style="color: #999; text-decoration: none;">隐私政策</a> | 
                 <a href="sitemap.xml" target="_blank" style="color: #999; text-decoration: none;">XML 地图</a> |
                 <a href="src/pages/tdr/index.html" target="_blank" style="color: #999; text-decoration: none;">吃豆人</a>
-                <span style="margin: 0 5px; color: #ccc;">|</span>
-                <a href="src/pages/rent/" style="color: #999; text-decoration: none;">租号</a> · 
-                <a href="src/pages/shop/" style="color: #999; text-decoration: none;">陪玩</a>
             </p>
         </div>
         <div style="margin-bottom: 5px; font-size: 12px; color: #999; transform: scale(0.9);">

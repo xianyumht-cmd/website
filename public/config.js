@@ -51,11 +51,7 @@ function initializeLinks() {
                     element.style.transform = '';
                 }, 150);
                 setTimeout(() => {
-                    if (id === 'qunliao1') {
-                        window.location.href = 'src/pages/shop/';
-                    } else if (id === 'qunliao3') {
-                        window.location.href = 'src/pages/rent/';
-                    } else if (id === 'qunliao4') {
+                    if (id === 'qunliao4') {
                         window.location.href = 'src/pages/nav/';
                     } else {
                         openLink(linkConfig[id]);
