@@ -12,7 +12,7 @@ const linkConfig = {
     qunliao1: 'https://an.207qk.cn/s',
     qunliao2: 'https://blog.xn--8pv109c.top/',
     qunliao3: 'https://kkk.45io.cn/shop/99BA0CEF',
-    qunliao4: 'down/nav/',
+    qunliao4: 'src/pages/nav/',
     qunliao5: 'https://an.24vv.cn/s/'
 };
 
@@ -52,9 +52,11 @@ function initializeLinks() {
                 }, 150);
                 setTimeout(() => {
                     if (id === 'qunliao1') {
-                        window.location.href = 'down/shop/';
+                        window.location.href = 'src/pages/shop/';
                     } else if (id === 'qunliao3') {
-                        window.location.href = 'down/rent/';
+                        window.location.href = 'src/pages/rent/';
+                    } else if (id === 'qunliao4') {
+                        window.location.href = 'src/pages/nav/';
                     } else {
                         openLink(linkConfig[id]);
                     }
