@@ -8,6 +8,7 @@
         <div style="margin-bottom: 5px;">
             <p style="margin: 0; font-size: 12px; display: inline-block; color: #999; transform: scale(0.9);">
                 &copy; 2026 脚本.top | 
+                <a href="/" target="_blank" style="color: #999; text-decoration: none;">首页</a> | 
                 <a href="https://blog.xn--8pv109c.top/" target="_blank" style="color: #999; text-decoration: none;">博客文章</a> | 
                 <a href="/down/nav/" target="_blank" style="color: #999; text-decoration: none;">网址导航</a> | 
                 <a href="/about.html" target="_blank" style="color: #999; text-decoration: none;">关于我们</a> | 
