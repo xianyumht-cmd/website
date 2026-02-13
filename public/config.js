@@ -52,7 +52,7 @@ function initializeLinks() {
                 }, 150);
                 setTimeout(() => {
                     if (id === 'qunliao4') {
-                        window.location.href = 'src/pages/nav/';
+                        window.location.href = 'down/nav/';
                     } else {
                         openLink(linkConfig[id]);
                     }

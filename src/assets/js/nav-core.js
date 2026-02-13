@@ -158,7 +158,7 @@ function generateContentSafe(retryCount = 0) {
                 // Append 'Game Resources' link (static)
                 const gameLi = document.createElement('li');
                 gameLi.className = 'submit-tag';
-                gameLi.innerHTML = `<a href="/src/pages/games/index.html">
+                gameLi.innerHTML = `<a href="/down/games/index.html">
                     <i class="fa-solid fa-gamepad"></i>
                     <span class="tooltip-blue" style="width: 60px;">游戏资源</span>
                 </a>`;
