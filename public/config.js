@@ -28,7 +28,7 @@ function openLink(url, target = '_blank') {
         var top = (screen.height - height) / 2;
         
         try {
-             window.open(url, '_blank', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left + ',status=no,toolbar=no,menubar=no,location=no');
+             window.open(url, '_blank', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left + ',noopener,noreferrer');
              console.log('Opened smart link:', url);
              return;
         } catch(e) {

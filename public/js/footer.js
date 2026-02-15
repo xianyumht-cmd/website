@@ -11,7 +11,7 @@
             var left = screen.width - width - 50; // 显示在右侧
             var top = (screen.height - height) / 2;
             
-            window.open(url, '_blank', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left + ',status=no,toolbar=no,menubar=no,location=no');
+            window.open(url, '_blank', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left + ',noopener,noreferrer');
         } else {
             // 移动端保持原样，在新标签打开
             window.open(url, '_blank');
