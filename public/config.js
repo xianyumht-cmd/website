@@ -66,17 +66,19 @@ function initializeLinks() {
             element.addEventListener('click', function(e) {
                 console.log('Clicked:', id);
                 e.preventDefault();
+                
+                // 立即执行打开逻辑，避免被浏览器拦截
+                if (id === 'qunliao4') {
+                    window.location.href = 'down/nav/';
+                } else {
+                    openLink(linkConfig[id]);
+                }
+
+                // 动画效果并行执行
                 element.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     element.style.transform = '';
                 }, 150);
-                setTimeout(() => {
-                    if (id === 'qunliao4') {
-                        window.location.href = 'down/nav/';
-                    } else {
-                        openLink(linkConfig[id]);
-                    }
-                }, 100);
             });
             element.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
