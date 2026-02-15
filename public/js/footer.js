@@ -1,7 +1,22 @@
 (function() {
-    // 获取当前脚本的路径，用于判断层级（虽然 public 里的 js 通常用绝对路径 /js/footer.js 引用，但为了保险起见）
-    // 为了简单起见，我们假设所有页面都通过 /js/footer.js 引用，或者页面里自己处理了 base 路径
-    // 这里我们直接输出绝对路径的 HTML，因为资源都在根目录下
+    // 智能打开链接函数：电脑端弹窗，移动端新标签
+    window.openSmartLink = function(url) {
+        // 检测是否为移动端
+        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        // 如果是电脑端，且是http链接，则使用小窗打开
+        if (!isMobile && url.startsWith('http')) {
+            var width = 420;
+            var height = 640;
+            var left = screen.width - width - 50; // 显示在右侧
+            var top = (screen.height - height) / 2;
+            
+            window.open(url, '_blank', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left + ',status=no,toolbar=no,menubar=no,location=no');
+        } else {
+            // 移动端保持原样，在新标签打开
+            window.open(url, '_blank');
+        }
+    };
 
     var footerHTML = `
     <footer style="width: 100%; text-align: center; color: #999; font-size: 12px; padding: 20px 0; background: transparent; margin-top: auto;">
@@ -9,7 +24,8 @@
             <p style="margin: 0; font-size: 12px; display: inline-block; color: #999; transform: scale(0.9);">
                 &copy; 2026 脚本.top | 
                 <a href="/" target="_blank" style="color: #999; text-decoration: none;">首页</a> | 
-                <a href="https://an.24vv.cn/s/" target="_blank" style="color: #999; text-decoration: none;">备用发卡</a> |
+                <a href="javascript:void(0)" onclick="openSmartLink('https://an.207qk.cn/s/')" style="color: #999; text-decoration: none; cursor: pointer;">超凡发卡</a> |
+                <a href="javascript:void(0)" onclick="openSmartLink('https://an.24vv.cn/s/')" style="color: #999; text-decoration: none; cursor: pointer;">备用发卡</a> |
                 <a href="https://blog.xn--8pv109c.top/" target="_blank" style="color: #999; text-decoration: none;">博客文章</a> | 
                 <a href="/down/nav/" target="_blank" style="color: #999; text-decoration: none;">网址导航</a> | 
                 <a href="/about.html" target="_blank" style="color: #999; text-decoration: none;">关于我们</a> | 
@@ -38,7 +54,5 @@
     </footer>
     `;
 
-    // 检查页面上是否已经有 footer 标签，如果有则替换，如果没有则追加到 body
-    // 策略：我们直接在脚本执行的位置插入 HTML
     document.write(footerHTML);
 })();
