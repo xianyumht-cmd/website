@@ -17,38 +17,19 @@ const linkConfig = {
 };
 
 function openLink(url, target = '_blank') {
-    // 智能打开逻辑：检测是否为移动端
-    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    // 如果是电脑端，且是外部http链接，则使用小窗打开
-    if (!isMobile && url.startsWith('http')) {
-        var width = 420;
-        var height = 640;
-        var left = screen.width - width - 50; // 显示在右侧
-        var top = (screen.height - height) / 2;
-        
-        try {
-             window.open(url, '_blank', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left + ',noopener,noreferrer');
-             console.log('Opened smart link:', url);
-             return;
-        } catch(e) {
-            console.error('Smart open failed, fallback to default', e);
-        }
-    }
-
-    // 移动端或降级处理（包括非http链接）
+    // 恢复标准逻辑：直接在新标签页打开，确保最大兼容性
     try {
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = target;
-        link.rel = 'noopener noreferrer';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        window.open(url, target);
         console.log('Opened link:', url);
     } catch (error) {
         console.error('Failed to open link:', error);
-        window.open(url, target);
+        // 降级处理
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = target;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 }
 

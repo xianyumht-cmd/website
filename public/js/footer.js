@@ -1,21 +1,8 @@
 (function() {
     // 智能打开链接函数：电脑端弹窗，移动端新标签
+    // 2026-02-15 更新：恢复标准 window.open 以解决 HTTP/2 协议错误
     window.openSmartLink = function(url) {
-        // 检测是否为移动端
-        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        // 如果是电脑端，且是http链接，则使用小窗打开
-        if (!isMobile && url.startsWith('http')) {
-            var width = 420;
-            var height = 640;
-            var left = screen.width - width - 50; // 显示在右侧
-            var top = (screen.height - height) / 2;
-            
-            window.open(url, '_blank', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left + ',noopener,noreferrer');
-        } else {
-            // 移动端保持原样，在新标签打开
-            window.open(url, '_blank');
-        }
+        window.open(url, '_blank');
     };
 
     var footerHTML = `
