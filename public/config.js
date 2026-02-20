@@ -4,16 +4,11 @@
 window.locationApp = window.locationApp || {};
 
 const linkConfig = {
-    fuqiang: 'https://baike.baidu.com/item/%E8%A2%81%E9%9A%86%E5%B9%B3',
-    minzhu: 'https://baike.baidu.com/item/%E9%9B%B7%E9%94%8B',
-    wenming: 'https://baike.baidu.com/item/%E7%84%A6%E8%A3%95%E7%A6%84',
-    hexie: 'https://baike.baidu.com/item/%E5%B1%A0%E5%91%A6%E5%91%A6',
-    ziyou: 'https://baike.baidu.com/item/%E6%9D%A8%E5%88%A9%E4%BC%9F',
-    qunliao1: 'https://an.207qk.cn/s',
+    qunliao1: 'https://an.24vv.cn/s',
     qunliao2: 'https://blog.xn--8pv109c.top/',
     qunliao3: 'https://kkk.45io.cn/shop/99BA0CEF',
     qunliao4: 'down/nav/',
-    qunliao5: 'https://an.24vv.cn/s/'
+    qunliao5: 'https://an.207qk.cn/s/'
 };
 
 function openLink(url, target = '_blank') {
