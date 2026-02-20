@@ -11,14 +11,14 @@
             <p style="margin: 0; font-size: 12px; display: inline-block; color: #999; transform: scale(0.9);">
                 &copy; 2026 脚本.top | 
                 <a href="/" target="_blank" style="color: #999; text-decoration: none;">首页</a> | 
-                <a href="javascript:void(0)" onclick="openSmartLink('https://an.207qk.cn/s/')" style="color: #999; text-decoration: none; cursor: pointer;">超凡发卡</a> |
-                <a href="javascript:void(0)" onclick="openSmartLink('https://an.24vv.cn/s/')" style="color: #999; text-decoration: none; cursor: pointer;">备用发卡</a> |
+                <a href="javascript:void(0)" onclick="openSmartLink('https://an.24vv.cn/s/')" style="color: #999; text-decoration: none; cursor: pointer;">超凡发卡</a> |
+                <a href="javascript:void(0)" onclick="openSmartLink('https://an.207qk.cn/s/')" style="color: #999; text-decoration: none; cursor: pointer;">备用发卡</a> |
                 <a href="https://blog.xn--8pv109c.top/" target="_blank" style="color: #999; text-decoration: none;">博客文章</a> | 
-                <a href="/down/nav/" target="_blank" style="color: #999; text-decoration: none;">网址导航</a> | 
-                <a href="/about.html" target="_blank" style="color: #999; text-decoration: none;">关于我们</a> | 
-                <a href="/privacy.html" target="_blank" style="color: #999; text-decoration: none;">隐私政策</a> | 
-                <a href="/sitemap.xml" target="_blank" style="color: #999; text-decoration: none;">XML 地图</a> |
-                <a href="/down/tdr/index.html" target="_blank" style="color: #999; text-decoration: none;">吃豆人</a>
+                <a href="https://blog.xn--8pv109c.top/down/nav/" target="_blank" style="color: #999; text-decoration: none;">网址导航</a> | 
+                <a href="https://blog.xn--8pv109c.top/about.html" target="_blank" style="color: #999; text-decoration: none;">关于我们</a> | 
+                <a href="https://blog.xn--8pv109c.top/privacy.html" target="_blank" style="color: #999; text-decoration: none;">隐私政策</a> | 
+                <a href="https://blog.xn--8pv109c.top/sitemap.xml" target="_blank" style="color: #999; text-decoration: none;">XML 地图</a> |
+                <a href="https://blog.xn--8pv109c.top/down/tdr/index.html" target="_blank" style="color: #999; text-decoration: none;">吃豆人</a>
             </p>
         </div>
         <div style="margin-bottom: 5px; font-size: 12px; color: #999; transform: scale(0.9);">
