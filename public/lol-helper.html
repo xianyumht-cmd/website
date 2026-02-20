@@ -288,10 +288,33 @@
 
 <script src="js/lol-data.js"></script>
 <script>
-    // 英雄数据库 (示例数据，可扩展至167位)
+    // 错误处理与调试
+    window.addEventListener('error', function(e) {
+        console.error("Script Error:", e.message);
+        // 如果是关于 heroes 未定义的错误，提示用户
+        if (e.message && e.message.includes('heroes')) {
+            alert("英雄数据加载失败！请检查 js/lol-data.js 文件是否存在且格式正确。");
+            document.getElementById('heroList').innerHTML = '<div style="color:red; padding:20px; text-align:center;">数据加载失败<br>请检查控制台(F12)获取详细错误信息</div>';
+        }
+    });
 
     // 初始化渲染
     function renderHeroes() {
+        // 数据完整性检查
+        if (typeof window.heroes === 'undefined') {
+            console.error("window.heroes is undefined!");
+            alert("错误：英雄数据未能加载(window.heroes undefined)！\n请确保 js/lol-data.js 文件存在且没有语法错误。");
+            document.getElementById('heroList').innerHTML = '<div style="color:red; padding:20px; text-align:center;">数据文件加载失败</div>';
+            return;
+        }
+        
+        if (!Array.isArray(window.heroes) || window.heroes.length === 0) {
+            console.warn("Heroes data is empty or not an array");
+            alert("警告：英雄数据为空！已加载但无内容。");
+            return;
+        }
+
+        const heroes = window.heroes;
         const searchVal = document.getElementById('searchInput').value.toLowerCase();
         const factionVal = document.getElementById('factionFilter').value;
         const roleVal = document.getElementById('roleFilter').value;
