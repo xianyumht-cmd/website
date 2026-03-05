@@ -108,9 +108,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Initialize Content
-    generateContentSafe();
-    resolveLastUpdateDate();
-    updateUpdateTime();
+    // Fetch LOL Version and update navData before generation
+    fetch('/data/lol-version.json')
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            if (window.navData && window.navData.gameInfo) {
+                window.navData.gameInfo.version = data.version;
+                window.navData.gameInfo.updateDate = data.update;
+                window.navData.gameInfo.nextUpdateDate = data.next;
+                console.log('LOL Version updated from external JSON');
+            }
+        })
+        .catch(error => {
+            console.warn('Failed to load lol-version.json:', error);
+        })
+        .finally(() => {
+            generateContentSafe();
+            resolveLastUpdateDate();
+            updateUpdateTime();
+        });
+
     setInterval(updateUpdateTime, 60 * 1000);
 });
 
