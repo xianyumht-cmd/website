@@ -29,6 +29,8 @@ jobs:
         run: npm install
 
       - name: Run update script
+        env:
+          LOL_API_KEY: ${{ secrets.LOL_API_KEY }}
         run: node scripts/update-lol-version.js
 
       - name: Commit and Push changes

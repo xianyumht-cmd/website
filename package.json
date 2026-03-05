@@ -9,14 +9,14 @@
     "lint": "npm run lint:html && npm run lint:css",
     "dev": "vite",
     "build": "vite build && node scripts/organize-dist.mjs",
-    "build:wasm": "wasm-pack build src-wasm --target web --out-dir ../public/wasm --no-typescript",
     "preview": "vite preview",
     "test:unit": "jest",
     "test:visual": "playwright test tests/visual.spec.ts",
     "test:visual:update": "playwright test tests/visual.spec.ts --update-snapshots",
     "test:e2e": "playwright test",
     "test:perf": "node scripts/perf-threshold.mjs",
-    "test": "npm run lint && npm run test:e2e && npm run test:perf"
+    "test": "npm run lint && npm run test:e2e && npm run test:perf",
+    "seo:push": "node scripts/baidu-push.js"
   },
   "keywords": [],
   "author": "",

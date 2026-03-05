@@ -9,7 +9,12 @@ const https = require('https');
 
 // 配置信息
 const SITE_URL = 'https://xn--8pv109c.top';
-const TOKEN = 'YOUR_BAIDU_TOKEN'; // 请替换为您在百度站长平台获取的 Token
+const TOKEN = process.env.BAIDU_PUSH_TOKEN; 
+
+if (!TOKEN) {
+    console.warn('⚠️  BAIDU_PUSH_TOKEN not set. Skipping push.');
+    process.exit(0);
+}
 
 // 需要推送的链接列表
 const urls = [

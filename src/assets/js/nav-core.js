@@ -1,14 +1,8 @@
 /**
  * Navigation Core Logic
- * Replaces inline scripts and unsafe innerHTML usage.
+ * Completely rewritten to remove Wasm and jQuery dependencies.
+ * Uses native DOM API and fetch for data loading.
  */
-
-import init, { generate_menu_html } from '../../pages/nav/pkg/nav_logic.js';
-
-// Initialize Wasm
-const wasmReady = init().catch(err => {
-    console.error("Failed to initialize Wasm module:", err);
-});
 
 // 安全地获取全局数据
 const getNavData = () => {
@@ -65,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Scroll Effect
+    // Scroll Effect (Native replacement for jQuery scroll)
     var fade = document.getElementById("fade");
     var light = document.getElementById("light");
     var scrollPending = false;
@@ -85,11 +79,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var box = document.querySelector(".box");
     if (box) {
         setInterval(function() {
-            box.innerHTML = getTime(); // Time string contains &nbsp;, so innerHTML is acceptable here for specific formatting, but textContent is safer if we change format. Kept for compatibility with HTML entities.
+            box.innerHTML = getTime(); // Time string contains &nbsp;
         }, 1000);
     }
 
-    // Bulletin Auto-scroll
+    // Bulletin Auto-scroll (Native animation)
     var bulletinUl = document.querySelector(".bulletin-ul");
     if (bulletinUl && bulletinUl.children && bulletinUl.children.length > 1) {
         var autoScroll = function() {
@@ -108,27 +102,40 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Initialize Content
-    // Fetch LOL Version and update navData before generation
-    fetch('/data/lol-version.json')
+    // Fetch Nav Data from JSON
+    fetch('/data/nav-data.json')
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
         })
-        .then(data => {
-            if (window.navData && window.navData.gameInfo) {
-                window.navData.gameInfo.version = data.version;
-                window.navData.gameInfo.updateDate = data.update;
-                window.navData.gameInfo.nextUpdateDate = data.next;
-                console.log('LOL Version updated from external JSON');
-            }
+        .then(navData => {
+            window.navData = navData; // Set global for compatibility
+            
+            // Fetch LOL Version and update navData before generation
+            return fetch('/data/lol-version.json')
+                .then(response => {
+                    if (response.ok) return response.json();
+                    throw new Error('LOL version fetch failed');
+                })
+                .then(data => {
+                    if (window.navData && window.navData.gameInfo) {
+                        window.navData.gameInfo.version = data.version;
+                        window.navData.gameInfo.updateDate = data.update;
+                        window.navData.gameInfo.nextUpdateDate = data.next;
+                        console.log('LOL Version updated from external JSON');
+                    }
+                })
+                .catch(err => console.warn('LOL Version fetch skipped or failed:', err));
         })
         .catch(error => {
-            console.warn('Failed to load lol-version.json:', error);
+            console.error('Failed to load nav-data.json:', error);
         })
         .finally(() => {
-            generateContentSafe();
-            resolveLastUpdateDate();
-            updateUpdateTime();
+            if (window.navData) {
+                generateContentSafe();
+                resolveLastUpdateDate();
+                updateUpdateTime();
+            }
         });
 
     setInterval(updateUpdateTime, 60 * 1000);
@@ -152,12 +159,11 @@ window.txtSearch = function() {
 
 /**
  * Safe Content Generation
- * Uses DOM API instead of innerHTML for structural generation
+ * Pure JS implementation, replacing Wasm
  */
 function generateContentSafe(retryCount = 0) {
     if (typeof navData === 'undefined') {
-        if (retryCount < 50) { // Retry for 5 seconds (50 * 100ms)
-            // console.log('navData not loaded yet, retrying... ' + (retryCount + 1));
+        if (retryCount < 50) { 
             setTimeout(() => generateContentSafe(retryCount + 1), 100);
             return;
         }
@@ -168,67 +174,40 @@ function generateContentSafe(retryCount = 0) {
     // 1. Generate Sidebar Menu
     const mainMenu = document.getElementById('main-menu');
     if (mainMenu) {
-        // 使用 Wasm 生成菜单，如果 Wasm 未就绪则回退到 JS
-        wasmReady.then(() => {
-            try {
-                console.log("Using Wasm for menu generation");
-                const menuHtml = generate_menu_html(JSON.stringify(navData.sections));
-                mainMenu.innerHTML = menuHtml;
-                
-                // Append 'Game Resources' link (static)
-                const gameLi = document.createElement('li');
-                gameLi.className = 'submit-tag';
-                gameLi.innerHTML = `<a href="/down/games/index.html">
-                    <i class="fa-solid fa-gamepad"></i>
-                    <span class="tooltip-blue" style="width: 60px;">游戏资源</span>
-                </a>`;
-                mainMenu.appendChild(gameLi);
-
-                // Append 'About' link (static)
-                const hr = document.createElement('hr');
-                Object.assign(hr.style, { marginBottom: '32px', borderTop: 'none' });
-                mainMenu.appendChild(hr);
-
-
-
-        const aboutLi = document.createElement('li');
-                aboutLi.className = 'submit-tag';
-                aboutLi.innerHTML = `<a href="/about.html">
-                    <i class="fa-solid fa-circle-info"></i>
-                    <span class="tooltip-blue" style="width: 60px;">关于本站</span>
-                </a>`;
-                mainMenu.appendChild(aboutLi);
-            } catch (e) {
-                console.error("Wasm generation failed, falling back to JS:", e);
-                fallbackJsMenuGeneration(mainMenu, navData);
-            }
-        }).catch(() => {
-            console.warn("Wasm not ready, falling back to JS");
-            fallbackJsMenuGeneration(mainMenu, navData);
+        mainMenu.innerHTML = ''; // Clear existing
+        
+        // Generate Dynamic Sections
+        navData.sections.forEach(section => {
+            const li = document.createElement('li');
+            li.innerHTML = `<a class="smooth" href="#${section.id}">
+                <i class="${section.icon}"></i>
+                <span class="title">${section.title}</span>
+            </a>`;
+            mainMenu.appendChild(li);
         });
+        
+        // Append Sidebar Footer Items from JSON
+        if (navData.sidebar_footer) {
+            navData.sidebar_footer.forEach(item => {
+                if (item.separator) {
+                    const hr = document.createElement('hr');
+                    Object.assign(hr.style, { marginBottom: '32px', borderTop: 'none' });
+                    mainMenu.appendChild(hr);
+                }
+
+                const li = document.createElement('li');
+                li.className = 'submit-tag';
+                li.innerHTML = `<a href="${item.url}">
+                    <i class="${item.icon}"></i>
+                    <span class="tooltip-blue" style="width: 60px;">${item.title}</span>
+                </a>`;
+                mainMenu.appendChild(li);
+            });
+        }
     }
 
     // 2. Generate Bulletin
     const bulletinContent = document.getElementById('bulletin-content');
-
-    // Helper: JS Fallback for Menu Generation
-    function fallbackJsMenuGeneration(container, data) {
-        container.innerHTML = '';
-        data.sections.forEach(section => {
-            const li = document.createElement('li');
-            li.innerHTML = `<a class="smooth" href="#${section.id}"><i class="${section.icon}"></i><span class="title">${section.title}</span></a>`;
-            container.appendChild(li);
-        });
-        
-        const hr = document.createElement('hr');
-        Object.assign(hr.style, { marginBottom: '32px', borderTop: 'none' });
-        container.appendChild(hr);
-
-        const aboutLi = document.createElement('li');
-        aboutLi.className = 'submit-tag';
-        aboutLi.innerHTML = `<a href="/about.html"><i class="fa-solid fa-circle-info"></i><span class="tooltip-blue" style="width: 60px;">关于本站</span></a>`;
-        container.appendChild(aboutLi);
-    }
     if (bulletinContent) {
         bulletinContent.textContent = '';
         const li = document.createElement('li');
@@ -307,21 +286,20 @@ function generateContentSafe(retryCount = 0) {
                 const avatarDiv = document.createElement('div');
                 avatarDiv.className = 'user-avatar';
                 avatarDiv.style.cssText = 'background-color: #007bff; color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;';
-                avatarDiv.textContent = item.avatar; // Safe text
+                avatarDiv.textContent = item.avatar; 
                 
                 // Lazy Load Image logic
                 if (item.imgUrl) {
                      const img = document.createElement('img');
                      img.dataset.src = item.imgUrl;
                      img.className = 'lazy-load';
-                     img.style.display = 'none'; // Hide initially
+                     img.style.display = 'none'; 
                      img.onload = () => {
                          img.style.display = 'block';
-                         avatarDiv.style.display = 'none'; // Hide text avatar if image loads
+                         avatarDiv.style.display = 'none';
                      };
                      userImgLink.appendChild(img);
                      
-                     // Create intersection observer for lazy loading
                      const observer = new IntersectionObserver((entries, obs) => {
                          entries.forEach(entry => {
                              if (entry.isIntersecting) {
@@ -333,7 +311,7 @@ function generateContentSafe(retryCount = 0) {
                      });
                      observer.observe(img);
                 }
-
+                
                 userImgLink.appendChild(avatarDiv);
                 
                 const commentDiv = document.createElement('div');
@@ -344,13 +322,13 @@ function generateContentSafe(retryCount = 0) {
                 userNameLink.href = 'javascript:void(0)';
                 
                 const strongTitle = document.createElement('strong');
-                strongTitle.textContent = item.title; // Safe text
+                strongTitle.textContent = item.title; 
                 
                 userNameLink.appendChild(strongTitle);
                 
                 const pDesc = document.createElement('p');
                 pDesc.className = 'overflowClip_2';
-                pDesc.textContent = item.description; // Safe text
+                pDesc.textContent = item.description; 
                 
                 commentDiv.appendChild(userNameLink);
                 commentDiv.appendChild(pDesc);

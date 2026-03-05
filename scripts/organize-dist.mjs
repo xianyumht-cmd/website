@@ -46,6 +46,16 @@ async function organizeDist() {
   }
 
   console.log('Dist organization complete.');
+  
+  // Copy anti-debug.js
+  const antiDebugSrc = path.join(__dirname, '../shared/anti-debug.js');
+  const antiDebugDest = path.join(distDir, 'anti-debug.js');
+  if (fs.existsSync(antiDebugSrc)) {
+    fs.copyFileSync(antiDebugSrc, antiDebugDest);
+    console.log('Copied anti-debug.js to dist');
+  } else {
+    console.warn('Warning: shared/anti-debug.js not found');
+  }
 }
 
 organizeDist().catch(err => {

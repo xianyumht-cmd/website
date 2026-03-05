@@ -5,7 +5,8 @@ const fs = require('fs');
 const path = require('path');
 
 const DATA_FILE = path.join(__dirname, '../public/data/lol-version.json');
-const API_URL = 'http://api.cc1990.cc/api/hotlist/game?apiKey=c033062b21c8949eb35ff623a03b7df5&type=lol';
+const API_KEY = process.env.LOL_API_KEY || 'c033062b21c8949eb35ff623a03b7df5'; // Fallback for local dev if not set
+const API_URL = `http://api.cc1990.cc/api/hotlist/game?apiKey=${API_KEY}&type=lol`;
 
 // Helper to calculate next update date (+14 days)
 function getNextUpdate(dateStr) {

@@ -1,1 +1,115 @@
-(function(){'use strict';let currentLanguage='zh';const translations={zh:{'title':'月上柳梢头，元宵快乐！','fuqiang':'富強','minzhu':'民主','wenming':'文明','hexie':'和諧','ziyou':'自由','qunliao1':'超凡发卡','qunliao2':'问题反馈','qunliao3':'租号陪玩','qunliao4':'下载导航','qunliao5':'备用发卡','translateButton':'Switch to English'},en:{'title':'Happy Lantern Festival！','fuqiang':'Prosperity','minzhu':'Democracy','wenming':'Civilization','hexie':'Harmony','ziyou':'Freedom','qunliao1':'Premium Cards','qunliao2':'Blog & Feedback','qunliao3':'Rent & Play','qunliao4':'Down nav','qunliao5':'Cards Other','translateButton':'切换为中文'}};function toggleLanguage(){currentLanguage=currentLanguage==='zh'?'en':'zh';applyTranslations();const translateButton=document.getElementById('translateButton');if(translateButton){translateButton.textContent=translations[currentLanguage]['translateButton'];}try{localStorage.setItem('preferredLanguage',currentLanguage);}catch(e){console.error('Failed to save language preference:',e);}}function applyTranslations(){document.title=translations[currentLanguage]['title'];Object.keys(translations.zh).forEach(key=>{if(key!=='title'&&key!=='translateButton'){const element=document.getElementById(key);if(element){const textElement=element.querySelector('p');if(textElement){textElement.textContent=translations[currentLanguage][key];}}}});}function initTranslateButton(){const translateButton=document.createElement('button');translateButton.id='translateButton';translateButton.textContent=translations[currentLanguage]['translateButton'];translateButton.className='translate-button';translateButton.addEventListener('click',toggleLanguage);document.body.appendChild(translateButton);}function loadLanguagePreference(){try{currentLanguage='zh';const savedLanguage=localStorage.getItem('preferredLanguage');if(savedLanguage&&(savedLanguage==='zh'||savedLanguage==='en')){currentLanguage=savedLanguage;}}catch(e){console.error('Failed to load language preference:',e);}}function init(){loadLanguagePreference();initTranslateButton();applyTranslations();console.log('Translation initialized');}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}window.translationApp={toggleLanguage:toggleLanguage,init:init};})();
+
+(function() {
+    'use strict';
+    let currentLanguage = 'zh';
+    let siteConfig = {};
+
+    const staticTranslations = {
+        zh: { 'translateButton': 'Switch to English' },
+        en: { 'translateButton': '切换为中文' }
+    };
+
+    function loadSiteConfig() {
+        return fetch('/data/site-config.json')
+            .then(response => response.json())
+            .then(data => {
+                siteConfig = data;
+                applyTranslations();
+                return data;
+            })
+            .catch(error => console.error('Error loading site config:', error));
+    }
+
+    function getTranslation(key) {
+        // 1. Check site config (dynamic content)
+        if (siteConfig.site_title && key === 'title') return siteConfig.site_title[currentLanguage];
+        if (siteConfig.footer_links && siteConfig.footer_links[key]) return siteConfig.footer_links[key][currentLanguage];
+        if (siteConfig.slogan && siteConfig.slogan[key]) return siteConfig.slogan[key][currentLanguage];
+
+        // 2. Check static translations
+        if (staticTranslations[currentLanguage][key]) return staticTranslations[currentLanguage][key];
+
+        return '';
+    }
+
+    function toggleLanguage() {
+        currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+        applyTranslations();
+        const translateButton = document.getElementById('translateButton');
+        if (translateButton) {
+            translateButton.textContent = getTranslation('translateButton');
+        }
+        try {
+            localStorage.setItem('preferredLanguage', currentLanguage);
+        } catch (e) {
+            console.error('Failed to save language preference:', e);
+        }
+    }
+
+    function applyTranslations() {
+        // Title
+        const title = getTranslation('title');
+        if (title) document.title = title;
+
+        // Dynamic Elements
+        const keys = [
+            'fuqiang', 'minzhu', 'wenming', 'hexie', 'ziyou',
+            'qunliao1', 'qunliao2', 'qunliao3', 'qunliao4', 'qunliao5'
+        ];
+
+        keys.forEach(key => {
+            const element = document.getElementById(key);
+            if (element) {
+                // If it's a link block with <p> inside (common in footer)
+                const textElement = element.querySelector('p');
+                if (textElement) {
+                    textElement.textContent = getTranslation(key);
+                } else {
+                    // Direct text replacement if no <p>
+                    // Be careful not to wipe out children if structure is complex
+                    // For now, assuming simple text or specific structure
+                    if (element.childNodes.length === 1 && element.childNodes[0].nodeType === 3) {
+                         element.textContent = getTranslation(key);
+                    }
+                }
+            }
+        });
+    }
+
+    function initTranslateButton() {
+        // Prevent duplicate button
+        if (document.getElementById('translateButton')) return;
+
+        const translateButton = document.createElement('button');
+        translateButton.id = 'translateButton';
+        translateButton.textContent = getTranslation('translateButton') || 'Switch Language';
+        translateButton.className = 'translate-button';
+        translateButton.addEventListener('click', toggleLanguage);
+        document.body.appendChild(translateButton);
+    }
+
+    function loadLanguagePreference() {
+        try {
+            currentLanguage = 'zh';
+            const savedLanguage = localStorage.getItem('preferredLanguage');
+            if (savedLanguage && (savedLanguage === 'zh' || savedLanguage === 'en')) {
+                currentLanguage = savedLanguage;
+            }
+        } catch (e) {
+            console.error('Failed to load language preference:', e);
+        }
+    }
+
+    function init() {
+        loadLanguagePreference();
+        loadSiteConfig().then(() => {
+            initTranslateButton();
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
