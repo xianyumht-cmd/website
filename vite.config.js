@@ -42,7 +42,15 @@ export default defineConfig({
       stringArrayEncoding: ['rc4'],
       stringArrayThreshold: 1,
       transformObjectKeys: true,
-      unicodeEscapeSequence: false
+      unicodeEscapeSequence: false,
+      
+      // Domain Lock
+      domainLock: [
+        "xn--8pv109c.top", // 脚本.top (Punycode)
+        "www.xn--8pv109c.top",
+        "localhost",       // For local development
+        "127.0.0.1"        // For local development
+      ]
     })
   ],
   root: '.',
