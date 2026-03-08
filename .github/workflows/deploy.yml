@@ -25,8 +25,28 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Lint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Smoke tests
+        run: npm run test:smoke
+        continue-on-error: true
+
       - name: Build project
         run: npm run build
+
+      - name: Print build size report
+        run: cat dist/build-size-report.json
+
+      - name: Upload bundle reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-reports
+          path: |
+            dist/bundle-report.html
+            dist/build-size-report.json
+          if-no-files-found: warn
 
       - name: Deploy to main branch
         uses: peaceiris/actions-gh-pages@v4

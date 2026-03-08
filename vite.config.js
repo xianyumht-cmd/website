@@ -3,6 +3,8 @@ import { resolve } from 'path';
 import wasm from "vite-plugin-wasm";
 import topLevelAwait from "vite-plugin-top-level-await";
 import javascriptObfuscator from 'rollup-plugin-javascript-obfuscator';
+import { visualizer } from 'rollup-plugin-visualizer';
+import compression from 'vite-plugin-compression';
 
 export default defineConfig({
   plugins: [
@@ -51,6 +53,20 @@ export default defineConfig({
         "localhost",       // For local development
         "127.0.0.1"        // For local development
       ]
+    }),
+    compression({
+      algorithm: 'gzip',
+      ext: '.gz',
+      threshold: 0,
+      filter: /\.(js|mjs|css|html)$/i,
+      deleteOriginFile: false
+    }),
+    compression({
+      algorithm: 'brotliCompress',
+      ext: '.br',
+      threshold: 0,
+      filter: /\.(js|mjs|css|html)$/i,
+      deleteOriginFile: false
     })
   ],
   root: '.',
@@ -78,7 +94,16 @@ export default defineConfig({
             return 'shared';
           }
         }
-      }
+      },
+      plugins: [
+        visualizer({
+          filename: 'dist/bundle-report.html',
+          template: 'treemap',
+          gzipSize: true,
+          brotliSize: true,
+          open: false
+        })
+      ]
     },
     minify: 'terser',
     terserOptions: {

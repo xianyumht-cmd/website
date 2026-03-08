@@ -7,10 +7,9 @@
  * https://github.com/mumuy/pacman/blob/master/LICENSE
 */
 
-import Game from './game.js';
-
 //主程序,业务逻辑
-(function(){
+(async function(){
+	const { default: Game } = await import('./game.js');
 	var _COIGIG = [		//关卡
 		{				//第1关
 			'map':[		//地图数据
