@@ -38,8 +38,8 @@
             <a href="https://beian.miit.gov.cn/" target="_blank" style="color: #999; text-decoration: none; font-size: 12px; transform: scale(0.9); display: inline-block;">鄂ICP备2024055850号-4</a>
         </div>
         <div style="margin-top: 10px;">
-            <a href="https://myssl.com/xn--8pv109c.top?from=mysslid" target="_blank">
-                <img src="https://static.myssl.com/res/images/myssl-id1.png" alt="MySSL 安全认证" style="max-height:50px; display:block; margin:0 auto;">
+            <a href="https://myssl.com/xn--8pv109c.top?from=mysslid" target="_blank" rel="noopener noreferrer">
+                <img src="https://static.myssl.com/res/images/myssl-id1.png" alt="MySSL 安全认证" loading="lazy" decoding="async" referrerpolicy="no-referrer" style="max-height:50px; display:block; margin:0 auto;">
             </a>
         </div>
     </footer>

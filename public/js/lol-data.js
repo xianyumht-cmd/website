@@ -1,4 +1,4 @@
-﻿﻿﻿﻿window.heroes = [
+﻿﻿﻿﻿﻿﻿window.heroes = [
     {
         id: "Aatrox",
         name: "亚托克斯",

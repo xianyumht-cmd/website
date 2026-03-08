@@ -5,10 +5,14 @@ const path = require('path');
 
 // Configuration
 const CONFIG_FILE = path.join(__dirname, '../public/data/site-config.json');
-const API_KEY = process.env.YIYAN_API_KEY || '014f07c51dc640ae4b9755a1c0714411'; // Fallback to provided key for local dev
-const API_URL = `http://api.cc1990.cc/api/yiyan?apiKey=${API_KEY}`;
+const API_KEY = process.env.YIYAN_API_KEY;
+const API_URL = API_KEY ? `https://api.cc1990.cc/api/yiyan?apiKey=${API_KEY}` : '';
 
 async function updateSiteTitle() {
+    if (!API_KEY) {
+        console.warn('YIYAN_API_KEY not set. Skipping site title update.');
+        return;
+    }
     try {
         console.log('Fetching random Yiyan...');
         const response = await axios.get(API_URL);
