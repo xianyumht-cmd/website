@@ -12,7 +12,7 @@
     "build": "vite build && node scripts/organize-dist.mjs && node scripts/postbuild-optimize.mjs",
     "preview": "vite preview",
     "test:unit": "jest",
-    "test:smoke": "npm run test:unit -- --runInBand",
+    "test:smoke": "jest tests/unit --runInBand --modulePathIgnorePatterns=dist",
     "test:visual": "playwright test tests/visual.spec.ts",
     "test:visual:update": "playwright test tests/visual.spec.ts --update-snapshots",
     "test:e2e": "playwright test",
