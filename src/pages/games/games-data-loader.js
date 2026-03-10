@@ -1,5 +1,7 @@
+import gamesDataUrl from '../../assets/data/games-data.json?url'
+
 async function loadGamesData() {
-  const response = await fetch('/data/games-data.json')
+  const response = await fetch(gamesDataUrl)
   if (!response.ok) {
     throw new Error(`Failed to load games data: ${response.status}`)
   }

@@ -6,6 +6,8 @@ import javascriptObfuscator from 'rollup-plugin-javascript-obfuscator';
 import { visualizer } from 'rollup-plugin-visualizer';
 import compression from 'vite-plugin-compression';
 
+const disableDomainLock = process.env.DISABLE_DOMAIN_LOCK === '1';
+
 export default defineConfig({
   plugins: [
     wasm(),
@@ -47,11 +49,11 @@ export default defineConfig({
       unicodeEscapeSequence: false,
       
       // Domain Lock
-      domainLock: [
-        "xn--8pv109c.top", // 脚本.top (Punycode)
+      domainLock: disableDomainLock ? [] : [
+        "xn--8pv109c.top",
         "www.xn--8pv109c.top",
-        "localhost",       // For local development
-        "127.0.0.1"        // For local development
+        "localhost",
+        "127.0.0.1"
       ]
     }),
     compression({
@@ -70,10 +72,27 @@ export default defineConfig({
     })
   ],
   root: '.',
-  base: './', 
+  base: './',
+  assetsInclude: ['**/*.ttf', '**/*.woff', '**/*.woff2', '**/*.svg', '**/*.ico', '**/*.wasm'],
+  optimizeDeps: {
+    include: ['axios'],
+    entries: [
+      'index.html',
+      'src/pages/nav/index.html',
+      'src/pages/games/index.html',
+      'src/pages/rent/index.html',
+      'src/pages/shop/index.html',
+      'src/pages/tdr/index.html',
+      'about.html',
+      'privacy.html',
+      '404.html'
+    ]
+  },
   build: {
     outDir: 'dist',
+    assetsInlineLimit: 2048,
     rollupOptions: {
+      external: (id) => /^https?:\/\//.test(id),
       input: {
         main: resolve(__dirname, 'index.html'),
         nav: resolve(__dirname, 'src/pages/nav/index.html'),

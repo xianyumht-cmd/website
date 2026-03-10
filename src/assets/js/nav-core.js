@@ -1,3 +1,5 @@
+import lolVersionUrl from '../data/lol-version.json?url';
+
 /**
  * Navigation Core Logic
  * Completely rewritten to remove Wasm and jQuery dependencies.
@@ -101,18 +103,10 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(autoScroll, 3000);
     }
 
-    // Initialize Content
-    // Fetch Nav Data from JSON
-    fetch('/data/nav-data.json')
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
-            return response.json();
-        })
-        .then(navData => {
-            window.navData = navData; // Set global for compatibility
-            
-            // Fetch LOL Version and update navData before generation
-            return fetch('/data/lol-version.json')
+    Promise.resolve()
+        .then(() => {
+            if (!window.navData) throw new Error('navData is not initialized');
+            return fetch(lolVersionUrl)
                 .then(response => {
                     if (response.ok) return response.json();
                     throw new Error('LOL version fetch failed');
@@ -122,13 +116,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         window.navData.gameInfo.version = data.version;
                         window.navData.gameInfo.updateDate = data.update;
                         window.navData.gameInfo.nextUpdateDate = data.next;
-                        console.log('LOL Version updated from external JSON');
                     }
                 })
-                .catch(err => console.warn('LOL Version fetch skipped or failed:', err));
+                .catch(() => {});
         })
         .catch(error => {
-            console.error('Failed to load nav-data.json:', error);
+            console.error('Failed to initialize nav data:', error);
         })
         .finally(() => {
             if (window.navData) {

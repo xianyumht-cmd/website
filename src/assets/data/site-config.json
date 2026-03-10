@@ -1,0 +1,216 @@
+{
+  "site_title": {
+    "zh": "月光所照 皆是故乡 双脚所踏 皆是生活.",
+    "en": "Happy Lantern Festival！"
+  },
+  "footer_links": {
+    "qunliao1": {
+      "zh": "超凡发卡",
+      "en": "Premium Cards"
+    },
+    "qunliao2": {
+      "zh": "问题反馈",
+      "en": "Blog & Feedback"
+    },
+    "qunliao3": {
+      "zh": "租号陪玩",
+      "en": "Rent & Play"
+    },
+    "qunliao4": {
+      "zh": "下载导航",
+      "en": "Down nav"
+    },
+    "qunliao5": {
+      "zh": "备用发卡",
+      "en": "Cards Other"
+    }
+  },
+  "slogan": {
+    "fuqiang": {
+      "zh": "富強",
+      "en": "Prosperity"
+    },
+    "minzhu": {
+      "zh": "民主",
+      "en": "Democracy"
+    },
+    "wenming": {
+      "zh": "文明",
+      "en": "Civilization"
+    },
+    "hexie": {
+      "zh": "和諧",
+      "en": "Harmony"
+    },
+    "ziyou": {
+      "zh": "自由",
+      "en": "Freedom"
+    }
+  },
+  "nav_translations": {
+    "sections": {
+      "常用工具": {
+        "zh": "常用工具",
+        "en": "Common Tools"
+      },
+      "GS专区": {
+        "zh": "GS专区",
+        "en": "GS Zone"
+      },
+      "BGX专区": {
+        "zh": "BGX专区",
+        "en": "BGX Zone"
+      },
+      "天卡专区": {
+        "zh": "天卡专区",
+        "en": "Daily Card Zone"
+      },
+      "周卡专区": {
+        "zh": "周卡专区",
+        "en": "Weekly Card Zone"
+      },
+      "月卡专区": {
+        "zh": "月卡专区",
+        "en": "Monthly Card Zone"
+      },
+      "一体化区": {
+        "zh": "一体化区",
+        "en": "Integration Zone"
+      },
+      "云顶专区": {
+        "zh": "云顶专区",
+        "en": "TFT Zone"
+      },
+      "缓存专区": {
+        "zh": "缓存专区",
+        "en": "Cache Zone"
+      },
+      "特权专区": {
+        "zh": "特权专区",
+        "en": "Privilege Zone"
+      },
+      "过机器码专区": {
+        "zh": "过机器码专区",
+        "en": "Machine Code Zone"
+      },
+      "游戏资源": {
+        "zh": "游戏资源",
+        "en": "Game Resources"
+      },
+      "关于本站": {
+        "zh": "关于本站",
+        "en": "About Us"
+      }
+    },
+    "common": {
+      "密码": {
+        "zh": "密码",
+        "en": "Password"
+      },
+      "自带": {
+        "zh": "自带",
+        "en": "Built-in"
+      },
+      "支持": {
+        "zh": "支持",
+        "en": "Supports"
+      },
+      "数据库": {
+        "zh": "数据库",
+        "en": "Database"
+      },
+      "工具": {
+        "zh": "工具",
+        "en": "Tools"
+      },
+      "修复": {
+        "zh": "修复",
+        "en": "Fix"
+      },
+      "远程": {
+        "zh": "远程",
+        "en": "Remote"
+      },
+      "控制": {
+        "zh": "控制",
+        "en": "Control"
+      },
+      "软件": {
+        "zh": "软件",
+        "en": "Software"
+      },
+      "问题": {
+        "zh": "问题",
+        "en": "Issues"
+      },
+      "运行": {
+        "zh": "运行",
+        "en": "Run"
+      },
+      "组件": {
+        "zh": "组件",
+        "en": "Components"
+      },
+      "清理": {
+        "zh": "清理",
+        "en": "Clean"
+      },
+      "卡": {
+        "zh": "卡",
+        "en": "Card"
+      },
+      "专区": {
+        "zh": "专区",
+        "en": "Zone"
+      },
+      "一体": {
+        "zh": "一体",
+        "en": "All-in-one"
+      },
+      "特权": {
+        "zh": "特权",
+        "en": "Privilege"
+      },
+      "加速器": {
+        "zh": "加速器",
+        "en": "Accelerator"
+      },
+      "网吧": {
+        "zh": "网吧",
+        "en": "Internet Cafe"
+      },
+      "机器": {
+        "zh": "机器",
+        "en": "Machine"
+      },
+      "关于": {
+        "zh": "关于",
+        "en": "About"
+      },
+      "主站": {
+        "zh": "主站",
+        "en": "Home"
+      },
+      "更新时间": {
+        "zh": "更新时间",
+        "en": "Updated"
+      },
+      "刚刚更新": {
+        "zh": "刚刚更新",
+        "en": "Just updated"
+      },
+      "分钟前更新": {
+        "zh": "分钟前更新",
+        "en": " mins ago"
+      },
+      "小时前更新": {
+        "zh": "小时前更新",
+        "en": " hours ago"
+      },
+      "天前更新": {
+        "zh": "天前更新",
+        "en": " days ago"
+      }
+    }
+  }
+}
