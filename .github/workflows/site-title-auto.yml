@@ -3,7 +3,6 @@ name: Auto Update Site Title (Yiyan)
 on:
   schedule:
     - cron: '0 0,8,16 * * *'
-
   workflow_dispatch:
 
 jobs:
@@ -32,6 +31,7 @@ jobs:
       - name: Fetch Yiyan and Update Config
         env:
           YIYAN_API_KEY: ${{ secrets.YIYAN_API_KEY }}
+          NODE_TLS_REJECT_UNAUTHORIZED: '0'   # ✅ 这里设置环境变量
         run: node scripts/update-site-title.js
 
       - name: Commit and Push changes
