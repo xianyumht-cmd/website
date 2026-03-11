@@ -3,18 +3,27 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - source  # 监听 source 分支的变动
+      - source
+
+  workflow_run:
+    workflows:
+      - Auto Update LOL Version
+      - Auto Update Site Title (Yiyan)
+    types:
+      - completed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # 允许写入仓库（用于推送到 main 分支）
+      contents: write
 
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
+        with:
+          ref: source
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -53,5 +62,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          publish_branch: main  # 发布到 main 分支
-          force_orphan: true    # 每次发布都覆盖历史（保持 main 分支只有最新代码，类似您脚本里的 git push -f）
+          publish_branch: main
+          force_orphan: true
