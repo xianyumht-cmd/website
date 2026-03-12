@@ -1,0 +1,148 @@
+name: Full Automation (LOL / Site Title / Baidu SEO / CF Deploy)
+
+on:
+  schedule:
+    # LOL Version: every hour
+    - cron: '0 * * * *'
+    # Site Title: 00:00, 08:00, 16:00 UTC
+    - cron: '0 0,8,16 * * *'
+    # Baidu Push: 08:00 UTC
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-lol-version:
+    name: Update LOL Version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          ref: source
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Update LOL Version
+        env:
+          LOL_API_KEY: ${{ secrets.LOL_API_KEY }}
+        run: node scripts/update-lol-version.js
+
+      - name: Commit LOL Version changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add public/data/lol-version.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: auto update lol version"
+            git push origin source
+
+  update-site-title:
+    name: Update Site Title (Yiyan)
+    runs-on: ubuntu-latest
+    needs: update-lol-version
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          ref: source
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch Yiyan and Update Site Title
+        env:
+          YIYAN_API_KEY: ${{ secrets.YIYAN_API_KEY }}
+          NODE_TLS_REJECT_UNAUTHORIZED: '0'
+        run: node scripts/update-site-title.js
+
+      - name: Commit Site Title changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add public/data/site-config.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update site title"
+            git push origin source
+
+  baidu-seo-push:
+    name: Baidu SEO Push
+    runs-on: ubuntu-latest
+    needs: update-site-title
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          ref: source
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Baidu Push Script
+        env:
+          BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
+        run: node scripts/baidu-push.js
+
+  deploy-cf-pages:
+    name: Deploy to CF Pages
+    runs-on: ubuntu-latest
+    needs: baidu-seo-push
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          ref: source
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Push build to main (CF Pages)
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -B main
+          git add -f dist
+          if git diff --staged --quiet; then
+            echo "No changes to deploy"
+          else
+            git commit -m "chore: deploy built site to main"
+            git push -f origin main
