@@ -1,0 +1,28 @@
+name: Baidu SEO Push
+
+on:
+  schedule:
+    # 每天一次
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+jobs:
+  baidu-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Push URLs to Baidu
+        run: |
+          echo "Start pushing URLs to Baidu..."
+
+          curl -H "Content-Type:text/plain" \
+          --data-binary @- \
+          "http://data.zz.baidu.com/urls?site=https://xn--8pv109c.top&token=${{ secrets.BAIDU_PUSH_TOKEN }}" <<EOF
+          https://xn--8pv109c.top/
+          https://xn--8pv109c.top/down/nav/
+          https://xn--8pv109c.top/down/game/
+          https://xn--8pv109c.top/shop/
+          https://xn--8pv109c.top/rent/
+          EOF
+
+          echo "Baidu push finished."
