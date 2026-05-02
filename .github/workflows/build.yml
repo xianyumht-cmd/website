@@ -1,60 +1,57 @@
-name: Build and Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - source
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - 'package.json'
-      - 'vite.config.js'
-
-  workflow_dispatch:
+      - source  # 监听 source 分支的变动
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # 核心修正 1：确保 permissions 在 job 层级且缩进正确
+
     permissions:
-      contents: write
+      contents: write  # 允许写入仓库（用于推送到 main 分支）
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          ref: source
-          # 建议获取完整历史，确保分支切换顺利
-          fetch-depth: 0
+          node-version: '20'
+          cache: 'npm'
 
-      - uses: actions/setup-node@v4
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Smoke tests
+        run: npm run test:smoke
+        continue-on-error: true
+
+      - name: Build project
+        run: npm run build
+
+      - name: Print build size report
+        run: cat dist/build-size-report.json
+
+      - name: Upload bundle reports
+        uses: actions/upload-artifact@v4
         with:
-          node-version: 20
-          cache: npm
+          name: bundle-reports
+          path: |
+            dist/bundle-report.html
+            dist/build-size-report.json
+          if-no-files-found: warn
 
-      - run: npm ci
-
-      - run: npm run build
-
-      - name: Push dist content to main
-        run: |
-          # 核心修正 2：进入 dist 目录，确保推送的是内容而不是文件夹
-          cd dist
-          
-          # 初始化临时 Git 环境
-          git init
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-          
-          # 使用 Token 关联远程仓库
-          git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
-          
-          git add .
-          
-          # 检查是否有内容变更
-          if git diff --staged --quiet; then
-            echo "No build changes to commit."
-          else
-            git commit -m "deploy site: $(date +'%Y-%m-%d %H:%M:%S')"
-            # 核心修正 3：强制覆盖远程 main 分支
-            git push -f origin HEAD:main
-          fi
+      - name: Deploy to main branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: main  # 发布到 main 分支
+          force_orphan: true    # 每次发布都覆盖历史（保持 main 分支只有最新代码，类似您脚本里的 git push -f）
