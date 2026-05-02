@@ -15,12 +15,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-permissions:
+    # 核心修正 1：确保 permissions 在 job 层级且缩进正确
+    permissions:
       contents: write
+
     steps:
       - uses: actions/checkout@v4
         with:
           ref: source
+          # 建议获取完整历史，确保分支切换顺利
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -31,17 +35,26 @@ permissions:
 
       - run: npm run build
 
-      - name: Push dist to main
+      - name: Push dist content to main
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com]'
-
-          git checkout -B main
-          git add -f dist
-
+          # 核心修正 2：进入 dist 目录，确保推送的是内容而不是文件夹
+          cd dist
+          
+          # 初始化临时 Git 环境
+          git init
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # 使用 Token 关联远程仓库
+          git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          
+          git add .
+          
+          # 检查是否有内容变更
           if git diff --staged --quiet; then
-            echo "No build changes"
+            echo "No build changes to commit."
           else
-            git commit -m "deploy site"
-            git push -f origin main
+            git commit -m "deploy site: $(date +'%Y-%m-%d %H:%M:%S')"
+            # 核心修正 3：强制覆盖远程 main 分支
+            git push -f origin HEAD:main
           fi
