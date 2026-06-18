@@ -1,106 +1,296 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>脚本.top - 首页</title>
-    <style>
-        body {
-            flex-direction: column;
-            height: auto;
-            min-height: 100vh;
-        }
-        .main-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column; /* Changed back to column */
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            gap: 60px; /* Space between buttons and text */
-        }
-        .buttons-area {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 60px;
-            flex-wrap: wrap;
-            width: 100%;
-        }
-        .seo-area {
-            width: 700px; 
-            max-width: 100%;
-            padding: 20px; 
-            text-align: center; 
-            color: #888; /* Slightly lighter text */
-            font-size: 13px; /* Slightly smaller font */
-            background: transparent; /* Remove background */
-            backdrop-filter: none; /* Remove blur */
-            border-radius: 0;
-            box-shadow: none; /* Remove shadow */
-            border: none;
-            margin-top: 20px;
-        }
-        .seo-area h3 {
-            color: #555;
-            font-size: 15px;
-            border-bottom: 1px solid rgba(0,0,0,0.05); /* Subtle separator */
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            display: inline-block; /* Only underline text */
-        }
-        .seo-content-wrapper {
-             /* New wrapper for content to control width/layout if needed */
-        }
-        @media (max-width: 900px) {
-            .buttons-area {
-                gap: 30px;
-            }
-            .seo-area {
-                width: 90%;
-                text-align: left; 
-            }
-            .seo-area h3 {
-                display: block;
-                text-align: left;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>脚本.top - 首页</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg: #f4f7fb;
+      --card: rgba(255,255,255,.78);
+      --text: #1d2433;
+      --muted: #6c7484;
+      --line: rgba(70,90,120,.12);
+      --blue: #1677ff;
+      --blue-dark: #0f55c8;
+      --purple: #7c3aed;
+      --shadow: 0 20px 60px rgba(31,55,90,.12);
+      --shadow-soft: 0 12px 32px rgba(31,55,90,.09);
+    }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 12%, rgba(22,119,255,.16), transparent 32%),
+        radial-gradient(circle at 78% 16%, rgba(124,58,237,.13), transparent 30%),
+        linear-gradient(180deg, #f7f9fd 0%, var(--bg) 54%, #eef3fa 100%);
+      overflow-x: hidden;
+    }
+    body { min-height: 100vh; }
+    .main-wrapper {
+      width: min(1080px, calc(100% - 32px));
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 56px 0 28px;
+      display: flex;
+      flex-direction: column;
+    }
+    .hero { text-align: center; margin: 10px auto 34px; }
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.68);
+      box-shadow: var(--shadow-soft);
+      color: var(--muted);
+      font-size: 13px;
+      backdrop-filter: blur(14px);
+    }
+    .hero h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -1px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero p {
+      margin: 0 auto;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    .quick-status {
+      margin: 22px auto 0;
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .status-pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.66);
+      color: #4c586b;
+      font-size: 12px;
+      box-shadow: 0 8px 20px rgba(42,64,96,.06);
+    }
+    .buttons-area {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 26px;
+      margin: 0 auto 28px;
+      width: min(760px, 100%);
+    }
+    .entry-card {
+      position: relative;
+      min-height: 214px;
+      padding: 28px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.72);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      color: inherit;
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+      cursor: pointer;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .entry-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: radial-gradient(circle at 20% 10%, rgba(22,119,255,.18), transparent 34%);
+      opacity: 0;
+      transition: opacity .22s ease;
+    }
+    .entry-card:hover, .entry-card:focus-visible {
+      transform: translateY(-6px);
+      box-shadow: 0 26px 72px rgba(31,55,90,.18);
+      border-color: rgba(22,119,255,.25);
+      outline: none;
+    }
+    .entry-card:hover::before, .entry-card:focus-visible::before { opacity: 1; }
+    .entry-card > * { position: relative; z-index: 1; }
+    .icon-box {
+      width: 70px;
+      height: 70px;
+      border-radius: 23px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, rgba(22,119,255,.13), rgba(124,58,237,.10));
+      font-size: 31px;
+      box-shadow: inset 0 0 0 1px rgba(22,119,255,.08);
+    }
+    .entry-card:nth-child(2) .icon-box {
+      background: linear-gradient(135deg, rgba(124,58,237,.13), rgba(22,119,255,.09));
+    }
+    .entry-card h2 {
+      margin: 0;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -.2px;
+      color: var(--text);
+    }
+    .entry-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .action {
+      margin-top: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-dark);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .info-panel {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 26px 30px;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,.7);
+      background: rgba(255,255,255,.62);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px);
+      text-align: center;
+      color: var(--muted);
+    }
+    .info-panel h2 { margin: 0 0 14px; font-size: 19px; color: var(--text); }
+    .points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin: 20px 0 22px;
+    }
+    .point {
+      padding: 13px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.76);
+      border: 1px solid var(--line);
+    }
+    .point strong { display: block; color: var(--text); font-size: 14px; margin-bottom: 5px; }
+    .point span { color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .assist-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .assist-links a {
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.62);
+      color: #4d5a6e;
+      font-size: 12px;
+      transition: all .2s ease;
+    }
+    .assist-links a:hover {
+      color: var(--blue-dark);
+      border-color: rgba(22,119,255,.25);
+      transform: translateY(-1px);
+    }
+    .footer {
+      margin-top: auto;
+      padding-top: 42px;
+      text-align: center;
+      color: #8a93a3;
+      font-size: 12px;
+      line-height: 2;
+    }
+    .footer a { color: #737d90; text-decoration: none; margin: 0 5px; }
+    .footer a:hover { color: var(--blue); }
+    .myssl { display: inline-block; margin-top: 10px; opacity: .68; }
+    .myssl img { max-height: 42px; }
+    @media (max-width: 720px) {
+      .main-wrapper { padding-top: 34px; }
+      .buttons-area, .points { grid-template-columns: 1fr; }
+      .entry-card { min-height: auto; }
+      .info-panel { padding: 22px 18px; }
+      .hero h1 { font-size: 36px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="main-wrapper">
-        <div class="buttons-area container">
-            <div class="box" id="qunliao1">
-                <div class="img"><img alt="Card"></div>
-                <p>Loading...</p>
-            </div>
-            <div class="box" id="qunliao3">
-                <div class="img"><img alt="Game"></div>
-                <p>Loading...</p>
-            </div>
-        </div>
-        
-        <!-- SEO Content Section -->
-        <div class="seo-area">
-            <div style="margin-bottom: 20px;">
-                <h3 style="color: #333; margin-bottom: 10px; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 5px;">🏆 超凡自动发卡</h3>
-                <p style="font-size: 13px; line-height: 1.6;">24小时自动发货，大神带飞、美女陪玩、语音开黑。支持微信/支付宝快捷支付，安全靠谱，体验极佳。</p>
-            </div>
-            <div style="margin-bottom: 20px;">
-                <h3 style="color: #333; margin-bottom: 10px; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 5px;">🎮 高端租号</h3>
-                <p style="font-size: 13px; line-height: 1.6;">全区租号/30级小号/全皮肤账号任选。1元体验，在线客服售后保障，随时随地极致体验。</p>
-            </div>
-            
-            <div style="font-size: 12px; color: #999; text-align: left; border-top: 1px solid #eee; padding-top: 15px;">
-                <p style="margin-bottom: 5px;"><strong>热门搜索：</strong>陪玩 | 租号 | 自动发卡网 | 30级小号 | 租号网站 | 1元陪玩体验 | </p>
-                <p>本站专业提供陪玩和租号服务，致力于打造安全、便捷、靠谱的游戏服务平台。无论是寻找大神带飞、购买游戏资源，还是体验高端全皮肤账号，这里都能满足您的需求。</p>
-            </div>
-        </div>
-    </div>
-    
-    <script type="module" src="./src/pages/home/entry.js"></script>
+  <main class="main-wrapper">
+    <section class="hero">
+      <div class="brand-badge">🎮 游戏工具 · 自动发卡 · 租号陪玩</div>
+      <h1><span>脚本.top</span></h1>
+      <p>游戏资源与常用工具入口，提供自动发卡、租号陪玩、网址导航与商务合作。页面保持轻量，方便客户快速进入购买、下载和反馈。</p>
+      <div class="quick-status">
+        <div class="status-pill">✅ 24小时自动发货</div>
+        <div class="status-pill">🛠️ 失效链接可反馈</div>
+        <div class="status-pill">🤝 商务合作可联系</div>
+      </div>
+    </section>
+
+    <section class="buttons-area">
+      <div class="entry-card" id="qunliao1" tabindex="0" role="button">
+        <div class="icon-box">💳</div>
+        <h2>超凡发卡</h2>
+        <p>24小时自动发货，购买后按页面提示提取卡密，适合老客户快速下单。</p>
+        <div class="action">进入发卡中心 →</div>
+      </div>
+      <div class="entry-card" id="qunliao3" tabindex="0" role="button">
+        <div class="icon-box">🎮</div>
+        <h2>租号陪玩</h2>
+        <p>全区租号、陪玩开黑与低价体验入口，适合临时体验和娱乐开黑。</p>
+        <div class="action">查看租号陪玩 →</div>
+      </div>
+    </section>
+
+    <section class="info-panel">
+      <h2>🏆 常用入口与服务说明</h2>
+      <div class="points">
+        <div class="point"><strong>入口清楚</strong><span>发卡、租号、导航分得明白</span></div>
+        <div class="point"><strong>售后明确</strong><span>失效资源可以反馈处理</span></div>
+        <div class="point"><strong>商务合作</strong><span>机器人、网站、AI代办可咨询</span></div>
+      </div>
+      <p>热门搜索：陪玩｜租号｜自动发卡网｜30级小号｜租号网站｜1元陪玩体验。<br>本站提供游戏相关资源、自动发卡和便捷入口，重点是清楚、轻量、容易找到。</p>
+      <div class="assist-links">
+        <a href="/down/nav/">网址导航</a>
+        <a href="mailto:xianyumht@gmail.com">问题反馈</a>
+        <a href="/about.html">商务合作</a>
+        <a href="/privacy.html">隐私政策</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© 2026 脚本.top
+        <a href="/">首页</a> |
+        <a href="https://an.24vv.cn/s/" target="_blank" rel="noopener noreferrer">超凡发卡</a> |
+        <a href="/down/nav/">网址导航</a> |
+        <a href="mailto:xianyumht@gmail.com">问题反馈</a> |
+        <a href="/about.html">商务合作</a> |
+        <a href="/privacy.html">隐私政策</a>
+      </div>
+      <div>富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善</div>
+      <div><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">鄂ICP备2024055850号-4</a></div>
+      <a class="myssl" href="https://myssl.com/xn--8pv109c.top?from=mysslid" target="_blank" rel="noopener noreferrer">
+        <img src="https://static.myssl.com/res/images/myssl-id1.png" alt="MySSL 安全认证" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+      </a>
+    </footer>
+  </main>
+
+  <script type="module" src="./src/assets/app/config.js"></script>
 </body>
 </html>
