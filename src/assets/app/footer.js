@@ -14,7 +14,7 @@
                 &copy; 2026 脚本.top | 
                 <a href="/" target="_blank" style="color: #999; text-decoration: none;">首页</a> | 
                 <a href="https://an.24vv.cn/s/" target="_blank" style="color: #999; text-decoration: none;" id="qunliao1">超凡发卡</a> | 
-                <a href="https://an.207qk.cn/s/" target="_blank" style="color: #999; text-decoration: none;" id="qunliao5">备用发卡</a> |
+                <a href="/" target="_blank" style="color: #999; text-decoration: none;" id="qunliao5">返回首页</a> |
                 <a href="https://blog.xn--8pv109c.top/" target="_blank" style="color: #999; text-decoration: none;" id="qunliao2">博客文章</a> | 
                 <a href="https://xn--8pv109c.top/down/nav/" target="_blank" style="color: #999; text-decoration: none;" id="qunliao4">网址导航</a> | 
                 <a href="https://xn--8pv109c.top/about.html" target="_blank" style="color: #999; text-decoration: none;">关于我们</a> | 
