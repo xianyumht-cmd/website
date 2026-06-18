@@ -84,28 +84,26 @@ body.night {
     }
 }
 
-/* Font Size Adjustments */
 .logo-env .logo-text a {
-    font-size: 20px !important; /* Reduced further from 22px */
+    font-size: 20px !important;
 }
 
 #navbar .menu-item span {
-    font-size: 13px; /* Reduced from 14px */
+    font-size: 13px;
 }
 
 #online_user, #sitetime, #time {
-    font-size: 12px !important; /* Reduced from 14px */
+    font-size: 12px !important;
     font-weight: 500;
 }
 
-/* Global Theme Transition */
 body,
 .navbar,
 .sidebar-menu,
 .logo-env,
 footer,
 .fk_service_box,
-.fk_service_ax_cont, 
+.fk_service_ax_cont,
 .fk_service_bx_cont,
 .s-search input,
 #bulletin_box,
@@ -121,24 +119,20 @@ footer,
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-/* Ensure link colors transition smoothly */
 a, i, span, p, h1, h2, h3, h4, h5, h6 {
     transition: color 0.3s ease;
 }
 
-/* 51.LA Widget Styling - CSS Trick to Hide Text */
 #LA-DATA-WIDGET {
-    font-size: 0 !important; /* Hide all text by making it size 0 */
+    font-size: 0 !important;
     color: transparent !important;
 }
 
-/* Restore the number */
-/* We target 'b', 'span', or any bold element which usually holds the number */
 #LA-DATA-WIDGET b, 
 #LA-DATA-WIDGET strong, 
 #LA-DATA-WIDGET .la-number { 
-    font-size: 12px !important; /* Restore font size for number */
-    color: red !important; /* Set number color */
+    font-size: 12px !important;
+    color: red !important;
     font-weight: 500 !important;
     display: inline-block !important;
     visibility: visible !important;
@@ -146,31 +140,27 @@ a, i, span, p, h1, h2, h3, h4, h5, h6 {
 
 #LA-DATA-WIDGET a {
     text-decoration: none !important;
-    cursor: default !important; /* Optional: remove pointer cursor */
+    cursor: default !important;
 }
 
-/* Ensure the widget container aligns properly */
 #online_user_container {
     display: inline-flex;
     align-items: center;
 }
 
 #navbar .menu-item i {
-    font-size: 13px; /* Reduced from 14px */
+    font-size: 13px;
 }
 
-/* Hitokoto Styling */
 .hitokoto {
-    font-size: 12px !important; /* Reduced from 13px */
+    font-size: 12px !important;
     color: #999;
 }
 
-/* 移动端响应式修复 */
 @media (max-width: 767px) {
-    /* 恢复默认缩放，防止文字过小或布局错乱 */
     #time, #sitetime, #online_user {
         transform: none !important;
-        font-size: 13px !important; /* 手机端稍微大一点点更易读 */
+        font-size: 13px !important;
     }
 
     #navbar .menu-item .hitokoto {
@@ -178,20 +168,17 @@ a, i, span, p, h1, h2, h3, h4, h5, h6 {
         font-size: 13px !important;
     }
 
-    /* 确保导航栏元素在手机上不换行，或者优雅换行 */
     #navbar .menu-item {
         font-size: 13px !important;
         white-space: nowrap;
     }
 
-    /* 针对 51.la 挂件在手机上的显示 */
     #online_user_container {
         display: inline-flex;
         transform: none !important;
     }
 }
 
-/* PC 端保留精细化缩放 */
 @media (min-width: 768px) {
     #time, #sitetime, #online_user {
         transform: scale(0.9);
@@ -204,32 +191,455 @@ a, i, span, p, h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* If the date is just text inside .menu-item, we target the li directly */
 #navbar .menu-item {
     font-size: 12px !important;
 }
 
 .hitokoto {
-    font-size: 12px !important; /* Reduced from 13px */
+    font-size: 12px !important;
 }
 
-/* Sidebar Adjustments */
 .sidebar-menu .main-menu a {
-    font-size: 14px !important; /* Force smaller font size for sidebar items */
-    padding: 10px 20px !important; /* Reduce padding for tighter look */
+    font-size: 14px !important;
+    padding: 10px 20px !important;
 }
 
 .sidebar-menu .main-menu a i {
-    font-size: 15px !important; /* Slightly smaller icons */
+    font-size: 15px !important;
     margin-right: 8px !important;
 }
 
 .sidebar-menu .main-menu li.has-sub > a:before {
-    font-size: 14px !important; /* Adjust submenu arrow if present */
+    font-size: 14px !important;
 }
 
-/* Adjust date/time container spacing */
 #navbar .menu-item {
     display: flex;
     align-items: center;
+}
+
+/* 2026 nav visual refresh: style-only layer, keeps existing HTML and JS intact. */
+.page-body {
+    --nav-bg: #0d1220;
+    --nav-panel: rgba(255, 255, 255, 0.075);
+    --nav-panel-strong: rgba(255, 255, 255, 0.11);
+    --nav-card: rgba(255, 255, 255, 0.095);
+    --nav-card-hover: rgba(255, 255, 255, 0.145);
+    --nav-text: #eef4ff;
+    --nav-muted: #9ba8bc;
+    --nav-line: rgba(255, 255, 255, 0.1);
+    --nav-blue: #38bdf8;
+    --nav-blue-dark: #1677ff;
+    --nav-purple: #8b5cf6;
+    --nav-green: #22c55e;
+    --nav-yellow: #facc15;
+    --nav-red: #fb7185;
+    --nav-sidebar: rgba(10, 16, 30, 0.86);
+    color: var(--nav-text) !important;
+    background:
+        radial-gradient(circle at 18% 12%, rgba(56, 189, 248, 0.20), transparent 32%),
+        radial-gradient(circle at 82% 8%, rgba(139, 92, 246, 0.20), transparent 34%),
+        radial-gradient(circle at 65% 82%, rgba(34, 197, 94, 0.08), transparent 28%),
+        linear-gradient(180deg, #0b1020 0%, #0d1220 42%, #101827 100%) !important;
+}
+
+.page-body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 42px 42px;
+    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.8), transparent 78%);
+    mask-image: linear-gradient(180deg, rgba(0,0,0,.8), transparent 78%);
+    z-index: 0;
+}
+
+.page-container,
+.main-content,
+.sidebar-menu,
+.navbar,
+#bulletin_box,
+#search,
+#content-sections,
+.fk_service {
+    position: relative;
+    z-index: 1;
+}
+
+.sidebar-menu {
+    background: var(--nav-sidebar) !important;
+    border-right: 1px solid var(--nav-line) !important;
+    box-shadow: 18px 0 60px rgba(0, 0, 0, 0.2) !important;
+    backdrop-filter: blur(22px);
+}
+
+.sidebar-menu .sidebar-menu-inner {
+    padding-top: 8px;
+}
+
+.logo-env {
+    border-bottom: 1px solid var(--nav-line) !important;
+    margin: 0 12px 16px !important;
+    padding: 12px 0 22px !important;
+}
+
+.logo-env .logo a,
+.logo-env .logo-text a {
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+.logo-env .logo i {
+    width: 42px;
+    height: 42px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--nav-blue-dark), var(--nav-purple));
+    box-shadow: 0 12px 34px rgba(56, 189, 248, 0.18);
+    color: #fff !important;
+}
+
+.sidebar-menu .main-menu a {
+    border-radius: 14px !important;
+    color: #c9d3e3 !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
+    margin: 5px 10px !important;
+}
+
+.sidebar-menu .main-menu a:hover,
+.sidebar-menu .main-menu li.active > a,
+.sidebar-menu .main-menu li.opened > a {
+    color: #fff !important;
+    background: rgba(56, 189, 248, 0.12) !important;
+    border-color: rgba(56, 189, 248, 0.22) !important;
+    transform: translateX(3px);
+}
+
+.sidebar-menu .main-menu a i {
+    color: var(--nav-blue) !important;
+    opacity: 0.95;
+}
+
+.main-content {
+    background: transparent !important;
+    padding: 22px 28px 60px !important;
+}
+
+.navbar.user-info-navbar {
+    min-height: 58px !important;
+    border-radius: 22px !important;
+    background: var(--nav-panel) !important;
+    border: 1px solid var(--nav-line) !important;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22) !important;
+    backdrop-filter: blur(22px);
+    margin-bottom: 18px !important;
+}
+
+.navbar.user-info-navbar .user-info-menu > li,
+.navbar.user-info-navbar .user-info-menu > li > a,
+.navbar.user-info-navbar .user-info-menu span,
+.navbar.user-info-navbar .user-info-menu i {
+    color: #dce7f8 !important;
+}
+
+#sitetime,
+#online_user,
+#time,
+#LA-DATA-WIDGET b,
+#LA-DATA-WIDGET strong,
+#LA-DATA-WIDGET .la-number {
+    color: var(--nav-blue) !important;
+}
+
+#bulletin_box.alert,
+#bulletin_box.alert-primary {
+    margin: 18px 0 !important;
+    padding: 15px 18px !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(56, 189, 248, 0.18) !important;
+    background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.11), rgba(139, 92, 246, 0.10)),
+        rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22) !important;
+    color: #dbeafe !important;
+    backdrop-filter: blur(20px);
+}
+
+#bulletin_box .text-muted,
+#bulletin_box a,
+#bulletin_box li {
+    color: #dbeafe !important;
+}
+
+#bulletin_box a[style*="red"] {
+    color: #fff !important;
+    font-weight: 700 !important;
+}
+
+#search.s-search {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.5fr) minmax(240px, 0.8fr);
+    gap: 14px !important;
+    margin-bottom: 24px !important;
+}
+
+#search #ss {
+    width: 100% !important;
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    background: var(--nav-panel) !important;
+    border: 1px solid var(--nav-line) !important;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22) !important;
+    backdrop-filter: blur(20px);
+    padding: 8px;
+}
+
+#search #search-text {
+    width: 100% !important;
+    border: 0 !important;
+    outline: none !important;
+    background: transparent !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    padding: 0 14px !important;
+}
+
+#search #search-text::placeholder {
+    color: #73839c !important;
+}
+
+#search button {
+    width: 42px !important;
+    height: 42px !important;
+    border: 0 !important;
+    border-radius: 16px !important;
+    color: #fff !important;
+    background: linear-gradient(135deg, var(--nav-blue-dark), var(--nav-purple)) !important;
+    box-shadow: none !important;
+}
+
+#search #gg {
+    width: 100% !important;
+    min-height: 54px !important;
+    height: auto !important;
+}
+
+#search #notice {
+    min-height: 54px !important;
+    border-radius: 20px !important;
+    background: var(--nav-panel) !important;
+    border: 1px solid var(--nav-line) !important;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22) !important;
+    backdrop-filter: blur(20px);
+    color: #d6e4f8 !important;
+    overflow: hidden;
+}
+
+#search #notice li,
+#search #notice i {
+    color: #d6e4f8 !important;
+}
+
+#content-sections {
+    max-width: none !important;
+    padding: 0 !important;
+}
+
+#content-sections h4.text-gray {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 26px 0 14px !important;
+    color: #fff !important;
+    font-size: 19px !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.2px;
+}
+
+#content-sections h4.text-gray i {
+    color: var(--nav-blue) !important;
+}
+
+#content-sections .row {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px !important;
+    margin: 0 !important;
+}
+
+#content-sections .col-sm-3 {
+    width: auto !important;
+    max-width: none !important;
+    padding: 0 !important;
+    float: none !important;
+}
+
+.xe-widget,
+.box2.label-info.xe-conversations.xe-widget {
+    min-height: 110px;
+    padding: 16px !important;
+    border-radius: 22px !important;
+    background: var(--nav-card) !important;
+    border: 1px solid var(--nav-line) !important;
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.18) !important;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease !important;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.xe-widget::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 0%, rgba(56, 189, 248, 0.12), transparent 34%);
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+.xe-widget:hover {
+    transform: translateY(-4px);
+    background: var(--nav-card-hover) !important;
+    border-color: rgba(56, 189, 248, 0.23) !important;
+}
+
+.xe-widget:hover::before {
+    opacity: 1;
+}
+
+.xe-comment-entry {
+    position: relative;
+    z-index: 1;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+}
+
+.xe-user-img {
+    flex: 0 0 auto;
+}
+
+.user-avatar {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(135deg, var(--nav-blue-dark), var(--nav-purple)) !important;
+    color: #fff !important;
+    font-weight: 800 !important;
+    font-size: 14px !important;
+    box-shadow: 0 12px 24px rgba(22, 119, 255, 0.20) !important;
+}
+
+.xe-comment {
+    min-width: 0;
+    flex: 1;
+}
+
+.xe-user-name,
+.xe-user-name strong {
+    display: block;
+    color: #f8fbff !important;
+    text-decoration: none !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    margin: 2px 0 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.xe-comment p,
+.overflowClip_2 {
+    margin: 0 !important;
+    color: var(--nav-muted) !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+}
+
+.fk_service_box,
+.fk_service_ax,
+.fk_service_bx {
+    min-width: 128px;
+    height: 42px;
+    padding: 0 13px;
+    border-radius: 999px !important;
+    color: #eef4ff !important;
+    background: rgba(255,255,255,.105) !important;
+    border: 1px solid var(--nav-line) !important;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22) !important;
+    backdrop-filter: blur(18px);
+}
+
+.fk_service_ax_cont,
+.fk_service_bx_cont,
+#theme-text,
+#lang-text {
+    color: #eef4ff !important;
+}
+
+@media (max-width: 1080px) {
+    #content-sections .row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 820px) {
+    .page-container {
+        display: block !important;
+    }
+
+    .sidebar-menu {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        border-right: 0 !important;
+        border-bottom: 1px solid var(--nav-line) !important;
+    }
+
+    .sidebar-menu .main-menu {
+        display: flex;
+        overflow-x: auto;
+        gap: 8px;
+        padding-bottom: 4px;
+    }
+
+    .sidebar-menu .main-menu li {
+        flex: 0 0 auto;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 16px 14px 54px !important;
+    }
+
+    .navbar.user-info-navbar {
+        position: static !important;
+    }
+
+    #search.s-search {
+        grid-template-columns: 1fr;
+    }
+
+    #content-sections .row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    #content-sections .row {
+        grid-template-columns: 1fr;
+    }
+
+    .fk_service {
+        display: none !important;
+    }
 }
