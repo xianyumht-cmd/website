@@ -49,7 +49,6 @@
 
 
     <script type="module" src="../../../shared/responsive-base.js"></script>
-    <script type="module" src="../../../shared/anti-debug.js"></script>
     <link rel="stylesheet" href="../../../shared/responsive.css">
     
     <!-- Critical CSS (inline for faster rendering) -->
@@ -102,6 +101,7 @@
         })();
     </script>
     <script type="module" src="../../assets/js/error-guard.js"></script>
+    <script type="module" src="../../../shared/page-guard.js"></script>
     
     <!-- Meta Tags -->
 
@@ -219,7 +219,7 @@
             <div class="s-search" style="position: relative;" id="search">
                 <div class="hide-type-list" id="search-list"></div>
                 <div id="ss" style="position: relative; width: 60%;">
-                    <input type="search" autocomplete="off" id="search-text" onchange="txtSearch()" placeholder=" 输入关键字按回车键快捷搜索..." style="outline: 0;">
+                    <input type="search" autocomplete="off" id="search-text" onchange="txtSearch()" placeholder=" 输入关键词，自动筛选资源..." style="outline: 0;">
                     <button type="button" aria-label="搜索" onclick="txtSearch()">
                         <i class="fa fa-search"></i>
                     </button>
@@ -275,6 +275,5 @@
     
     <!-- Optimized Scripts (loaded at bottom for better performance with callbacks) -->
     <!-- Consolidated JavaScript Functions in nav-core.js -->
-    
 </body>
 </html>

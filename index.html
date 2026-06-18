@@ -7,266 +7,684 @@
   <style>
     * { box-sizing: border-box; }
     :root {
-      --bg: #f4f7fb;
-      --card: rgba(255,255,255,.78);
-      --text: #1d2433;
-      --muted: #6c7484;
-      --line: rgba(70,90,120,.12);
-      --blue: #1677ff;
-      --blue-dark: #0f55c8;
-      --purple: #7c3aed;
-      --shadow: 0 20px 60px rgba(31,55,90,.12);
-      --shadow-soft: 0 12px 32px rgba(31,55,90,.09);
+      --bg: #eef4fb;
+      --panel: rgba(255, 255, 255, .76);
+      --panel-soft: rgba(255, 255, 255, .58);
+      --entry-bg: rgba(255, 255, 255, .70);
+      --entry-hover: rgba(255, 255, 255, .90);
+      --line: rgba(32, 57, 92, .13);
+      --line-strong: rgba(22, 119, 255, .32);
+      --text: #101827;
+      --muted: #64748b;
+      --soft: #334155;
+      --blue: #46b7ff;
+      --violet: #7a6cff;
+      --green: #3ee08f;
+      --yellow: #ffd65a;
+      --shadow: 0 24px 70px rgba(31, 55, 90, .14);
+      --grid-line: rgba(32, 57, 92, .045);
+      --hero-glow-a: rgba(70, 183, 255, .16);
+      --hero-glow-b: rgba(122, 108, 255, .13);
+      --hero-glow-c: rgba(62, 224, 143, .08);
+      --page-gradient: linear-gradient(180deg, #f8fbff 0%, #eef4fb 48%, #e6eef9 100%);
+      font-family: "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
-    html, body {
+
+    body.night {
+      --bg: #080d16;
+      --panel: rgba(18, 27, 43, .78);
+      --panel-soft: rgba(255, 255, 255, .06);
+      --entry-bg: rgba(8, 13, 22, .66);
+      --entry-hover: rgba(255,255,255,.08);
+      --line: rgba(169, 192, 228, .14);
+      --line-strong: rgba(91, 173, 255, .32);
+      --text: #eef6ff;
+      --muted: #8fa0b8;
+      --soft: #c6d6ea;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .34);
+      --grid-line: rgba(255, 255, 255, .035);
+      --hero-glow-a: rgba(70, 183, 255, .18);
+      --hero-glow-b: rgba(122, 108, 255, .20);
+      --hero-glow-c: rgba(62, 224, 143, .09);
+      --page-gradient: linear-gradient(180deg, #070b13 0%, #0b111d 44%, #101725 100%);
+    }
+
+    html,
+    body {
       margin: 0;
       min-height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 20% 12%, rgba(22,119,255,.16), transparent 32%),
-        radial-gradient(circle at 78% 16%, rgba(124,58,237,.13), transparent 30%),
-        linear-gradient(180deg, #f7f9fd 0%, var(--bg) 54%, #eef3fa 100%);
+        radial-gradient(circle at 12% 10%, var(--hero-glow-a), transparent 26%),
+        radial-gradient(circle at 86% 8%, var(--hero-glow-b), transparent 27%),
+        radial-gradient(circle at 70% 82%, var(--hero-glow-c), transparent 25%),
+        var(--page-gradient);
       overflow-x: hidden;
     }
-    body { min-height: 100vh; }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 42px 42px;
+      -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.82), transparent 78%);
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.82), transparent 78%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
     .main-wrapper {
-      width: min(1080px, calc(100% - 32px));
+      position: relative;
+      z-index: 1;
+      width: min(1220px, calc(100% - 32px));
       min-height: 100vh;
       margin: 0 auto;
-      padding: 56px 0 28px;
+      padding: 24px 0 28px;
       display: flex;
       flex-direction: column;
     }
-    .hero { text-align: center; margin: 10px auto 34px; }
-    .brand-badge {
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-height: 68px;
+      padding: 10px 12px 10px 18px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+
+    .brand {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255,255,255,.68);
-      box-shadow: var(--shadow-soft);
-      color: var(--muted);
-      font-size: 13px;
-      backdrop-filter: blur(14px);
+      gap: 12px;
+      min-width: 180px;
+      font-weight: 800;
+      letter-spacing: .2px;
     }
-    .hero h1 {
-      margin: 18px 0 10px;
-      font-size: clamp(32px, 5vw, 52px);
-      line-height: 1.05;
-      letter-spacing: -1px;
-    }
-    .hero h1 span {
-      background: linear-gradient(135deg, var(--blue), var(--purple));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .hero p {
-      margin: 0 auto;
-      max-width: 680px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.8;
-    }
-    .quick-status {
-      margin: 22px auto 0;
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
-    .status-pill {
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.66);
-      color: #4c586b;
-      font-size: 12px;
-      box-shadow: 0 8px 20px rgba(42,64,96,.06);
-    }
-    .buttons-area {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 26px;
-      margin: 0 auto 28px;
-      width: min(760px, 100%);
-    }
-    .entry-card {
-      position: relative;
-      min-height: 214px;
-      padding: 28px;
-      border-radius: 28px;
-      border: 1px solid rgba(255,255,255,.72);
-      background: var(--card);
-      box-shadow: var(--shadow);
-      color: inherit;
-      overflow: hidden;
-      backdrop-filter: blur(18px);
-      cursor: pointer;
-      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-    }
-    .entry-card::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      background: radial-gradient(circle at 20% 10%, rgba(22,119,255,.18), transparent 34%);
-      opacity: 0;
-      transition: opacity .22s ease;
-    }
-    .entry-card:hover, .entry-card:focus-visible {
-      transform: translateY(-6px);
-      box-shadow: 0 26px 72px rgba(31,55,90,.18);
-      border-color: rgba(22,119,255,.25);
-      outline: none;
-    }
-    .entry-card:hover::before, .entry-card:focus-visible::before { opacity: 1; }
-    .entry-card > * { position: relative; z-index: 1; }
-    .icon-box {
-      width: 70px;
-      height: 70px;
-      border-radius: 23px;
+
+    .brand-mark,
+    .entry-icon,
+    .mini-icon {
       display: grid;
       place-items: center;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, rgba(22,119,255,.13), rgba(124,58,237,.10));
-      font-size: 31px;
-      box-shadow: inset 0 0 0 1px rgba(22,119,255,.08);
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.2), transparent),
+        linear-gradient(135deg, var(--blue), var(--violet));
+      box-shadow: 0 14px 38px rgba(70, 183, 255, .25);
     }
-    .entry-card:nth-child(2) .icon-box {
-      background: linear-gradient(135deg, rgba(124,58,237,.13), rgba(22,119,255,.09));
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
     }
-    .entry-card h2 {
-      margin: 0;
-      font-size: 23px;
-      font-weight: 800;
-      letter-spacing: -.2px;
-      color: var(--text);
+
+    .top-nav {
+      display: flex;
+      gap: 6px;
+      padding: 5px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel-soft);
     }
-    .entry-card p {
-      margin: 10px 0 0;
-      color: var(--muted);
+
+    .top-nav a {
+      padding: 9px 13px;
+      border-radius: 12px;
+      color: var(--soft);
       font-size: 14px;
-      line-height: 1.7;
     }
-    .action {
-      margin-top: 22px;
-      display: inline-flex;
+
+    .top-nav a:hover {
+      color: #fff;
+      background: rgba(70, 183, 255, .14);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .utility-actions {
+      display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--blue-dark);
-      font-weight: 700;
+    }
+
+    .utility-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 42px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel-soft);
+      color: var(--soft);
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .utility-button:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+      color: var(--text);
+    }
+
+    .theme-icon-element,
+    .lang-icon-element {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+    }
+
+    .theme-text-element,
+    .lang-text-element {
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .primary-button,
+    .ghost-button {
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .primary-button {
+      padding: 12px 18px;
+      border-color: rgba(70, 183, 255, .38);
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      font-weight: 800;
+      box-shadow: 0 16px 42px rgba(70, 183, 255, .24);
+    }
+
+    .ghost-button {
+      padding: 11px 16px;
+      background: var(--panel-soft);
+    }
+
+    .primary-button:hover,
+    .ghost-button:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+    }
+
+    .hero {
+      min-height: 610px;
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(500px, 1.1fr);
+      gap: 32px;
+      align-items: center;
+      padding: 48px 0 36px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 560px;
+      font-size: clamp(38px, 4.1vw, 54px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    h1 span {
+      display: block;
+    }
+
+    .hero-copy {
+      max-width: 630px;
+      margin: 22px 0 0;
+      color: var(--soft);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 36px;
+      max-width: 680px;
+    }
+
+    .trust-item,
+    .business-panel,
+    .info-panel,
+    .entry-card,
+    .footer {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+
+    .trust-item {
+      min-height: 92px;
+      padding: 18px;
+      border-radius: 20px;
+    }
+
+    .metric {
+      display: block;
+      color: var(--text);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .label {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .business-panel {
+      position: relative;
+      min-height: 500px;
+      border-radius: 32px;
+      overflow: hidden;
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.12), transparent 42%),
+        var(--panel-soft);
+    }
+
+    .business-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(70,183,255,.22), transparent 34%),
+        radial-gradient(circle at 88% 16%, rgba(122,108,255,.20), transparent 30%);
+      pointer-events: none;
+    }
+
+    .business-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding: 22px;
+    }
+
+    .entry-card {
+      min-height: 142px;
+      padding: 18px;
+      border-radius: 22px;
+      background: var(--entry-bg);
+      transition: .2s ease;
+      cursor: pointer;
+    }
+
+    .entry-card:hover,
+    .entry-card:focus-visible {
+      transform: translateY(-3px);
+      border-color: var(--line-strong);
+      background: var(--entry-hover);
+      outline: none;
+    }
+
+    .entry-card.primary {
+      grid-column: span 2;
+      min-height: 170px;
+      display: grid;
+      grid-template-columns: 78px minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      background:
+        linear-gradient(135deg, rgba(70,183,255,.22), rgba(122,108,255,.16)),
+        var(--entry-bg);
+    }
+
+    .entry-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      font-size: 24px;
+    }
+
+    .entry-card h2,
+    .entry-card h3 {
+      margin: 0 0 8px;
+      color: var(--text);
+      font-size: 19px;
+      line-height: 1.25;
+    }
+
+    .entry-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 13px;
+    }
+
+    .action {
+      color: var(--text);
+      white-space: nowrap;
+      font-weight: 800;
+    }
+
+    .service-rail {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      padding: 0 22px 22px;
+    }
+
+    .service-chip {
+      min-height: 78px;
+      padding: 13px 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      background: var(--panel-soft);
+      color: var(--soft);
+      font-size: 13px;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .service-chip strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
       font-size: 14px;
     }
+
     .info-panel {
-      width: min(760px, 100%);
-      margin: 0 auto;
-      padding: 26px 30px;
+      padding: 28px;
       border-radius: 26px;
-      border: 1px solid rgba(255,255,255,.7);
-      background: rgba(255,255,255,.62);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(18px);
-      text-align: center;
-      color: var(--muted);
+      margin-bottom: 22px;
     }
-    .info-panel h2 { margin: 0 0 14px; font-size: 19px; color: var(--text); }
+
+    .section-title {
+      margin: 0 0 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 40px);
+      line-height: 1.1;
+    }
+
+    .section-title p {
+      max-width: 660px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
     .points {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 12px;
-      margin: 20px 0 22px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
     }
+
     .point {
-      padding: 13px 12px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.76);
-      border: 1px solid var(--line);
+      min-height: 128px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 20px;
+      background: var(--panel-soft);
     }
-    .point strong { display: block; color: var(--text); font-size: 14px; margin-bottom: 5px; }
-    .point span { color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+    .point strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--text);
+      font-size: 17px;
+    }
+
+    .point span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
     .assist-links {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 22px;
     }
+
     .assist-links a {
-      text-decoration: none;
-      padding: 8px 12px;
+      padding: 9px 12px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.62);
-      color: #4d5a6e;
-      font-size: 12px;
+      background: var(--panel-soft);
+      color: var(--soft);
+      font-size: 13px;
       transition: all .2s ease;
     }
+
     .assist-links a:hover {
-      color: var(--blue-dark);
-      border-color: rgba(22,119,255,.25);
+      color: #fff;
+      border-color: var(--line-strong);
       transform: translateY(-1px);
     }
+
     .footer {
       margin-top: auto;
-      padding-top: 42px;
-      text-align: center;
-      color: #8a93a3;
+      padding: 24px;
+      border-radius: 24px 24px 0 0;
+      color: #8391a8;
       font-size: 12px;
       line-height: 2;
+      text-align: center;
+      background: var(--panel);
     }
-    .footer a { color: #737d90; text-decoration: none; margin: 0 5px; }
+
+    .footer a {
+      color: #aebed3;
+      margin: 0 5px;
+    }
+
     .footer a:hover { color: var(--blue); }
-    .myssl { display: inline-block; margin-top: 10px; opacity: .68; }
+    .myssl { display: inline-block; margin-top: 10px; opacity: .78; }
     .myssl img { max-height: 42px; }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .topbar {
+        flex-wrap: wrap;
+      }
+
+      .top-actions {
+        margin-left: 0;
+      }
+
+      .utility-actions {
+        margin-left: auto;
+      }
+
+      .business-panel {
+        min-height: auto;
+      }
+    }
+
     @media (max-width: 720px) {
-      .main-wrapper { padding-top: 34px; }
-      .buttons-area, .points { grid-template-columns: 1fr; }
-      .entry-card { min-height: auto; }
-      .info-panel { padding: 22px 18px; }
-      .hero h1 { font-size: 36px; }
+      .main-wrapper {
+        width: min(100% - 20px, 1220px);
+        padding-top: 10px;
+      }
+
+      .top-nav {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      .top-actions,
+      .utility-actions {
+        width: 100%;
+      }
+
+      .top-actions .primary-button,
+      .top-actions .ghost-button {
+        flex: 1 1 130px;
+        text-align: center;
+      }
+
+      .utility-button {
+        flex: 1 1 130px;
+        justify-content: center;
+      }
+
+      .hero {
+        padding: 34px 0;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .business-grid,
+      .service-rail,
+      .entry-card.primary,
+      .trust-row,
+      .points {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-card.primary {
+        grid-column: span 1;
+      }
+
+      .action {
+        white-space: normal;
+      }
     }
   </style>
 </head>
-<body>
+<body class="night">
   <main class="main-wrapper">
-    <section class="hero">
-      <div class="brand-badge">🎮 游戏工具 · 自动发卡 · 租号陪玩</div>
-      <h1><span>脚本.top</span></h1>
-      <p>游戏资源与常用工具入口，提供自动发卡、租号陪玩、网址导航与商务合作。页面保持轻量，方便客户快速进入购买、下载和反馈。</p>
-      <div class="quick-status">
-        <div class="status-pill">✅ 24小时自动发货</div>
-        <div class="status-pill">🛠️ 失效链接可反馈</div>
-        <div class="status-pill">🤝 商务合作可联系</div>
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>脚本.top</span>
+      </a>
+      <nav class="top-nav" aria-label="主要入口">
+        <a href="https://an.24vv.cn/s/" target="_blank" rel="noopener noreferrer">超凡发卡</a>
+        <a href="https://kkk.ewnco.cn/shop/99BA0CEF" target="_blank" rel="noopener noreferrer">租号陪玩</a>
+        <a href="/down/nav/">下载导航</a>
+        <a href="/about.html">商务合作</a>
+      </nav>
+      <div class="top-actions">
+        <a class="ghost-button" href="mailto:xianyumht@gmail.com">问题反馈</a>
+        <a class="primary-button" href="https://an.24vv.cn/s/" target="_blank" rel="noopener noreferrer">立即发卡</a>
       </div>
-    </section>
+      <div class="utility-actions" aria-label="页面工具">
+        <button class="utility-button" type="button" onclick="themeMode.toggleMode()" title="切换主题模式">
+          <span class="theme-icon-element" aria-hidden="true"></span>
+          <span class="theme-text-element">自动模式</span>
+        </button>
+        <button class="utility-button" type="button" onclick="languageSwitcher.switchLanguage()" title="切换语言">
+          <span class="lang-icon-element" aria-hidden="true">文</span>
+          <span class="lang-text-element">Switch to English</span>
+        </button>
+      </div>
+    </header>
 
-    <section class="buttons-area">
-      <div class="entry-card" id="qunliao1" tabindex="0" role="button">
-        <div class="icon-box">💳</div>
-        <h2>超凡发卡</h2>
-        <p>24小时自动发货，购买后按页面提示提取卡密，适合老客户快速下单。</p>
-        <div class="action">进入发卡中心 →</div>
+    <section class="hero">
+      <div>
+        <h1><span>发卡、租号</span><span>下载导航</span><span>一页直达</span></h1>
+        <p class="hero-copy">游戏资源与常用工具入口，提供自动发卡、租号陪玩、下载导航、问题反馈和商务合作。页面保持清楚、轻量，方便客户快速进入购买、下载和反馈。</p>
+        <div class="hero-actions">
+          <button class="primary-button" id="qunliao1" type="button">超凡发卡</button>
+          <button class="ghost-button" id="qunliao3" type="button">租号陪玩</button>
+          <button class="ghost-button" id="qunliao4" type="button">下载导航</button>
+        </div>
+        <div class="trust-row">
+          <div class="trust-item"><span class="metric">24h</span><span class="label">自动发卡下单入口</span></div>
+          <div class="trust-item"><span class="metric">66</span><span class="label">资源导航入口</span></div>
+          <div class="trust-item"><span class="metric">5</span><span class="label">核心业务入口保留</span></div>
+        </div>
       </div>
-      <div class="entry-card" id="qunliao3" tabindex="0" role="button">
-        <div class="icon-box">🎮</div>
-        <h2>租号陪玩</h2>
-        <p>全区租号、陪玩开黑与低价体验入口，适合临时体验和娱乐开黑。</p>
-        <div class="action">查看租号陪玩 →</div>
+
+      <div class="business-panel" aria-label="业务入口">
+        <div class="business-grid">
+          <div class="entry-card primary" tabindex="0" role="button" aria-label="超凡发卡入口">
+            <span class="entry-icon" aria-hidden="true">💳</span>
+            <div>
+              <h2>超凡发卡</h2>
+              <p>首页第一主入口，24 小时自动发货，老客户能直接进入购买路径。</p>
+            </div>
+            <span class="action">进入发卡 →</span>
+          </div>
+          <div class="entry-card" tabindex="0" role="button" aria-label="租号陪玩入口">
+            <span class="entry-icon" aria-hidden="true">🎮</span>
+            <h3>租号陪玩</h3>
+            <p>全区租号、陪玩开黑、低价体验入口，作为第二核心业务展示。</p>
+          </div>
+          <div class="entry-card" tabindex="0" role="button" aria-label="下载导航入口">
+            <span class="entry-icon" aria-hidden="true">🧭</span>
+            <h3>下载导航</h3>
+            <p>脚本、工具、修复包、专区资源集中入口，承接资源导航页。</p>
+          </div>
+          <a class="entry-card" href="mailto:xianyumht@gmail.com">
+            <span class="entry-icon" aria-hidden="true">🛟</span>
+            <h3>问题反馈</h3>
+            <p>链接失效、资源更新、页面问题都能快速反馈。</p>
+          </a>
+          <a class="entry-card" href="/about.html">
+            <span class="entry-icon" aria-hidden="true">🤝</span>
+            <h3>商务合作</h3>
+            <p>网站、机器人、AI 代办和项目维护咨询入口。</p>
+          </a>
+        </div>
+        <div class="service-rail">
+          <button class="service-chip" id="qunliao5" type="button"><strong>备用发卡</strong>兜底入口</button>
+          <div class="service-chip"><strong>自动发货</strong>快速下单</div>
+          <div class="service-chip"><strong>资源修复</strong>失效反馈</div>
+          <a class="service-chip" href="/privacy.html"><strong>隐私政策</strong>基础说明</a>
+          <a class="service-chip" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer"><strong>备案信息</strong>合规入口</a>
+        </div>
       </div>
     </section>
 
     <section class="info-panel">
-      <h2>🏆 常用入口与服务说明</h2>
-      <div class="points">
-        <div class="point"><strong>入口清楚</strong><span>发卡、租号、导航分得明白</span></div>
-        <div class="point"><strong>售后明确</strong><span>失效资源可以反馈处理</span></div>
-        <div class="point"><strong>商务合作</strong><span>机器人、网站、AI代办可咨询</span></div>
+      <div class="section-title">
+        <h2>常用入口与服务说明</h2>
+        <p>首页优先解决客户“去哪买、去哪租、去哪下载、去哪反馈、去哪合作”的问题。</p>
       </div>
-      <p>热门搜索：陪玩｜租号｜自动发卡网｜30级小号｜租号网站｜1元陪玩体验。<br>本站提供游戏相关资源、自动发卡和便捷入口，重点是清楚、轻量、容易找到。</p>
+      <div class="points">
+        <div class="point"><strong>入口清楚</strong><span>发卡、租号、导航分得明白，核心动作放在首屏可见位置。</span></div>
+        <div class="point"><strong>售后明确</strong><span>链接失效、资源更新、页面问题可以通过邮箱快速反馈处理。</span></div>
+        <div class="point"><strong>商务合作</strong><span>机器人、网站、AI 代办和小型项目维护可通过关于页面咨询。</span></div>
+      </div>
+      <p class="hero-copy" style="font-size: 14px; margin-top: 20px;">热门搜索：陪玩｜租号｜自动发卡网｜30级小号｜租号网站｜1元陪玩体验。</p>
       <div class="assist-links">
+        <a id="qunliao2" href="https://blog.xn--8pv109c.top/" target="_blank" rel="noopener noreferrer">新闻公告</a>
         <a href="/down/nav/">网址导航</a>
         <a href="mailto:xianyumht@gmail.com">问题反馈</a>
         <a href="/about.html">商务合作</a>
@@ -291,6 +709,22 @@
     </footer>
   </main>
 
+  <script type="module" src="./src/assets/js/theme-mode.min.js"></script>
+  <script type="module" src="./src/assets/js/language-switcher.min.js"></script>
+  <script type="module" src="./src/assets/js/home-i18n.js"></script>
+  <script type="module" src="./shared/page-guard.js"></script>
   <script type="module" src="./src/assets/app/config.js"></script>
+  <script>
+    document.querySelectorAll('.business-grid .entry-card[role="button"]').forEach((card, index) => {
+      const ids = ['qunliao1', 'qunliao3', 'qunliao4'];
+      card.addEventListener('click', () => document.getElementById(ids[index])?.click());
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          document.getElementById(ids[index])?.click();
+        }
+      });
+    });
+  </script>
 </body>
 </html>

@@ -18,6 +18,8 @@ export default defineConfig({
         server.middlewares.use((req, res, next) => {
           if (req.url.startsWith('/down/')) {
             req.url = req.url.replace('/down/', '/src/pages/');
+          } else if (req.url.startsWith('/assets/')) {
+            req.url = req.url.replace('/assets/', '/src/assets/');
           }
           next();
         });

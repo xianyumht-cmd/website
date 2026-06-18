@@ -150,6 +150,25 @@ window.txtSearch = function() {
     });
 };
 
+function bindSearchInput() {
+    var input = document.getElementById("search-text");
+    if (!input || input.dataset.searchBound === "1") return;
+    input.dataset.searchBound = "1";
+    input.addEventListener("input", window.txtSearch);
+    input.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            window.txtSearch();
+        }
+    });
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bindSearchInput);
+} else {
+    bindSearchInput();
+}
+
 /**
  * Safe Content Generation
  * Pure JS implementation, replacing Wasm
