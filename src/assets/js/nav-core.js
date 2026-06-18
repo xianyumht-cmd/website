@@ -338,27 +338,20 @@ function generateContentSafe(retryCount = 0) {
             contentSections.appendChild(document.createElement('br'));
         });
 
-        const runChunk = (deadline) => {
+        const runChunk = () => {
             const start = performance.now();
             while (tasks.length) {
-                if (deadline && deadline.timeRemaining && deadline.timeRemaining() < 8) break;
-                if (!deadline && performance.now() - start > 12) break;
                 const fn = tasks.shift();
                 fn && fn();
+                if (performance.now() - start > 12) break;
             }
             if (tasks.length) {
-                if ('requestIdleCallback' in window) {
-                    requestIdleCallback(runChunk, { timeout: 200 });
-                } else {
-                    setTimeout(runChunk, 0);
-                }
+                setTimeout(runChunk, 0);
             }
         };
 
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(runChunk, { timeout: 200 });
-        } else {
-            setTimeout(runChunk, 0);
-        }
+        // Run the first chunk immediately instead of waiting for requestIdleCallback.
+        // requestIdleCallback can be delayed on heavy pages, causing the content area to stay blank until tab focus changes.
+        runChunk();
     }
 }
