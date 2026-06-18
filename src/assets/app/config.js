@@ -8,7 +8,7 @@ const linkConfig = {
     qunliao2: 'https://blog.xn--8pv109c.top/',
     qunliao3: 'https://kkk.ewnco.cn/shop/99BA0CEF',
     qunliao4: 'down/nav/',
-    qunliao5: 'https://an.krlkm.cn/s/'
+    qunliao5: '/'
 };
 
 function openLink(url, target = '_blank') {
