@@ -1,8 +1,41 @@
 import '../../assets/css/nav-visual-enhance.css';
 
+function currentLang() {
+    return window.currentNavLanguage || (window.languageSwitcher && window.languageSwitcher.currentLanguage) || 'zh';
+}
+
+function text(key) {
+    const dict = {
+        zh: {
+            status: '状态',
+            version: '当前游戏版本',
+            updated: '更新时间',
+            next: '预计下版本',
+            feedback: '失效反馈邮箱',
+            resource: '资源',
+            resourceCount: '个资源',
+            resourceEntry: '资源入口',
+            codeIncluded: '含提取码'
+        },
+        en: {
+            status: 'Status',
+            version: 'Current Version',
+            updated: 'Updated',
+            next: 'Next Version',
+            feedback: 'Feedback Email',
+            resource: 'Resources',
+            resourceCount: 'resources',
+            resourceEntry: 'Resource Entry',
+            codeIncluded: 'Code Included'
+        }
+    };
+    const lang = currentLang();
+    return (dict[lang] && dict[lang][key]) || dict.zh[key] || key;
+}
+
 function safeText(value, fallback = '-') {
-    const text = String(value || '').trim();
-    return text || fallback;
+    const result = String(value || '').trim();
+    return result || fallback;
 }
 
 function makeStat(label, id, extraClass) {
@@ -34,12 +67,12 @@ function ensureStatusGrid() {
     grid = document.createElement('section');
     grid.id = 'nav-visual-status-grid';
     grid.className = 'nav-visual-status-grid';
-    grid.setAttribute('aria-label', 'status');
+    grid.setAttribute('aria-label', text('status'));
 
-    grid.appendChild(makeStat('当前游戏版本', 'nav-visual-version', 'is-blue'));
-    grid.appendChild(makeStat('更新时间', 'nav-visual-update', 'is-green'));
-    grid.appendChild(makeStat('预计下版本', 'nav-visual-next', 'is-yellow'));
-    grid.appendChild(makeStat('失效反馈邮箱', 'nav-visual-feedback', 'is-red'));
+    grid.appendChild(makeStat(text('version'), 'nav-visual-version', 'is-blue'));
+    grid.appendChild(makeStat(text('updated'), 'nav-visual-update', 'is-green'));
+    grid.appendChild(makeStat(text('next'), 'nav-visual-next', 'is-yellow'));
+    grid.appendChild(makeStat(text('feedback'), 'nav-visual-feedback', 'is-red'));
 
     const bulletin = document.getElementById('bulletin_box');
     if (bulletin && bulletin.nextSibling) {
@@ -56,7 +89,15 @@ function setText(id, value) {
 }
 
 function updateStatusGrid() {
-    if (!ensureStatusGrid()) return;
+    const grid = ensureStatusGrid();
+    if (!grid) return;
+
+    grid.setAttribute('aria-label', text('status'));
+    const labels = grid.querySelectorAll('.nav-visual-stat-label');
+    [text('version'), text('updated'), text('next'), text('feedback')].forEach((label, index) => {
+        if (labels[index]) labels[index].textContent = label;
+    });
+
     const info = (window.navData && window.navData.gameInfo) ? window.navData.gameInfo : {};
     setText('nav-visual-version', safeText(info.version));
     setText('nav-visual-update', safeText(info.updateDate));
@@ -64,15 +105,15 @@ function updateStatusGrid() {
     setText('nav-visual-feedback', safeText(info.feedbackEmail, 'xianyumht@gmail.com'));
 }
 
-function shortSectionName(title) {
-    return safeText(title, '资源').replace(/专区/g, '').replace(/区/g, '').trim() || '资源';
+function cleanSectionName(title) {
+    return safeText(title, text('resource')).replace(/专区|Zone|区/g, '').trim() || text('resource');
 }
 
 function sectionTitle(header) {
     if (!header) return '';
     const count = header.querySelector('.nav-section-count');
-    const text = header.textContent || '';
-    return count ? text.replace(count.textContent || '', '').trim() : text.trim();
+    const raw = header.textContent || '';
+    return count ? raw.replace(count.textContent || '', '').trim() : raw.trim();
 }
 
 function addTag(wrapper, label) {
@@ -87,23 +128,27 @@ function enhanceRow(header, row) {
     const cards = Array.from(row.querySelectorAll('.xe-widget'));
     if (!cards.length) return;
 
-    if (!header.querySelector('.nav-section-count')) {
-        const count = document.createElement('span');
+    let count = header.querySelector('.nav-section-count');
+    if (!count) {
+        count = document.createElement('span');
         count.className = 'nav-section-count';
-        count.textContent = `${cards.length} 个资源`;
         header.appendChild(count);
     }
+    count.textContent = currentLang() === 'en'
+        ? `${cards.length} ${text('resourceCount')}`
+        : `${cards.length} ${text('resourceCount')}`;
 
-    const groupName = shortSectionName(sectionTitle(header));
+    const groupName = cleanSectionName(sectionTitle(header));
     cards.forEach(card => {
-        if (card.dataset.navVisualEnhanced === '1') return;
-        card.dataset.navVisualEnhanced = '1';
+        const oldTags = card.querySelector('.nav-card-tags');
+        if (oldTags) oldTags.remove();
 
-        const text = card.textContent || '';
+        card.dataset.navVisualEnhanced = '1';
+        const cardText = card.textContent || '';
         const tags = document.createElement('div');
         tags.className = 'nav-card-tags';
         addTag(tags, groupName);
-        addTag(tags, /密码|提取码|访问码|解压码/i.test(text) ? '含提取码' : '资源入口');
+        addTag(tags, /密码|Password|提取码|访问码|解压码|code/i.test(cardText) ? text('codeIncluded') : text('resourceEntry'));
         card.appendChild(tags);
     });
 }
@@ -132,6 +177,7 @@ function init() {
         const observer = new MutationObserver(() => requestAnimationFrame(run));
         observer.observe(container, { childList: true, subtree: true });
     }
+    document.addEventListener('navDataUpdated', () => requestAnimationFrame(run));
     setTimeout(run, 300);
     setTimeout(run, 1000);
     setTimeout(run, 2200);

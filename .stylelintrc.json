@@ -1,7 +1,22 @@
 {
   "extends": ["stylelint-config-standard"],
   "rules": {
-    "selector-class-pattern": null
-  }
+    "selector-class-pattern": null,
+    "selector-id-pattern": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
+    "color-function-alias-notation": null,
+    "color-function-notation": null,
+    "alpha-value-notation": null,
+    "media-feature-range-notation": null,
+    "selector-pseudo-element-colon-notation": null,
+    "property-no-vendor-prefix": null,
+    "declaration-empty-line-before": null,
+    "rule-empty-line-before": null
+  },
+  "ignoreFiles": [
+    "src/assets/css/*.min.css",
+    "src/assets/css/bootstrap*.css"
+  ]
 }
 

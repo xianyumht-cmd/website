@@ -2,6 +2,8 @@ import { defineConfig } from '@playwright/test'
 
 export default defineConfig({
   testDir: './tests',
+  testIgnore: ['**/unit/**'],
+  workers: 1,
   timeout: 60_000,
   retries: 0,
   use: {
@@ -9,10 +11,10 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
   },
   webServer: {
-    command: 'node_modules\\.bin\\http-server.cmd -p 4173 -c-1 .',
+    command: 'npm run build && node_modules\\.bin\\vite.cmd preview --host 127.0.0.1 --port 4173',
     url: 'http://127.0.0.1:4173',
     reuseExistingServer: true,
-    timeout: 120_000,
+    timeout: 180_000,
   },
 })
 

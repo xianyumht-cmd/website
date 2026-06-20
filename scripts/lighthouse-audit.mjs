@@ -63,6 +63,7 @@ for (const entry of targets) {
 
   try {
     fs.appendFileSync(debugPath, `run ${entry.id} ${entry.url}\n`, 'utf8')
+    let timeoutId
     const runnerResult = await Promise.race([
       lighthouse(entry.url, {
         port: chrome.port,
@@ -70,8 +71,12 @@ for (const entry of targets) {
         onlyCategories: ['performance'],
         logLevel: 'error',
       }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('Lighthouse timeout')), 180000)),
-    ])
+      new Promise((_, reject) => {
+        timeoutId = setTimeout(() => reject(new Error('Lighthouse timeout')), 180000)
+      }),
+    ]).finally(() => {
+      clearTimeout(timeoutId)
+    })
     fs.appendFileSync(debugPath, `done ${entry.id}\n`, 'utf8')
 
     const audits = runnerResult?.lhr?.audits || {}

@@ -38,6 +38,7 @@
     <script>
     var _hmt = _hmt || [];
     (function() {
+      if (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname)) return;
       var hm = document.createElement("script");
       hm.src = "https://hm.baidu.com/hm.js?201ec7af011a8e9dc6b1b66ddb73b4db";
       var s = document.getElementsByTagName("script")[0]; 
@@ -59,6 +60,7 @@
         .sidebar-menu { width: 250px; background: #2c3e50; position: fixed; height: 100vh; z-index: 1000; }
         .main-content { margin-left: 250px; flex: 1; }
         .navbar { background: #fff; padding: 10px 20px; border-bottom: 1px solid #eee; }
+        #content-sections { min-height: 2200px; }
         .loading { display: none; }
         /* Language switcher button - now uses SVG icons */
         .fk_service_bx { background: #fff; }
@@ -72,11 +74,11 @@
         .changestyle { color: red; font-weight: 600; }
     </style>
     
-    <link rel="stylesheet" href="../../assets/css/style.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../../assets/css/dark.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../../assets/css/animation.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../../assets/css/mobile.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../../assets/css/style.min.css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/css/dark.min.css">
+    <link rel="stylesheet" href="../../assets/css/animation.min.css">
+    <link rel="stylesheet" href="../../assets/css/mobile.min.css">
     <noscript><link rel="stylesheet" href="../../assets/css/style.min.css"></noscript>
     <noscript><link rel="stylesheet" href="../../assets/css/bootstrap.min.css"></noscript>
     <noscript><link rel="stylesheet" href="../../assets/css/dark.min.css"></noscript>
@@ -175,7 +177,21 @@
                         <span>
                             <!-- Widget with Fallback -->
                             <span id="online_user_container">
-                                <script id="LA-DATA-WIDGET" crossorigin="anonymous" charset="UTF-8" src="https://v6-widget.51.la/v6/3OsinsCksDM34iaJ/quote.js?theme=0&f=12&display=0,1,0,0,0,0,0,0" onerror="document.getElementById('online_user_container').innerText='(统计加载中...)'"></script>
+                                <span id="online_user">最近活跃访客 0</span>
+                                <script>
+                                    (function() {
+                                        if (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname)) return;
+                                        var widget = document.createElement('script');
+                                        widget.id = 'LA-DATA-WIDGET';
+                                        widget.crossOrigin = 'anonymous';
+                                        widget.charset = 'UTF-8';
+                                        widget.src = 'https://v6-widget.51.la/v6/3OsinsCksDM34iaJ/quote.js?theme=0&f=12&display=0,1,0,0,0,0,0,0';
+                                        widget.onerror = function() {
+                                            document.getElementById('online_user_container').innerText = '(统计加载中...)';
+                                        };
+                                        document.getElementById('online_user_container').appendChild(widget);
+                                    })();
+                                </script>
                             </span>
                         </span>
                         
@@ -254,6 +270,14 @@
     <!-- Theme Mode and Language Toggle Buttons -->
     <div class="fk_service">
         <ul>
+            <li>
+                <div class="fk_service_box fk_service_top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" title="返回顶部">
+                    <span style="margin-right: 8px; display: inline-flex; align-items: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="18" height="18" fill="currentColor"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
+                    </span>
+                    <span class="fk_service_top_cont">返回顶部</span>
+                </div>
+            </li>
             <li>
                 <div class="fk_service_box fk_service_ax" onclick="themeMode.toggleMode()" title="切换主题模式">
                     <span id="theme-icon" style="margin-right: 8px; display: inline-flex; align-items: center;">

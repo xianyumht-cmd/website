@@ -1,6 +1,9 @@
 (function() {
     'use strict';
     var initialized = false;
+    function isLocalPreview() {
+        return /^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname);
+    }
     function initAnalytics() {
         if (initialized) return;
         initialized = true;
@@ -10,6 +13,10 @@
         }
     }
     function injectSdk() {
+        if (isLocalPreview()) {
+            initAnalytics();
+            return;
+        }
         if (document.getElementById('LA_COLLECT')) {
             initAnalytics();
             return;

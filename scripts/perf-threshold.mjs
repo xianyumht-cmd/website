@@ -25,7 +25,7 @@ function waitForHttp(url, timeoutMs) {
     const tick = () => {
       const req = http.get(url, (res) => {
         res.resume()
-        if (res.statusCode && res.statusCode < 500) return resolve()
+        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 400) return resolve()
         if (Date.now() - start > timeoutMs) return reject(new Error('server timeout'))
         setTimeout(tick, 250)
       })
@@ -78,7 +78,12 @@ const nodeExe = process.execPath
 const browser = findBrowser()
 if (!browser) throw new Error('No Chromium-based browser found. Set CHROME_PATH.')
 
-const server = spawn(nodeExe, ['node_modules/http-server/bin/http-server', '-p', '4173', '-c-1', '.'], {
+const distDir = path.join(repoRoot, 'dist')
+if (!fs.existsSync(path.join(distDir, 'down', 'nav', 'index.html'))) {
+  throw new Error('dist/down/nav/index.html not found. Run npm run build before performance tests.')
+}
+
+const server = spawn(nodeExe, ['node_modules/http-server/bin/http-server', '-p', '4173', '-c-1', distDir], {
   cwd: repoRoot,
   env: { ...process.env, CHROME_PATH: browser },
   stdio: 'ignore',

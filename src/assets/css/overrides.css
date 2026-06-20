@@ -576,9 +576,14 @@ a, i, span, p, h1, h2, h3, h4, h5, h6 {
 .fk_service_box,
 .fk_service_ax,
 .fk_service_bx {
-    min-width: 128px;
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 52px !important;
+    min-width: 52px;
     height: 42px;
-    padding: 0 13px;
+    padding: 0 !important;
     border-radius: 999px !important;
     color: #eef4ff !important;
     background: rgba(255,255,255,.105) !important;
@@ -587,11 +592,148 @@ a, i, span, p, h1, h2, h3, h4, h5, h6 {
     backdrop-filter: blur(18px);
 }
 
+.fk_service_box > span:first-child {
+    margin-right: 0 !important;
+}
+
+.fk_service {
+    position: fixed !important;
+    top: 50% !important;
+    right: 24px !important;
+    transform: translateY(-50%) !important;
+    z-index: 10000 !important;
+    width: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    pointer-events: auto;
+}
+
+.fk_service ul {
+    position: static !important;
+    right: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 10px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.fk_service li {
+    list-style: none !important;
+    margin: 0 !important;
+}
+
+.fk_service_top {
+    cursor: pointer;
+}
+
+.fk_service_top_cont,
 .fk_service_ax_cont,
 .fk_service_bx_cont,
 #theme-text,
 #lang-text {
-    color: #eef4ff !important;
+    position: absolute !important;
+    top: 50% !important;
+    right: calc(100% + 12px) !important;
+    display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 92px !important;
+    height: 36px !important;
+    padding: 0 14px !important;
+    border-radius: 999px !important;
+    color: #1f2937 !important;
+    background: rgba(255,255,255,.94) !important;
+    border: 1px solid rgba(226,232,240,.9) !important;
+    box-shadow: 0 14px 32px rgba(0,0,0,.24) !important;
+    font-size: 13px !important;
+    line-height: 36px !important;
+    white-space: nowrap !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+}
+
+.fk_service_box:hover .fk_service_top_cont,
+.fk_service_box:hover .fk_service_ax_cont,
+.fk_service_box:hover .fk_service_bx_cont,
+.fk_service_box:hover #theme-text,
+.fk_service_box:hover #lang-text {
+    display: inline-flex !important;
+}
+
+body.page-body .fk_service .fk_service_box .fk_service_top_cont,
+body.page-body .fk_service .fk_service_box .fk_service_ax_cont,
+body.page-body .fk_service .fk_service_box .fk_service_bx_cont,
+body.page-body .fk_service .fk_service_box #theme-text,
+body.page-body .fk_service .fk_service_box #lang-text {
+    position: absolute !important;
+    top: 50% !important;
+    right: calc(100% + 12px) !important;
+    left: auto !important;
+    display: none !important;
+    width: auto !important;
+    min-width: 92px !important;
+    height: 36px !important;
+    margin: 0 !important;
+    padding: 0 14px !important;
+    border-radius: 999px !important;
+    color: #1f2937 !important;
+    background: rgba(255,255,255,.94) !important;
+    border: 1px solid rgba(226,232,240,.9) !important;
+    box-shadow: 0 14px 32px rgba(0,0,0,.24) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 36px !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    transform: translateY(-50%) !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+    animation: none !important;
+}
+
+body.page-body .fk_service .fk_service_box:hover .fk_service_top_cont,
+body.page-body .fk_service .fk_service_box:hover .fk_service_ax_cont,
+body.page-body .fk_service .fk_service_box:hover .fk_service_bx_cont,
+body.page-body .fk_service .fk_service_box:hover #theme-text,
+body.page-body .fk_service .fk_service_box:hover #lang-text {
+    display: inline-flex !important;
+}
+
+body.page-body .fk_service .fk_service_top .fk_service_top_cont,
+body.page-body .fk_service .fk_service_top:hover .fk_service_top_cont {
+    display: none !important;
+}
+
+body.page-body .fk_service .fk_service_top::after {
+    content: attr(data-tooltip);
+    position: absolute !important;
+    top: 50% !important;
+    right: calc(100% + 12px) !important;
+    display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 92px !important;
+    height: 36px !important;
+    padding: 0 14px !important;
+    border-radius: 999px !important;
+    color: #1f2937 !important;
+    background: rgba(255,255,255,.94) !important;
+    border: 1px solid rgba(226,232,240,.9) !important;
+    box-shadow: 0 14px 32px rgba(0,0,0,.24) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 36px !important;
+    white-space: nowrap !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+}
+
+body.page-body .fk_service .fk_service_top:hover::after {
+    display: inline-flex !important;
 }
 
 @media (max-width: 1080px) {
@@ -649,7 +791,10 @@ a, i, span, p, h1, h2, h3, h4, h5, h6 {
     }
 
     .fk_service {
-        display: none !important;
+        display: flex !important;
+        right: 12px !important;
+        top: 50% !important;
+        padding-right: 0 !important;
     }
 }
 

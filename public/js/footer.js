@@ -4,7 +4,7 @@
     // 智能打开链接函数：电脑端弹窗，移动端新标签
     // 2026-02-15 更新：恢复标准 window.open 以解决 HTTP/2 协议错误
     window.openSmartLink = function(url) {
-        window.open(url, '_blank');
+        window.open(url, '_blank', 'noopener,noreferrer');
     };
 
     const footerHTML = `
@@ -25,9 +25,9 @@
         </div>
         <div style="margin-bottom: 5px; font-size: 12px; color: #999; transform: scale(0.9);">
             友情链接：
-            <a href="https://www.baidu.com" target="_blank" rel="nofollow" style="color: #999; text-decoration: none; margin: 0 5px;">百度搜索</a>
-            <a href="https://www.so.com" target="_blank" rel="nofollow" style="color: #999; text-decoration: none; margin: 0 5px;">360搜索</a>
-            <a href="https://www.sogou.com" target="_blank" rel="nofollow" style="color: #999; text-decoration: none; margin: 0 5px;">搜狗搜索</a>
+            <a href="https://www.baidu.com" target="_blank" rel="nofollow noopener noreferrer" style="color: #999; text-decoration: none; margin: 0 5px;">百度搜索</a>
+            <a href="https://www.so.com" target="_blank" rel="nofollow noopener noreferrer" style="color: #999; text-decoration: none; margin: 0 5px;">360搜索</a>
+            <a href="https://www.sogou.com" target="_blank" rel="nofollow noopener noreferrer" style="color: #999; text-decoration: none; margin: 0 5px;">搜狗搜索</a>
         </div>
         <p style="margin: 0; font-size: 12px; opacity: 0.8; transform: scale(0.8); color: #999;">
             <span id="fuqiang">富强</span>、<span id="minzhu">民主</span>、<span id="wenming">文明</span>、<span id="hexie">和谐</span>，
@@ -56,4 +56,10 @@
         footerContainer.innerHTML = footerHTML;
         document.body.appendChild(footerContainer);
     }
+    document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
+        var rel = new Set((link.getAttribute('rel') || '').split(/\s+/).filter(Boolean));
+        rel.add('noopener');
+        rel.add('noreferrer');
+        link.setAttribute('rel', Array.from(rel).join(' '));
+    });
 })();

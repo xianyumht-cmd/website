@@ -188,12 +188,6 @@ function patchNavData() {
         translations.zh.sections = patchZhSections(translations.zh.sections);
     }
 
-    // Keep the English switch from showing stale/old resource links.
-    // Resource names are product names, so Chinese names are acceptable here.
-    if (translations.en && translations.zh && Array.isArray(translations.zh.sections)) {
-        translations.en.sections = cloneSections(translations.zh.sections);
-    }
-
     Object.values(translations).forEach(data => {
         patchUrlsInSections(data && data.sections);
     });
