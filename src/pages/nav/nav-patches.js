@@ -90,7 +90,8 @@ function patchZhSections(sections) {
         makeItem("MMG", "飞鸡盘下载", "https://share.feijipan.com/s/fv27ZgPh", "M"),
         makeItem("DC", "提取码：DC66", "https://share.feijipan.com/s/xiark1VW?code=DC66", "DC"),
         makeItem("鲨鱼", "鲨鱼", "https://wwbuq.lanzouu.com/b00jezzfej", "鲨"),
-        makeItem("KR", "密码：123", "https://wwbgz.lanzouu.com/b019vtbwdi", "KR")
+        makeItem("KR", "密码：123", "https://wwbgz.lanzouu.com/b019vtbwdi", "KR"),
+        makeItem("传奇", "密码：efbk", "https://wwamk.lanzouu.com/b01d70ikvc", "传")
     ]);
 
     const weeklySection = upsertSection(sections, "周卡专区", "周卡专区", "fa fa-google-wallet", [
