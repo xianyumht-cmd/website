@@ -149,7 +149,8 @@ function patchZhSections(sections) {
         makeItem("JJ", "密码：6666", "https://ly888.lanzoue.com/b0j1fvgzi", "JJ"),
         makeItem("GTA", "密码：666", "https://wud.lanzoul.com/b00hrkm3pg", "G"),
         makeItem("红狼", "密码：123", "https://wwbtd.lanzoul.com/b0188d9lli", "红"),
-        makeItem("游龙", "密码：5566", "https://wwaot.lanzn.com/s/89237fas", "游")
+        makeItem("游龙", "密码：5566", "https://wwaot.lanzn.com/s/89237fas", "游"),
+        makeItem("RANGER", "下载地址", "https://wwayq.lanzouq.com/b00odz9eda", "R")
     ]);
 
     upsertSection(sections, "PUBG专区", "PUBG专区", "fa fa-gamepad", [
