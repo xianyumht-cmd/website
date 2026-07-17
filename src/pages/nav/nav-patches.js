@@ -78,19 +78,15 @@ function patchZhSections(sections) {
 
     upsertSection(sections, "天卡专区", "天卡专区", "fa fa-book", [
         makeItem("蓝鲸", "蓝鲸", "https://wwbpx.lanzoum.com/b00mqcafbi", "蓝"),
-        makeItem("space", "space", "https://wwayq.lanzouq.com/b00odtjzsf", "S"),
         makeItem("FY", "FY", "https://wwbls.lanzouq.com/b0rb4uivc", "FY"),
+        makeItem("acme", "密码：8888", "https://wwer.ysupan.com", "A"),
         makeItem("如意", "如意", "https://wwbpx.lanzoum.com/b00mqcagdg", "如"),
         makeItem("sgpro", "sgpro", "http://b-bu.cn/s/porobaobao", "S"),
-        makeItem("OK", "OK", "https://wwus.lanzouu.com/b0zku7ocj", "OK"),
-        makeItem("###", "###", "https://wwayq.lanzouq.com/b00odvegoj", "#"),
-        makeItem("TOP", "密码：123", "https://wwazw.lanzouu.com/b019vtbk0d", "T"),
+        makeItem("Strat", "蓝奏下载", "https://www.lanwp.com/b019vxf7mf", "S"),
         makeItem("DJ", "密码：123", "https://wwaym.lanzoub.com/s/DJYYDS", "DJ"),
         makeItem("FE", "密码：bp03", "https://wwarw.lanzn.com/b00l2sy5re", "FE"),
-        makeItem("MMG", "飞鸡盘下载", "https://share.feijipan.com/s/fv27ZgPh", "M"),
         makeItem("DC", "提取码：DC66", "https://share.feijipan.com/s/xiark1VW?code=DC66", "DC"),
         makeItem("鲨鱼", "鲨鱼", "https://wwbuq.lanzouu.com/b00jezzfej", "鲨"),
-        makeItem("KR", "密码：123", "https://wwbgz.lanzouu.com/b019vtbwdi", "KR"),
         makeItem("传奇", "密码：efbk", "https://wwamk.lanzouu.com/b01d70ikvc", "传"),
         makeItem("yun", "密码：yun", "https://wwus.lanzouu.com/s/yunnb", "云")
     ]);
@@ -177,6 +173,28 @@ function patchZhSections(sections) {
     return sections;
 }
 
+function patchEnSections(sections) {
+    if (!Array.isArray(sections)) return sections;
+
+    upsertSection(sections, "天卡专区", "Daily Card Zone", "fa fa-book", [
+        makeItem("Blue Whale", "Blue Whale", "https://wwbpx.lanzoum.com/b00mqcafbi", "B"),
+        makeItem("FY", "FY", "https://wwbls.lanzouq.com/b0rb4uivc", "FY"),
+        makeItem("acme", "Password: 8888", "https://wwer.ysupan.com", "A"),
+        makeItem("Ruyi", "Ruyi", "https://wwbpx.lanzoum.com/b00mqcagdg", "R"),
+        makeItem("sgpro", "sgpro", "http://b-bu.cn/s/porobaobao", "S"),
+        makeItem("Strat", "Lanzou download", "https://www.lanwp.com/b019vxf7mf", "S"),
+        makeItem("DJ", "Password: 123", "https://wwaym.lanzoub.com/s/DJYYDS", "DJ"),
+        makeItem("FE", "Password: bp03", "https://wwarw.lanzn.com/b00l2sy5re", "FE"),
+        makeItem("DC", "Code: DC66", "https://share.feijipan.com/s/xiark1VW?code=DC66", "DC"),
+        makeItem("Shark", "Shark", "https://wwbuq.lanzouu.com/b00jezzfej", "S"),
+        makeItem("Legend", "Password: efbk", "https://wwamk.lanzouu.com/b01d70ikvc", "L"),
+        makeItem("yun", "Password: yun", "https://wwus.lanzouu.com/s/yunnb", "Y")
+    ]);
+
+    patchUrlsInSections(sections);
+    return sections;
+}
+
 function patchNavData() {
     const translations = window.navDataTranslations;
     if (!translations) return;
@@ -189,6 +207,10 @@ function patchNavData() {
 
     if (translations.zh && Array.isArray(translations.zh.sections)) {
         translations.zh.sections = patchZhSections(translations.zh.sections);
+    }
+
+    if (translations.en && Array.isArray(translations.en.sections)) {
+        translations.en.sections = patchEnSections(translations.en.sections);
     }
 
     Object.values(translations).forEach(data => {
