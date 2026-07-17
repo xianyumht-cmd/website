@@ -3,14 +3,14 @@
 
 const patchedGameInfo = {
     zh: {
-        version: "26.13",
-        updateDate: "2026年6月25日",
-        nextUpdateDate: "2026年7月16日"
+        version: "26.14",
+        updateDate: "2026年7月16日",
+        nextUpdateDate: "2026年7月30日"
     },
     en: {
-        version: "26.13",
-        updateDate: "June 25, 2026",
-        nextUpdateDate: "July 16, 2026"
+        version: "26.14",
+        updateDate: "July 16, 2026",
+        nextUpdateDate: "July 30, 2026"
     }
 };
 

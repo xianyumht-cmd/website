@@ -67,6 +67,29 @@ function navText(key) {
     return (navUiText[lang] && navUiText[lang][key]) || navUiText.zh[key] || key;
 }
 
+function formatVersionDate(value) {
+    const raw = String(value || '').trim();
+    const match = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!match) return raw;
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    if (getCurrentNavLanguage() === 'en') {
+        const names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return `${names[month - 1]} ${day}, ${year}`;
+    }
+    return `${year}年${month}月${day}日`;
+}
+
+function parseVersionDate(value) {
+    const raw = String(value || '').trim();
+    const zhMatch = raw.match(/^(\d{4})年(\d{1,2})月(\d{1,2})日$/);
+    if (zhMatch) {
+        return new Date(`${zhMatch[1]}-${zhMatch[2].padStart(2, '0')}-${zhMatch[3].padStart(2, '0')}`);
+    }
+    return new Date(raw);
+}
+
 function applyNavStaticLanguage() {
     const homeText = document.querySelector('#navbar .fa-house + span');
     if (homeText) homeText.textContent = navText('home');
@@ -139,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function resolveLastUpdateDate() {
         try {
             if (window.navData && window.navData.gameInfo && window.navData.gameInfo.updateDate) {
-                var parsed = new Date(window.navData.gameInfo.updateDate);
+                var parsed = parseVersionDate(window.navData.gameInfo.updateDate);
                 if (!isNaN(parsed.getTime())) lastUpdateDate = parsed;
             }
         } catch (e) {}
@@ -220,8 +243,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (window.navData && window.navData.gameInfo) {
                         window.navData.gameInfo.version = data.version;
-                        window.navData.gameInfo.updateDate = data.update;
-                        window.navData.gameInfo.nextUpdateDate = data.next;
+                        window.navData.gameInfo.updateDate = formatVersionDate(data.update);
+                        window.navData.gameInfo.nextUpdateDate = formatVersionDate(data.next);
                     }
                 })
                 .catch(() => {});
