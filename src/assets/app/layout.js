@@ -6,7 +6,6 @@ const text = {
     home: '首页',
     shop: '超凡发卡',
     nav: '资源导航',
-    news: '新闻公告',
     business: '商务合作',
     privacy: '隐私政策',
     feedback: '问题反馈',
@@ -16,7 +15,6 @@ const text = {
     home: 'Home',
     shop: 'Card Shop',
     nav: 'Resources',
-    news: 'News',
     business: 'Business',
     privacy: 'Privacy',
     feedback: 'Feedback',
@@ -43,7 +41,6 @@ function headerMarkup(language) {
         <a href="${links.home}">${labels.home}</a>
         <a href="${links.shop}"${externalAttributes(links.shop)}>${labels.shop}</a>
         <a href="${links.nav}">${labels.nav}</a>
-        <a href="${links.news}">${labels.news}</a>
         <a href="${links.business}">${labels.business}</a>
       </nav>
     </div>
@@ -64,7 +61,6 @@ function footerMarkup(language) {
         <a href="${links.shop}"${externalAttributes(links.shop)}>${labels.shop}</a>
         <a href="mailto:${siteConfig.site.email}">${labels.feedback}</a>
         <a href="${links.nav}">${labels.nav}</a>
-        <a href="${links.news}">${labels.news}</a>
         <a href="${links.business}">${labels.business}</a>
         <a href="${links.privacy}">${labels.privacy}</a>
         <a href="${links.pacman}">${labels.pacman}</a>

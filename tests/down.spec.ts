@@ -39,3 +39,50 @@ test('down/tdr 控制台零报错且无 4xx/5xx', async ({ page, baseURL }) => {
   await assertNoIssues(page, `${baseURL}/down/tdr/index.html`)
 })
 
+test('Nav category drawer is open by default, scrollable, and collapsible', async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 1256, height: 920 })
+  await page.goto(`${baseURL}/down/nav/index.html`, { waitUntil: 'load' })
+  await page.waitForSelector('#main-menu li')
+
+  const desktopToggle = page.locator('.resource-sidebar-toggle')
+  const menu = page.locator('#main-menu')
+
+  await expect(desktopToggle).toBeVisible()
+  await expect(desktopToggle).toHaveAttribute('aria-expanded', 'true')
+
+  const desktopMenu = await menu.evaluate((element) => ({
+    clientHeight: element.clientHeight,
+    scrollHeight: element.scrollHeight,
+    overflowY: getComputedStyle(element).overflowY,
+  }))
+  expect(desktopMenu.scrollHeight).toBeGreaterThan(desktopMenu.clientHeight)
+  expect(desktopMenu.overflowY).toBe('auto')
+
+  await desktopToggle.click()
+  await expect(page.locator('.page-container')).toHaveClass(/resource-sidebar-closed/)
+  await expect(desktopToggle).toHaveAttribute('aria-expanded', 'false')
+
+  await desktopToggle.click()
+  await expect(page.locator('.page-container')).not.toHaveClass(/resource-sidebar-closed/)
+
+  await page.setViewportSize({ width: 375, height: 667 })
+  await page.reload({ waitUntil: 'load' })
+  await page.waitForSelector('#main-menu li')
+
+  const mobileToggle = page.locator('[data-toggle="mobile-menu"]')
+  await expect(mobileToggle).toBeVisible()
+  await expect(mobileToggle).toHaveAttribute('aria-expanded', 'true')
+
+  const mobileMenu = await menu.evaluate((element) => ({
+    clientHeight: element.clientHeight,
+    scrollHeight: element.scrollHeight,
+    overflowY: getComputedStyle(element).overflowY,
+  }))
+  expect(mobileMenu.scrollHeight).toBeGreaterThan(mobileMenu.clientHeight)
+  expect(mobileMenu.overflowY).toBe('auto')
+
+  await mobileToggle.click()
+  await expect(menu).toBeHidden()
+  await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
+})
+

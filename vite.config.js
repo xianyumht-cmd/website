@@ -28,7 +28,6 @@ export default defineConfig({
       'src/pages/nav/index.html',
       'src/pages/games/index.html',
       'src/pages/tdr/index.html',
-      'src/pages/news/lol-patch-26-3.html',
       'about.html',
       'privacy.html',
       '404.html'
@@ -44,7 +43,6 @@ export default defineConfig({
         nav: resolve(__dirname, 'src/pages/nav/index.html'),
         games: resolve(__dirname, 'src/pages/games/index.html'),
         tdr: resolve(__dirname, 'src/pages/tdr/index.html'),
-        newsLolPatch263: resolve(__dirname, 'src/pages/news/lol-patch-26-3.html'),
         privacy: resolve(__dirname, 'privacy.html'),
         about: resolve(__dirname, 'about.html'),
         notFound: resolve(__dirname, '404.html')

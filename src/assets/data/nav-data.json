@@ -20,6 +20,13 @@
             "tooltip": "论坛"
           },
           {
+            "title": "游戏资源",
+            "description": "游戏工具、账号服务与官方支持入口",
+            "avatar": "游",
+            "url": "/down/games/",
+            "tooltip": "游戏资源"
+          },
+          {
             "title": "4件套+DX修复+工具盒子",
             "description": "专业的纯C++语言编写的清理工具，与必备组件",
             "avatar": "清",
@@ -243,6 +250,13 @@
             "avatar": "News",
             "url": "https://xn--8pv109c.top/blog/",
             "tooltip": "News & Announcements"
+          },
+          {
+            "title": "Game Resources",
+            "description": "Game tools, account services, and official support",
+            "avatar": "Game",
+            "url": "/down/games/",
+            "tooltip": "Game Resources"
           },
           {
             "title": "Raylink",
