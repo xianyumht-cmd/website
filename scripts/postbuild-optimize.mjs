@@ -2,9 +2,6 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { gzipSync, brotliCompressSync, constants as zlibConstants } from 'node:zlib'
-import { minify as minifyHtml } from 'html-minifier-terser'
-import CleanCSS from 'clean-css'
-import { minify as minifyJs } from 'terser'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distDir = path.resolve(__dirname, '../dist')
@@ -24,34 +21,6 @@ function walk(dir) {
     }
   }
   return result
-}
-
-async function minifyByType(filePath, content) {
-  const ext = path.extname(filePath).toLowerCase()
-  if (ext === '.js') {
-    const output = await minifyJs(content, {
-      compress: { drop_console: true, drop_debugger: true },
-      mangle: true,
-      format: { comments: false }
-    })
-    return output.code || content
-  }
-  if (ext === '.css') {
-    const output = new CleanCSS({ level: 2 }).minify(content)
-    return output.styles || content
-  }
-  if (ext === '.html') {
-    return minifyHtml(content, {
-      collapseWhitespace: true,
-      removeComments: true,
-      minifyCSS: true,
-      minifyJS: true,
-      removeRedundantAttributes: true,
-      removeEmptyAttributes: true,
-      useShortDoctype: true
-    })
-  }
-  return content
 }
 
 function writeCompressedVariants(filePath, contentBuffer) {
@@ -95,11 +64,7 @@ async function run() {
     }
     if (!textExtensions.has(ext)) continue
 
-    const original = fs.readFileSync(filePath, 'utf8')
-    const minified = await minifyByType(filePath, original)
-    const finalContent = minified.length <= original.length ? minified : original
-    fs.writeFileSync(filePath, finalContent, 'utf8')
-    const rawBuffer = Buffer.from(finalContent, 'utf8')
+    const rawBuffer = fs.readFileSync(filePath)
     const { gzSize, brSize } = writeCompressedVariants(filePath, rawBuffer)
 
     const typeKey = ext.slice(1)

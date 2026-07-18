@@ -27,12 +27,12 @@ if (!(Test-Path "dist")) {
     exit 1
 }
 
-# Ensure anti-debug.js exists in dist
-$AntiDebugSource = "shared\anti-debug.js"
-$AntiDebugDist = "dist\anti-debug.js"
-if (Test-Path $AntiDebugSource) {
-    Copy-Item $AntiDebugSource $AntiDebugDist -Force
-    Write-Host "Ensured anti-debug.js is copied to build directory"
+# Ensure the shared page guard exists for public pages.
+$PageGuardSource = "shared\page-guard.js"
+$PageGuardDist = "dist\page-guard.js"
+if (Test-Path $PageGuardSource) {
+    Copy-Item $PageGuardSource $PageGuardDist -Force
+    Write-Host "Ensured page-guard.js is copied to build directory"
 }
 
 Write-Host "`n>>> 2. Preparing for deployment..."

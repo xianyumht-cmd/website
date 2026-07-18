@@ -11,129 +11,7 @@ const getNavData = () => {
     return window.navData;
 };
 
-const getCurrentNavLanguage = () => window.currentNavLanguage || (window.languageSwitcher && window.languageSwitcher.currentLanguage) || "zh";
-
-const navUiText = {
-    zh: {
-        updateTime: "更新时间：",
-        currentVersion: "当前游戏版本:",
-        updatedAt: "更新时间:",
-        nextUpdate: "预计下版本更新时间:",
-        feedbackEmail: "未找到新FF或地址失效反馈邮箱:",
-        searchPlaceholder: "输入关键词，自动筛选资源...",
-        notice: "页面将永久存在，失效请邮箱反馈",
-        searchLabel: "搜索",
-        home: "主站",
-        visitors: "最近活跃访客",
-        topButton: "返回顶部",
-        themeTitle: "切换主题模式",
-        languageTitle: "切换语言",
-        switchToEnglish: "Switch to English",
-        themeAuto: "自动模式",
-        themeLight: "浅色模式",
-        themeDark: "深色模式",
-        justUpdated: "刚刚更新",
-        minuteAgo: "分钟前更新",
-        hourAgo: "小时前更新",
-        dayAgo: "天前更新"
-    },
-    en: {
-        updateTime: "Updated: ",
-        currentVersion: "Current game version:",
-        updatedAt: "Updated:",
-        nextUpdate: "Expected next update:",
-        feedbackEmail: "Missing new FF or invalid link feedback:",
-        searchPlaceholder: "Enter keywords to filter resources...",
-        notice: "This page will remain available. Please report invalid links by email.",
-        searchLabel: "Search",
-        home: "Home",
-        visitors: "Recent visitors",
-        topButton: "Back to top",
-        themeTitle: "Switch theme mode",
-        languageTitle: "Switch language",
-        switchToChinese: "Switch to Chinese",
-        themeAuto: "Auto mode",
-        themeLight: "Light mode",
-        themeDark: "Dark mode",
-        justUpdated: "Just updated",
-        minuteAgo: " minutes ago",
-        hourAgo: " hours ago",
-        dayAgo: " days ago"
-    }
-};
-
-function navText(key) {
-    const lang = getCurrentNavLanguage();
-    return (navUiText[lang] && navUiText[lang][key]) || navUiText.zh[key] || key;
-}
-
-function formatVersionDate(value) {
-    const raw = String(value || '').trim();
-    const match = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-    if (!match) return raw;
-    const year = Number(match[1]);
-    const month = Number(match[2]);
-    const day = Number(match[3]);
-    if (getCurrentNavLanguage() === 'en') {
-        const names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        return `${names[month - 1]} ${day}, ${year}`;
-    }
-    return `${year}年${month}月${day}日`;
-}
-
-function parseVersionDate(value) {
-    const raw = String(value || '').trim();
-    const zhMatch = raw.match(/^(\d{4})年(\d{1,2})月(\d{1,2})日$/);
-    if (zhMatch) {
-        return new Date(`${zhMatch[1]}-${zhMatch[2].padStart(2, '0')}-${zhMatch[3].padStart(2, '0')}`);
-    }
-    return new Date(raw);
-}
-
-function applyNavStaticLanguage() {
-    const homeText = document.querySelector('#navbar .fa-house + span');
-    if (homeText) homeText.textContent = navText('home');
-
-    const visitorContainer = document.getElementById('online_user_container');
-    if (visitorContainer) {
-        const count = (visitorContainer.textContent || '').match(/\d+/);
-        visitorContainer.textContent = count ? `${navText('visitors')} ${count[0]}` : navText('visitors');
-    }
-
-    const updateLabel = document.querySelector('#navbar .fa-clock-o + span');
-    if (updateLabel) updateLabel.textContent = navText('updateTime');
-
-    const searchText = document.getElementById('search-text');
-    if (searchText) searchText.placeholder = " " + navText('searchPlaceholder');
-
-    const searchButton = document.querySelector('#ss button');
-    if (searchButton) searchButton.setAttribute('aria-label', navText('searchLabel'));
-
-    const notice = document.querySelector('#notice li');
-    if (notice) notice.textContent = navText('notice');
-
-    const lang = getCurrentNavLanguage();
-    const topButton = document.querySelector('.fk_service_top');
-    if (topButton) {
-        topButton.title = navText('topButton');
-        topButton.setAttribute('data-tooltip', navText('topButton'));
-    }
-
-    const themeButton = document.querySelector('.fk_service_ax');
-    if (themeButton) themeButton.title = navText('themeTitle');
-
-    const langButton = document.querySelector('.fk_service_bx');
-    if (langButton) langButton.title = navText('languageTitle');
-
-    const langText = document.getElementById('lang-text');
-    if (langText) langText.textContent = lang === 'zh' ? navText('switchToEnglish') : navText('switchToChinese');
-
-    const themeText = document.getElementById('theme-text');
-    if (themeText && window.themeMode) {
-        const modeKey = window.themeMode.current === 'light' ? 'themeLight' : window.themeMode.current === 'dark' ? 'themeDark' : 'themeAuto';
-        themeText.textContent = navText(modeKey);
-    }
-}
+import { applyNavStaticLanguage, formatVersionDate, getCurrentNavLanguage, navText, parseVersionDate } from './nav-i18n.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     // Clock Functionality
@@ -285,20 +163,78 @@ window.txtSearch = function() {
     var input = document.getElementById("search-text");
     if (!input) return;
     var txt = String(input.value || "").trim().toLowerCase();
-    var cards = document.querySelectorAll(".col-sm-3");
-    if (!txt) {
-        cards.forEach(function(el) { el.style.display = ""; });
-        return;
-    }
-    cards.forEach(function(el) {
-        var t = (el.textContent || "").toLowerCase();
-        el.style.display = t.indexOf(txt) >= 0 ? "" : "none";
+    var sections = document.querySelectorAll("#content-sections .resource-section");
+    var visibleCount = 0;
+    var totalCount = 0;
+
+    sections.forEach(function(section) {
+        var sectionMatches = 0;
+        section.querySelectorAll(".col-sm-3").forEach(function(card) {
+            totalCount += 1;
+            var cardText = (card.textContent || "").toLowerCase();
+            var matched = !txt || cardText.indexOf(txt) >= 0;
+            card.hidden = !matched;
+            if (matched) {
+                sectionMatches += 1;
+                visibleCount += 1;
+            }
+        });
+        section.hidden = Boolean(txt) && sectionMatches === 0;
     });
+
+    var clearButton = document.getElementById("search-clear");
+    if (clearButton) {
+        clearButton.hidden = !txt;
+        clearButton.textContent = getCurrentNavLanguage() === "en" ? "Clear" : "清除";
+        clearButton.setAttribute("aria-label", getCurrentNavLanguage() === "en" ? "Clear search" : "清除搜索");
+    }
+
+    var status = document.getElementById("search-result-status");
+    if (status) {
+        var isEnglish = getCurrentNavLanguage() === "en";
+        status.classList.toggle("is-active", Boolean(txt));
+        status.textContent = txt
+            ? (isEnglish ? `${visibleCount} matches for “${input.value.trim()}”` : `找到 ${visibleCount} 个与“${input.value.trim()}”相关的资源`)
+            : (isEnglish ? `${totalCount} resources indexed` : `已收录 ${totalCount} 个资源，可直接搜索或按分类浏览`);
+    }
 };
+
+function ensureSearchExperience() {
+    var search = document.getElementById("search");
+    var input = document.getElementById("search-text");
+    var inputShell = document.getElementById("ss");
+    if (!search || !input || !inputShell) return;
+
+    if (!document.getElementById("search-clear")) {
+        var clearButton = document.createElement("button");
+        clearButton.id = "search-clear";
+        clearButton.className = "search-clear";
+        clearButton.type = "button";
+        clearButton.hidden = true;
+        clearButton.setAttribute("aria-label", "清除搜索");
+        clearButton.textContent = "清除";
+        clearButton.addEventListener("click", function() {
+            input.value = "";
+            window.txtSearch();
+            input.focus();
+        });
+        inputShell.insertBefore(clearButton, inputShell.querySelector("button"));
+    }
+
+    if (!document.getElementById("search-result-status")) {
+        var status = document.createElement("div");
+        status.id = "search-result-status";
+        status.className = "search-result-status";
+        status.setAttribute("role", "status");
+        status.setAttribute("aria-live", "polite");
+        search.appendChild(status);
+    }
+}
 
 function bindSearchInput() {
     var input = document.getElementById("search-text");
     if (!input || input.dataset.searchBound === "1") return;
+    ensureSearchExperience();
     input.dataset.searchBound = "1";
     input.addEventListener("input", window.txtSearch);
     input.addEventListener("keydown", function(event) {
@@ -410,6 +346,10 @@ function generateContentSafe(retryCount = 0) {
         contentSections.textContent = '';
         
         const tasks = navData.sections.filter(section => section.items && section.items.length > 0).map(section => () => {
+            const sectionElement = document.createElement('section');
+            sectionElement.className = 'resource-section';
+            sectionElement.dataset.sectionId = section.id;
+
             const sectionHeader = document.createElement('h4');
             sectionHeader.className = 'text-gray';
             
@@ -431,6 +371,15 @@ function generateContentSafe(retryCount = 0) {
                 const box = document.createElement('div');
                 box.className = 'box2 label-info xe-conversations xe-widget';
                 box.onclick = () => window.open(item.url, '_blank', 'noopener,noreferrer');
+                box.tabIndex = 0;
+                box.setAttribute('role', 'link');
+                box.setAttribute('aria-label', `${item.title}：${item.description}`);
+                box.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        box.click();
+                    }
+                });
                 box.setAttribute('data-original-title', item.tooltip);
                 box.setAttribute('data-placement', 'bottom');
                 box.setAttribute('data-toggle', 'tooltip');
@@ -499,9 +448,9 @@ function generateContentSafe(retryCount = 0) {
                 row.appendChild(col);
             });
             
-            contentSections.appendChild(sectionHeader);
-            contentSections.appendChild(row);
-            contentSections.appendChild(document.createElement('br'));
+            sectionElement.appendChild(sectionHeader);
+            sectionElement.appendChild(row);
+            contentSections.appendChild(sectionElement);
         });
 
         const runChunk = () => {
@@ -513,6 +462,9 @@ function generateContentSafe(retryCount = 0) {
             }
             if (tasks.length) {
                 setTimeout(runChunk, 0);
+            } else {
+                ensureSearchExperience();
+                window.txtSearch();
             }
         };
 

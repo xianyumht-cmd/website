@@ -8,14 +8,197 @@
     <link rel="canonical" href="https://xn--8pv109c.top/privacy.html">
     <script type="module" src="./src/pages/common/info-entry.js"></script>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
-        h1 { border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        h2 { margin-top: 30px; color: #2c3e50; }
-        p { margin-bottom: 15px; }
-        .footer { margin-top: 50px; font-size: 0.9em; color: #666; border-top: 1px solid #eee; padding-top: 20px; }
+        * { box-sizing: border-box; }
+
+        :root {
+            --paper: #f8f8f5;
+            --paper-soft: #f0f2f5;
+            --ink: #0b0d10;
+            --muted: #6c727d;
+            --line: #d7dbe2;
+            --line-strong: #aeb6c3;
+            --accent: #1264ff;
+            --accent-soft: rgba(18, 100, 255, .08);
+            color-scheme: light;
+            font-family: "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        body.night {
+            --paper: #0b0d11;
+            --paper-soft: #12151b;
+            --ink: #f4f6f8;
+            --muted: #9299a6;
+            --line: #292e37;
+            --line-strong: #4a5362;
+            --accent: #4c8dff;
+            --accent-soft: rgba(76, 141, 255, .10);
+            color-scheme: dark;
+        }
+
+        html,
+        body { min-height: 100%; margin: 0; }
+
+        body {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.8;
+            transition: background-color .25s ease, color .25s ease;
+        }
+
+        body::before,
+        body::after {
+            position: fixed;
+            z-index: 0;
+            width: 150px;
+            height: 150px;
+            pointer-events: none;
+            content: '';
+            opacity: .7;
+            background-image:
+                linear-gradient(var(--line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 24px 24px;
+            -webkit-mask-image: radial-gradient(circle at center, #000, transparent 70%);
+            mask-image: radial-gradient(circle at center, #000, transparent 70%);
+        }
+
+        body::before { top: 70px; left: -34px; }
+        body::after { right: -34px; bottom: 70px; }
+
+        body .site-header {
+            position: relative;
+            z-index: 2;
+            border-bottom: 1px solid var(--line);
+            background: color-mix(in srgb, var(--paper) 94%, transparent);
+            box-shadow: none;
+            backdrop-filter: blur(14px);
+        }
+
+        body .site-header__inner,
+        body .site-footer__inner,
+        .privacy-shell { width: min(980px, calc(100% - 72px)); }
+
+        .privacy-shell {
+            position: relative;
+            z-index: 1;
+            flex: 1 0 auto;
+            margin: 0 auto;
+            padding: clamp(62px, 9vw, 112px) 0 80px;
+        }
+
+        h1 {
+            max-width: 780px;
+            margin: 0;
+            padding: 0 0 clamp(40px, 6vw, 68px);
+            border-bottom: 1px solid var(--line-strong);
+            color: var(--ink);
+            font-size: clamp(58px, 11vw, 118px);
+            font-weight: 950;
+            line-height: .88;
+            letter-spacing: -.075em;
+        }
+
+        .privacy-shell > h1 + p {
+            margin: 0;
+            padding: 18px 0 42px;
+            border-bottom: 1px solid var(--line);
+            color: var(--accent);
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .10em;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            margin: 54px 0 18px;
+            padding-top: 18px;
+            border-top: 1px solid var(--line-strong);
+            color: var(--ink);
+            font-size: clamp(24px, 3.5vw, 36px);
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -.035em;
+        }
+
+        p,
+        li {
+            max-width: 780px;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        p { margin: 0 0 18px; }
+
+        ul {
+            max-width: 780px;
+            margin: 0 0 26px;
+            padding: 0;
+            list-style: none;
+            border-top: 1px solid var(--line);
+        }
+
+        li {
+            position: relative;
+            padding: 16px 0 16px 28px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        li::before {
+            position: absolute;
+            top: 25px;
+            left: 4px;
+            width: 7px;
+            height: 7px;
+            background: var(--accent);
+            content: '';
+        }
+
+        strong { color: var(--ink); }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            overflow-wrap: anywhere;
+        }
+
+        a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+        .footer-placeholder { position: relative; z-index: 1; width: 100%; }
+
+        body .site-footer {
+            margin-top: 0;
+            padding: 28px 0;
+            border: 0;
+            border-top: 1px solid var(--line);
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+            color: var(--muted);
+            backdrop-filter: none;
+        }
+
+        @media (max-width: 680px) {
+            body .site-header__inner,
+            body .site-footer__inner,
+            .privacy-shell { width: min(100% - 30px, 980px); }
+            .privacy-shell { padding: 56px 0 58px; }
+            h1 { font-size: clamp(56px, 19vw, 86px); }
+            h2 { margin-top: 44px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; }
+        }
     </style>
 </head>
 <body>
+    <div data-site-header></div>
+    <main class="privacy-shell">
     <h1>隐私政策</h1>
     <p>生效日期：2026年1月31日</p>
 
@@ -44,8 +227,8 @@
     <p>本站不参与任何第三方交易，如您在第三方网站遭遇欺诈或纠纷，请直接联系该第三方网站或相关执法部门。</p>
 
     <h2>5. 联系我们</h2>
-    <p>如果您对本隐私政策有任何疑问，请通过邮件联系我们：xianyumht@gamail.com</p>
-
+    <p>如果您对本隐私政策有任何疑问，请通过邮件联系我们：<a href="mailto:xianyumht@gmail.com">xianyumht@gmail.com</a></p>
+    </main>
     <div class="footer-placeholder"></div>
 </body>
 </html>

@@ -55,7 +55,6 @@
 | :--- | :--- |
 | `_headers` | **Cloudflare 缓存配置**。定义浏览器和 CDN 的缓存策略（重要）。 |
 | `robots.txt` | **爬虫协议**。指导搜索引擎如何抓取网站。 |
-| `sitemap.xml` | **站点地图**。帮助搜索引擎索引所有页面。 |
 | `favicon.ico` | 网站图标。 |
 
 #### 静态资源 (`static/`)
@@ -75,7 +74,7 @@
 | :--- | :--- |
 | `responsive-base.js` | 响应式基座脚本，处理移动端适配。 |
 | `responsive.css` | 全局响应式样式。 |
-| `anti-debug.js` | 防调试脚本（安全防护）。 |
+| `page-guard.js` | 全站防复制与快捷键干扰脚本。 |
 
 #### 第三方库 (`down/`)
 历史遗留的静态资源库，包含 jQuery, Bootstrap, FontAwesome 等。

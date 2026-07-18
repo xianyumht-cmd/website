@@ -175,7 +175,7 @@ function init() {
     if (container && container.dataset.navVisualObserver !== '1') {
         container.dataset.navVisualObserver = '1';
         const observer = new MutationObserver(() => requestAnimationFrame(run));
-        observer.observe(container, { childList: true, subtree: true });
+        observer.observe(container, { childList: true });
     }
     document.addEventListener('navDataUpdated', () => requestAnimationFrame(run));
     setTimeout(run, 300);

@@ -15,37 +15,36 @@
         <title>吃豆人 ・ Pac-Man</title>
         <link rel="shortcut icon" href="favicon.png">
         <link rel="stylesheet" href="./static/style/index.css">
+        <script type="module" src="../../../shared/page-guard.js"></script>
     </head>
     <body>
         <div class="wrapper">
-            <header>
-                <div class="mod-head">
-                    <div class="inner">
-                        <div class="bd">
-                            <div class="logo">
-                                <a href="/" style="font-size: 24px; color: #fff; text-decoration: none; font-weight: bold;">脚本.top</a>
-                            </div>
-                            <div class="operation">
-                                <!-- Operation buttons removed -->
-                            </div>
-                        </div>
+            <header class="game-header">
+                <div class="game-header__inner">
+                    <a class="game-brand" href="/" aria-label="返回脚本.top首页">脚本.top</a>
+                    <div class="game-status" role="status" aria-label="游戏运行状态：在线">
+                        <span class="game-status__dot" aria-hidden="true"></span>
+                        <span>ARCADE 04 / ONLINE</span>
                     </div>
-                </div>
-                <div class="mod-bg">
-                    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                        <defs>
-                            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
-                        </defs>
-                        <g class="parallax">
-                            <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.4)"></use>
-                            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.6)"></use>
-                            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.2)"></use>
-                            <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(255,255,255,1)"></use>
-                        </g>
-                    </svg>
+                    <nav class="game-actions" aria-label="游戏页导航">
+                        <a href="/down/nav/">资源导航</a>
+                        <a href="mailto:xianyumht@gmail.com">问题反馈</a>
+                        <a class="game-actions__primary" href="/">返回首页 <span aria-hidden="true">→</span></a>
+                    </nav>
                 </div>
             </header>
-            <div class="container">
+            <main class="container">
+                <section class="game-heading" aria-labelledby="game-title">
+                    <div>
+                        <p class="game-heading__index">HTML5 GAME / 04</p>
+                        <h1 id="game-title">吃豆人</h1>
+                    </div>
+                    <div class="game-heading__controls" role="group" aria-label="游戏操作说明">
+                        <span><b>ENTER</b> 开始</span>
+                        <span><b>方向键</b> 移动</span>
+                        <span><b>SPACE</b> 暂停</span>
+                    </div>
+                </section>
                 <div class="mod-panel">
                     <div class="inner">
                         <div class="bd">
@@ -53,8 +52,8 @@
                         </div>
                         <div class="ft">
                             <div class="info">
-                                <p>按 [空格键] 暂停或继续</p>
-                                <p>Press [space] to pause or continue</p>
+                                <p><span class="info__signal" aria-hidden="true"></span>经典模式已就绪</p>
+                                <p>ENTER 开始 · 方向键移动 · SPACE 暂停或继续</p>
                             </div>
                         </div>
                     </div>
@@ -62,17 +61,17 @@
                 <div class="mod-introtion">
                     <div class="inner">
                         <div class="hd">
-                            <h3 class="title">吃豆人游戏</h3>
-                            <p class="subtitle">Pac-Man</p>
+                            <p class="section-index">HOW TO PLAY / 游戏说明</p>
+                            <h2 class="title">保持移动，吃完所有豆子。</h2>
                         </div>
                         <div class="bd">
-                            <p>这款吃豆人游戏的开发是我在学习和探索HTML5游戏的一次尝试，也是对这款儿时经典街机游戏的致敬。游戏大致还原了我印象中Pac-Man的样子，在移植关卡和玩法规则的同时，在游戏中加入了游戏角色动画管理和幽灵的智能寻址算法，实现了幽灵对玩家的围堵。在你玩的过程中，你会发现这些精灵似乎很有想法，它们知道如何彼此协作对你穷追不舍。</p>
-                            <p>如果你对此感兴趣，可以在Github上关注此项目。我希望能通过游戏和代码与你分享一些我对游戏开发的感悟。</p>
+                            <p><strong>目标</strong> 吃完迷宫里的全部豆子并避开幽灵。吃下大力丸后，可以在短时间内反击。</p>
+                            <p><strong>提示</strong> 幽灵会协作追踪路线。提前规划转角，保留大力丸，往往比一味加速更有效。</p>
                         </div>
                     </div>
                 </div>
-            </div>
-		</div>
+            </main>
+        </div>
         <script type="module" src="./entry.js"></script>
         <script type="module" src="./static/script/index.js"></script>
     </body>

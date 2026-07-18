@@ -1,6 +1,27 @@
 {
+  "site": {
+    "brand": "脚本.top",
+    "origin": "https://xn--8pv109c.top",
+    "email": "xianyumht@gmail.com",
+    "icp": "鄂ICP备2024055850号-4"
+  },
+  "links": {
+    "home": "/",
+    "shop": "https://an.24vv.cn/s/",
+    "blog": "https://blog.xn--8pv109c.top/",
+    "rent": "https://kkk.ewnco.cn/shop/99BA0CEF",
+    "backupRent": "https://d.qkang.com/F34A3F2C",
+    "nav": "/down/nav/",
+    "news": "/down/news/lol-patch-26-3.html",
+    "backupShop": "https://an.krlkm.cn/s/",
+    "business": "/about.html",
+    "privacy": "/privacy.html",
+    "pacman": "/down/tdr/",
+    "record": "https://beian.miit.gov.cn/",
+    "ssl": "https://myssl.com/xn--8pv109c.top?from=mysslid"
+  },
   "site_title": {
-    "zh": "月光所照 皆是故乡 双脚所踏 皆是生活.",
+    "zh": "今晚星河浪漫 风也温柔.",
     "en": "Happy Lantern Festival！"
   },
   "footer_links": {

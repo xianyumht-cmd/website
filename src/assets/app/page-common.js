@@ -1,6 +1,8 @@
-import faviconUrl from '../home/favicon.ico';
 import './analytics.js';
-import './footer.js';
+import { initLayout } from './layout.js';
+import '../../../shared/page-guard.js';
+
+const faviconUrl = '/favicon.ico';
 
 export function applyFavicon() {
   let link = document.querySelector('link[rel="shortcut icon"], link[rel="icon"]');
@@ -14,4 +16,5 @@ export function applyFavicon() {
 
 export function initCommonPage() {
   applyFavicon();
+  initLayout();
 }

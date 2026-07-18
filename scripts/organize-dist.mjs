@@ -47,14 +47,14 @@ async function organizeDist() {
 
   console.log('Dist organization complete.');
   
-  // Copy anti-debug.js
-  const antiDebugSrc = path.join(__dirname, '../shared/anti-debug.js');
-  const antiDebugDest = path.join(distDir, 'anti-debug.js');
-  if (fs.existsSync(antiDebugSrc)) {
-    fs.copyFileSync(antiDebugSrc, antiDebugDest);
-    console.log('Copied anti-debug.js to dist');
+  // Public pages are copied as-is, so expose the shared page guard at the root.
+  const pageGuardSrc = path.join(__dirname, '../shared/page-guard.js');
+  const pageGuardDest = path.join(distDir, 'page-guard.js');
+  if (fs.existsSync(pageGuardSrc)) {
+    fs.copyFileSync(pageGuardSrc, pageGuardDest);
+    console.log('Copied page-guard.js to dist');
   } else {
-    console.warn('Warning: shared/anti-debug.js not found');
+    console.warn('Warning: shared/page-guard.js not found');
   }
 }
 

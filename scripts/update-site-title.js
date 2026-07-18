@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const CONFIG_FILE = path.join(__dirname, '../public/data/site-config.json');
+const CONFIG_FILE = path.join(__dirname, '../src/assets/data/site-config.json');
 const API_KEY = process.env.YIYAN_API_KEY;
 const API_URL = API_KEY ? `https://api.cc1990.cc/api/yiyan?apiKey=${API_KEY}` : '';
 

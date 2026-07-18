@@ -1,14 +1,17 @@
 'use strict';
 
+import siteConfig from '../data/site-config.json';
+
 // Explicitly define window.locationApp immediately in global scope
 window.locationApp = window.locationApp || {};
 
 const linkConfig = {
-    qunliao1: 'https://an.24vv.cn/s',
-    qunliao2: 'https://blog.xn--8pv109c.top/',
-    qunliao3: 'https://kkk.ewnco.cn/shop/99BA0CEF',
-    qunliao4: 'down/nav/',
-    qunliao5: '/'
+    qunliao1: siteConfig.links.shop,
+    qunliao2: siteConfig.links.blog,
+    qunliao3: siteConfig.links.rent,
+    qunliao4: siteConfig.links.nav,
+    qunliao5: siteConfig.links.backupShop,
+    qunliao6: siteConfig.links.backupRent
 };
 
 function openLink(url, target = '_blank') {
@@ -45,7 +48,7 @@ function initializeLinks() {
                 
                 // 立即执行打开逻辑，避免被浏览器拦截
                 if (id === 'qunliao4') {
-                    window.location.href = 'down/nav/';
+                    window.location.href = linkConfig[id];
                 } else {
                     openLink(linkConfig[id]);
                 }

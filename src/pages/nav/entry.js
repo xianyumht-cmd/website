@@ -1,5 +1,6 @@
 import '../../assets/app/page-common.js';
-import './nav-data.min.js';
+import '../../assets/css/resource-pages.css';
+import './data.js';
 import './nav-patches.js';
 import './nav-loading.js';
 import '../../assets/js/nav-core.js';

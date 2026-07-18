@@ -1,387 +1,320 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOL 26.3版本更新公告：Mel重做、极地大乱斗Mayhem模式升级与英雄平衡调整 - 脚本.top</title>
-    <meta name="description" content="英雄联盟LOL 26.3版本详细更新公告。深度解析Mel（梅尔）重做细节、ARAM Mayhem模式45+新海克斯强化与套装系统、Zaahen/Vi/Briar等打野英雄增强、以及最新的排位赛与视野机制调整。全网最全26.3版本改动解读。">
-    <meta name="keywords" content="LOL 26.3更新, 英雄联盟补丁笔记, Mel重做, ARAM Mayhem, 极地大乱斗海克斯, Zaahen加强, 英雄联盟2026赛季, LOL新皮肤, 游戏脚本, 脚本.top">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://xn--8pv109c.top/news/lol-patch-26-3.html">
-    <script type="module" src="../common/info-entry.js"></script>
-    
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../assets/css/style.min.css">
-    <link rel="stylesheet" href="../../assets/css/dark.min.css">
-    <link rel="stylesheet" href="../../assets/css/mobile.min.css">
-    
-    <style>
-        .article-container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 30px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        body.night .article-container {
-            background: #2c2e2f;
-            color: #d8d8d8;
-        }
-        .article-header {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .article-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-        }
-        body.night .article-title {
-            color: #f0f0f0;
-        }
-        .article-meta {
-            color: #888;
-            font-size: 14px;
-        }
-        .content-section {
-            margin-bottom: 40px;
-        }
-        .section-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding-left: 15px;
-            border-left: 4px solid #4f7cfc;
-            color: #2c3e50;
-        }
-        body.night .section-title {
-            color: #e0e0e0;
-        }
-        .update-card {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        body.night .update-card {
-            background: #383a3b;
-            border-color: #444;
-        }
-        .hero-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #d32f2f; /* Red for emphasis */
-            margin-bottom: 10px;
-            display: block;
-        }
-        body.night .hero-name {
-            color: #ff6b6b;
-        }
-        .hero-buff { color: #2e7d32; } /* Green */
-        .hero-nerf { color: #c62828; } /* Red */
-        .hero-adjust { color: #0277bd; } /* Blue */
-        
-        body.night .hero-buff { color: #66bb6a; }
-        body.night .hero-nerf { color: #ef5350; }
-        body.night .hero-adjust { color: #4fc3f7; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOL 26.3 版本更新公告：Mel 调整与极地大乱斗更新 - 脚本.top</title>
+  <meta name="description" content="英雄联盟 26.3 版本更新摘要，包含 Mel 调整、英雄平衡、排位系统与极地大乱斗 Mayhem 模式更新。">
+  <meta name="keywords" content="LOL 26.3更新,英雄联盟版本公告,Mel调整,ARAM Mayhem,英雄平衡">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xn--8pv109c.top/news/lol-patch-26-3.html">
+  <script type="module" src="../common/info-entry.js"></script>
+  <style>
+    :root {
+      --paper: #f8f8f5;
+      --paper-soft: #f0f2f5;
+      --ink: #0b0d10;
+      --muted: #6c727d;
+      --line: #d7dbe2;
+      --line-strong: #aeb6c3;
+      --accent: #1264ff;
+      --accent-soft: rgba(18, 100, 255, .08);
+      color-scheme: light;
+      font-family: "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-        .change-list {
-            list-style: none;
-            padding: 0;
-        }
-        .change-list li {
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-        .ability-tag {
-            background: #e3f2fd;
-            color: #1565c0;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-        body.night .ability-tag {
-            background: #1e3a5f;
-            color: #90caf9;
-        }
-        .nav-breadcrumb {
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-        .nav-breadcrumb a {
-            color: #4f7cfc;
-            text-decoration: none;
-        }
-        .toc {
-            background: #f0f4ff;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-        body.night .toc {
-            background: #252830;
-        }
-        .toc ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        .toc li {
-            margin-bottom: 8px;
-        }
-        .toc a {
-            color: #4f7cfc;
-            font-weight: 500;
-        }
-        img.patch-banner {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        code {
-            background: #f1f3f5;
-            padding: 2px 5px;
-            border-radius: 3px;
-            color: #c7254e;
-        }
-        body.night code {
-            background: #444;
-            color: #ff80ab;
-        }
-    </style>
+    * { box-sizing: border-box; }
+
+    body.night {
+      --paper: #0b0d11;
+      --paper-soft: #12151b;
+      --ink: #f4f6f8;
+      --muted: #9299a6;
+      --line: #292e37;
+      --line-strong: #4a5362;
+      --accent: #4c8dff;
+      --accent-soft: rgba(76, 141, 255, .10);
+      color-scheme: dark;
+    }
+
+    html,
+    body { min-height: 100%; margin: 0; }
+
+    body.page-body {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.75;
+      transition: background-color .25s ease, color .25s ease;
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: 0;
+      width: 150px;
+      height: 150px;
+      pointer-events: none;
+      content: '';
+      opacity: .7;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 24px 24px;
+      -webkit-mask-image: radial-gradient(circle at center, #000, transparent 70%);
+      mask-image: radial-gradient(circle at center, #000, transparent 70%);
+    }
+
+    body::before { top: 70px; left: -34px; }
+    body::after { right: -34px; bottom: 70px; }
+
+    body .site-header {
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 94%, transparent);
+      box-shadow: none;
+      backdrop-filter: blur(14px);
+    }
+
+    body .site-header__inner,
+    body .site-footer__inner,
+    .article-container { width: min(1180px, calc(100% - 72px)); }
+
+    .article-container {
+      position: relative;
+      z-index: 1;
+      flex: 1 0 auto;
+      margin: 0 auto;
+      padding: 42px 0 28px;
+    }
+
+    .article-card {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .breadcrumb {
+      margin: 0;
+      padding: 0 0 18px;
+      border-bottom: 1px solid var(--line-strong);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+
+    .article-card > header {
+      padding: clamp(62px, 9vw, 108px) 0 clamp(44px, 7vw, 72px);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    h1 {
+      max-width: 980px;
+      margin: 0 0 28px;
+      color: var(--ink);
+      font-size: clamp(52px, 8.2vw, 104px);
+      font-weight: 950;
+      line-height: .94;
+      letter-spacing: -.065em;
+    }
+
+    .article-meta {
+      margin: 0;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .summary {
+      max-width: 900px;
+      margin: 0;
+      padding: clamp(34px, 5vw, 56px) 0;
+      border: 0;
+      border-bottom: 1px solid var(--line-strong);
+      border-radius: 0;
+      background: transparent;
+      color: var(--ink);
+      font-size: clamp(20px, 2.7vw, 31px);
+      font-weight: 750;
+      line-height: 1.55;
+      letter-spacing: -.025em;
+    }
+
+    .article-card > section {
+      padding: clamp(50px, 7vw, 78px) 0;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    h2 {
+      margin: 0 0 30px;
+      color: var(--ink);
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -.045em;
+    }
+
+    h3 {
+      margin: 0 0 12px;
+      color: var(--ink);
+      font-size: 19px;
+      letter-spacing: -.025em;
+    }
+
+    p,
+    li { color: var(--muted); }
+
+    .update-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .update-card {
+      min-width: 0;
+      padding: clamp(22px, 3vw, 32px);
+      border: 0;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      transition: background-color .18s ease;
+    }
+
+    .update-card:hover { background: var(--accent-soft); }
+    .update-card h3 { margin-top: 0; }
+    .update-card p { margin: 0; }
+
+    ul {
+      max-width: 820px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    li {
+      position: relative;
+      padding: 18px 0 18px 30px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    li::before {
+      position: absolute;
+      top: 27px;
+      left: 4px;
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      content: '';
+    }
+
+    .notice {
+      margin: 0;
+      padding: clamp(34px, 5vw, 54px);
+      border-radius: 0;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 14px;
+    }
+
+    body .site-footer {
+      margin-top: 0;
+      padding: 28px 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--muted);
+      backdrop-filter: none;
+    }
+
+    @media (max-width: 680px) {
+      body .site-header__inner,
+      body .site-footer__inner,
+      .article-container { width: min(100% - 30px, 1180px); }
+      .article-container { padding-top: 28px; }
+      .article-card > header { padding: 58px 0 48px; }
+      h1 { font-size: clamp(48px, 15vw, 72px); }
+      .update-grid { grid-template-columns: 1fr; }
+      .notice { padding: 32px 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
 </head>
 <body class="page-body">
-    
-    <div class="page-container" style="display: block;">
-        <!-- Simple Header -->
-        <nav class="navbar" style="background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 15px 0;">
-            <div class="container" style="max-width: 900px; display: flex; justify-content: space-between; align-items: center;">
-                <a href="../nav/index.html" style="font-size: 24px; font-weight: bold; color: #333; text-decoration: none;">脚本.top</a>
-                <div>
-                    <a href="../nav/index.html" style="margin-left: 20px; color: #555;">首页</a>
-                    <a href="../games/index.html" style="margin-left: 20px; color: #555;">游戏库</a>
-                </div>
-            </div>
-        </nav>
+  <div data-site-header></div>
 
-        <div class="article-container">
-            <div class="nav-breadcrumb">
-                <a href="../nav/index.html">首页</a> &gt; <a href="#">游戏资讯</a> &gt; 正文
-            </div>
+  <main class="article-container">
+    <article class="article-card">
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a> &gt; <a href="/down/games/">游戏资源</a> &gt; 版本公告
+      </nav>
 
-            <header class="article-header">
-                <h1 class="article-title">LOL 26.3 版本更新公告：Mel 重做、ARAM Mayhem 升级与打野大调整</h1>
-                <div class="article-meta">
-                    <span>发布时间：2026-02-04</span> | 
-                    <span>分类：版本公告</span> | 
-                    <span>阅读：10W+</span>
-                </div>
-            </header>
+      <header>
+        <h1>LOL 26.3 版本更新公告</h1>
+        <p class="article-meta">发布日期：2026-02-04 · 分类：版本公告</p>
+      </header>
 
-            <div class="toc">
-                <p style="font-weight: bold; margin-bottom: 10px;">文章目录</p>
-                <ul>
-                    <li><a href="#intro">1. 版本概览：2026赛季的新篇章</a></li>
-                    <li><a href="#mel-rework">2. Mel（梅尔）大型重做：机制与反制</a></li>
-                    <li><a href="#champions">3. 英雄平衡性调整（加强/削弱）</a></li>
-                    <li><a href="#items-system">4. 装备与系统改动：视野与排位</a></li>
-                    <li><a href="#aram-mayhem">5. 极地大乱斗 Mayhem 模式 2.0</a></li>
-                    <li><a href="#skins">6. 全新皮肤：鞭炮系列</a></li>
-                </ul>
-            </div>
+      <div class="summary">
+        本次更新围绕英雄对抗体验、排位机制和娱乐模式展开，重点包括 Mel 调整、部分英雄平衡，以及极地大乱斗 Mayhem 模式内容扩充。
+      </div>
 
-            <div id="intro" class="content-section">
-                <h2 class="section-title">1. 版本概览：2026赛季的新篇章</h2>
-                <p>欢迎来到 <strong>英雄联盟 26.3 版本</strong>！这是 2026 赛季开启后的首次大型后续更新。在收集了大量玩家反馈和职业赛场的数据后，Riot Games 决定在本次更新中对游戏生态进行一次深度梳理。</p>
-                <p>本版本的核心关键词是<strong>“反制”</strong>与<strong>“平衡”</strong>。备受争议的新英雄 Mel（梅尔）迎来了机制上的重做，旨在解决其“无解”的对抗体验；同时，针对新赛季打野（尤其是 AD 打野）表现疲软的问题，我们进行了一轮大规模的数值回调与增强。此外，深受喜爱的 ARAM Mayhem（极地大乱斗·大乱斗模式）也迎来了全新升级，带来了类似 TFT 的海克斯强化组合系统。</p>
-            </div>
-
-            <div id="mel-rework" class="content-section">
-                <h2 class="section-title">2. Mel（梅尔）大型重做：机制与反制</h2>
-                <p>自上线以来，Mel 一直是 Ban 位上的常客。设计师坦言：“坦率地说，我们低估了 Mel 给对手带来的挫败感。” 本次重做的目标是保留 Mel 的核心玩法，同时给予对手更多的博弈空间。</p>
-                
-                <div class="update-card">
-                    <span class="hero-name hero-adjust">Mel 梅尔（重做）</span>
-                    <p><strong>基础属性：</strong> 攻速收益比从 0.4 提升至 0.625。</p>
-                    <ul class="change-list">
-                        <li>
-                            <span class="ability-tag">被动 - 压倒性优势</span>
-                            <br>弹道伤害从 8-50 (+5% AP) 下调至 <strong>8-25 (+3% AP)</strong>。不再对非英雄单位显示被动标记，减少视觉干扰。
-                        </li>
-                        <li>
-                            <span class="ability-tag">Q - 辉光齐射</span>
-                            <br>机制调整：首次爆炸造成额外伤害，后续命中伤害衰减。
-                            <br>总伤害从 78-230 (+51-85% AP) 调整为 <strong>85-261 (+85-105% AP)</strong>，提高了技能命中的收益上限，但也要求更高的精准度。
-                        </li>
-                        <li>
-                            <span class="ability-tag">W - 反驳</span> <strong><span style="color:red">[核心改动]</span></strong>
-                            <br><strong>移除：</strong>不再提供伤害免疫效果。
-                            <br><strong>新增：</strong>现在提供 80/110/140/170/200 (+60% AP) 的<strong>护盾</strong>。
-                            <br>物理伤害反弹比例：-30%。
-                            <br><em>开发者注：这意味着像金克丝大招这样的爆发技能无法再被 Mel 轻易用 W 完美规避，玩家需要更加谨慎地计算伤害。</em>
-                        </li>
-                        <li>
-                            <span class="ability-tag">E - 太阳束缚</span>
-                            <br>禁锢导弹半径调整为 70，持续伤害半径 230。视觉效果优化，使其更容易被看清和躲避。
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="champions" class="content-section">
-                <h2 class="section-title">3. 英雄平衡性调整</h2>
-                <p>本版本对大量英雄进行了数值调整，特别是为了拯救在新赛季系统中表现挣扎的 AD 打野们。</p>
-
-                <h3><span class="hero-buff">📈 英雄增强 (Buffs)</span></h3>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="update-card">
-                            <span class="hero-name hero-buff">Briar 贝蕾亚</span>
-                            <ul class="change-list">
-                                <li><strong>基础属性：</strong> 生命成长 95 &rarr; 100；护甲成长 4.2 &rarr; 4.5。</li>
-                                <li><strong>技能消耗：</strong> Q/W/E/R 的生命值消耗从当前生命值的 6% 降低至 <strong>5%</strong>。</li>
-                                <li><em>分析：这不仅增强了打野续航，也让上单 Briar 的换血更加赚。</em></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="update-card">
-                            <span class="hero-name hero-buff">Bel'Veth 卑尔维斯</span>
-                            <ul class="change-list">
-                                <li><strong>R - 万载豪筵：</strong> 每次攻击的真实伤害从 6/8/10 提升至 <strong>6/10/14 (+12% 额外AD)</strong>。</li>
-                                <li><em>分析：大幅提升后期能力，鼓励高攻速出装。</em></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="update-card">
-                            <span class="hero-name hero-buff">Ahri 阿狸</span>
-                            <ul class="change-list">
-                                <li><strong>W - 妖异狐火：</strong> 冷却时间从 10-6秒 降低至 <strong>9-5秒</strong>。</li>
-                                <li><em>分析：回调了之前的削弱，让阿狸在团战中能更频繁地拉扯。</em></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="update-card">
-                            <span class="hero-name hero-buff">Zaahen 扎亨</span>
-                            <ul class="change-list">
-                                <li><strong>综合：</strong> 针对打野位进行了专项数值增强，使其回归去年年底的强度水平。</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <h3><span class="hero-nerf">📉 英雄削弱 (Nerfs)</span></h3>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="update-card">
-                            <span class="hero-name hero-nerf">Braum 布隆</span>
-                            <ul class="change-list">
-                                <li><strong>基础生命值：</strong> 630 &rarr; 610。</li>
-                                <li><strong>Q - 寒冬之咬：</strong> 基础伤害全等级下调 5-20 点。</li>
-                                <li><em>原因：在新赛季装备（如班德尔风笛）加持下，布隆的粘人和爆发过于强势。</em></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="update-card">
-                            <span class="hero-name hero-nerf">Ekko 艾克</span>
-                            <ul class="change-list">
-                                <li><strong>被动 - Z型驱动共振：</strong> 对野怪伤害上限从 300% 降低至 <strong>270%</strong>。</li>
-                                <li><em>原因：艾克的刷野速度过快，导致其能过早地接管比赛。</em></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="items-system" class="content-section">
-                <h2 class="section-title">4. 装备与系统改动：视野与排位</h2>
-                
-                <div class="update-card">
-                    <h4>👁️ 视野机制调整 (Vision)</h4>
-                    <p>设计师发现 <strong>Faelights</strong>（一种新的视野机制）在河道像素草丛附近的视野范围过大，严重影响了打野的Gank路线。改动如下：</p>
-                    <ul>
-                        <li>缩小了 Faelights 的视野半径，不再覆盖河道蟹加速区或史诗级野怪入口。</li>
-                        <li><strong>黄色饰品（眼）：</strong> 增加了游戏前期的冷却时间，降低了对线期的视野覆盖率，迫使玩家更谨慎地进行博弈。</li>
-                    </ul>
-                </div>
-
-                <div class="update-card">
-                    <h4>🏆 排位赛系统 (Ranked)</h4>
-                    <ul>
-                        <li><strong>Aegis of Valor（英勇之盾）：</strong> 获取门槛从 C 级评价提升至 <strong>B 级</strong>。防止玩家混分，确保该荣誉真正代表了“表现尚可”。</li>
-                        <li><strong>Apex 段位补分优化：</strong> 修复了顶尖段位（王者/宗师）胜点增加为负数的问题。虽然由于ELO机制，极其顶尖的玩家仍可能遇到补分，但情况将大幅缓解。</li>
-                        <li><strong>爬升指示器：</strong> 26.3 版本正式启用。当你的隐藏分（MMR）高于当前段位时，会显示此标志，表明你正处于“爬升期”。</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="aram-mayhem" class="content-section">
-                <h2 class="section-title">5. 极地大乱斗 Mayhem 模式 2.0</h2>
-                <p>ARAM Mayhem（大乱斗·大乱斗）模式不仅保留了下来，还迎来了史上最大更新！引入了类似云顶之弈（TFT）的<strong>海克斯强化（Augments）</strong>与<strong>套装羁绊</strong>系统。</p>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="update-card" style="background: linear-gradient(to right, #fdfbfb, #ebedee);">
-                            <h4>🔥 新增 45+ 种海克斯强化</h4>
-                            <p>玩家现在可以像下棋一样选择强化符文，甚至可以通过收集特定组合来触发<strong>套装效果</strong>：</p>
-                            <ul>
-                                <li><strong>Deathknell（丧钟）套装：</strong> 
-                                    <br>包含海克斯：Clown College, Train of the Dead, Self Destruct, Dive Bomber。
-                                    <br><strong>(2) 羁绊：</strong> 减少 40% 的死亡复活时间。让送死流塞恩/死歌更加快乐！
-                                </li>
-                                <li><strong>Firecracker（鞭炮）套装：</strong>
-                                    <br><strong>(2) 羁绊：</strong> 技能产生的导弹会弹跳 2 次，造成 40% 原始伤害。
-                                    <br><strong>(4) 羁绊：</strong> 弹跳 3 次，造成 80% 伤害。泽拉斯和吉格斯玩家狂喜。
-                                </li>
-                                <li><strong>High Roller（豪赌）套装：</strong>
-                                    <br>增加金币获取和装备锻造器的掉落率，适合喜欢神装单挑的玩家。
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <h4>🎁 Mayhem 赛季奖励路线</h4>
-                <p>类似通行证的免费奖励系统，只要玩 Mayhem 模式即可解锁：</p>
-                <ul class="change-list">
-                    <li><strong>Level 1:</strong> 红包海克斯（增加金币）。</li>
-                    <li><strong>Level 8:</strong> 魄罗王之跃（变身魄罗王跳跃砸人）。</li>
-                    <li><strong>Level 19:</strong> 莎弥拉大招自动触发（达到S评价时自动释放R）。</li>
-                    <li><strong>Level 32:</strong> ???（神秘海克斯：你的问号Ping现在会造成真实伤害！没错，精神攻击变为物理攻击！）。</li>
-                </ul>
-            </div>
-
-            <div id="skins" class="content-section">
-                <h2 class="section-title">6. 全新皮肤：鞭炮系列</h2>
-                <p>为了庆祝新年，全新的 Firecracker（鞭炮/春节）系列皮肤将于 2026年2月4日 正式上线。本次皮肤依然延续了喜庆的红金配色，并加入了大量的烟花特效。</p>
-            </div>
-
-            <div class="content-section">
-                <h2 class="section-title">总结</h2>
-                <p>26.3 版本通过对 Mel 的重做和大量打野英雄的增强，试图将游戏节奏从赛季初的混乱中拉回正轨。对于休闲玩家来说，ARAM Mayhem 的 TFT 化改动无疑是最大的惊喜——谁能拒绝一个能用“问号Ping”杀人的模式呢？</p>
-                <p>准备好适应新的峡谷生态了吗？现在就登录游戏，体验全新的 26.3 版本吧！</p>
-            </div>
-
+      <section>
+        <h2>版本重点</h2>
+        <div class="update-grid">
+          <div class="update-card">
+            <h3>Mel 对抗体验调整</h3>
+            <p>保留英雄的核心特色，同时增加更明确的应对空间。技能效果、护盾与伤害结构得到重新梳理。</p>
+          </div>
+          <div class="update-card">
+            <h3>英雄平衡更新</h3>
+            <p>针对多个位置进行数值调整，重点改善部分打野英雄的前期节奏、续航与团战表现。</p>
+          </div>
+          <div class="update-card">
+            <h3>排位与视野机制</h3>
+            <p>优化排位反馈和高分段体验，并调整部分视野规则，让对线与地图决策更加清晰。</p>
+          </div>
+          <div class="update-card">
+            <h3>ARAM Mayhem 扩充</h3>
+            <p>加入更多强化组合与套装联动，为极地大乱斗带来更丰富的构筑选择和娱乐体验。</p>
+          </div>
         </div>
-    </div>
+      </section>
 
-    <!-- Scripts -->
-    <script type="module" src="../../assets/js/theme-mode.min.js"></script>
-    <script>
-        // Simple dark mode init if not handled by theme-mode.js automatically for this page structure
-        if (localStorage.getItem('theme') === 'night') {
-            document.body.classList.add('night');
-        }
-    </script>
+      <section>
+        <h2>更新建议</h2>
+        <ul>
+          <li>常用英雄玩家可先查看技能说明和装备推荐，再进入排位。</li>
+          <li>打野玩家应留意前期清野节奏和资源争夺变化。</li>
+          <li>娱乐模式玩家可优先尝试新的强化组合，熟悉套装联动方式。</li>
+        </ul>
+      </section>
+
+      <p class="notice">本文为版本重点摘要，具体数值、上线时间和后续热修内容请以英雄联盟官方公告及游戏内说明为准。</p>
+    </article>
+  </main>
+
+  <div data-site-footer></div>
 </body>
 </html>

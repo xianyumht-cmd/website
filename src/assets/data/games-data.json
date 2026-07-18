@@ -97,6 +97,13 @@
         "icon": "fa-solid fa-chart-line",
         "items": [
           {
+            "title": "LOL 直播速查表",
+            "description": "直播与解说常用信息集中查询，适合开播时快速查看。",
+            "avatar": "播",
+            "url": "/lol-helper.html",
+            "tooltip": "打开速查表"
+          },
+          {
             "title": "OP.GG 战绩",
             "description": "全球最权威的战绩与数据网",
             "avatar": "OP",

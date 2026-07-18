@@ -1,6 +1,7 @@
 ﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <script defer src="/page-guard.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOL直播速查表 - 主播专用版</title>
@@ -265,8 +266,8 @@
                 <option value="new">📅 按上线顺序</option>
             </select>
 
-            <button onclick="toggleAll(true)">全部展开</button>
-            <button onclick="toggleAll(false)" style="background:#555; color:#fff;">全部收起</button>
+            <button type="button" onclick="toggleAll(true)">全部展开</button>
+            <button type="button" onclick="toggleAll(false)" style="background:#555; color:#fff;">全部收起</button>
             <div style="margin-left: auto; color: #888;">共收录 <span id="countDisplay">0</span> 位英雄</div>
         </div>
 
