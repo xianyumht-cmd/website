@@ -62,6 +62,25 @@ function patchUrlsInSections(sections) {
     });
 }
 
+function upsertHideAndSeekSection(sections, title, items) {
+    let section =
+        findSection(sections, "躲猫猫专区") ||
+        findSection(sections, "变色龙躲猫猫专区") ||
+        findSection(sections, "Meccha Chameleon 变色龙躲猫猫(变色龙躲猫猫)") ||
+        findSection(sections, "Hide-and-Seek Zone");
+
+    if (!section) {
+        section = { id: "躲猫猫专区", title, icon: "fa fa-puzzle-piece", items: [] };
+        sections.push(section);
+    }
+
+    section.id = "躲猫猫专区";
+    section.title = title;
+    section.icon = "fa fa-puzzle-piece";
+    section.items = items;
+    return section;
+}
+
 function patchZhSections(sections) {
     if (!Array.isArray(sections)) return sections;
 
@@ -103,7 +122,7 @@ function patchZhSections(sections) {
         makeItem("FJ", "密码：123", "https://wwaym.lanzoub.com/s/QiHang", "FJ"),
         makeItem("樱桃", "密码：123", "https://wwbgz.lanzouu.com/b019vx8h5g", "樱"),
         makeItem("灵影", "密码：0ying", "https://wwus.lanzouu.com/b0zkvz7la", "灵"),
-        makeItem("TAB", "使用文档：https://a.hoisen.com/6LN45F；密码：tab11", "https://wwus.lanzouu.com/s/TAB1", "TAB"),
+        makeItem("TAB", "密码：tab11", "https://wwus.lanzouu.com/s/TAB1", "TAB"),
         makeItem("ADS", "飞鸡盘下载", "https://share.feijipan.com/s/jBdy32yE", "ADS"),
         makeItem("星辰", "密码：123", "https://wwbgz.lanzouu.com/b019w076jg", "星")
     ]);
@@ -123,7 +142,6 @@ function patchZhSections(sections) {
 
     upsertSection(sections, "云顶专区", "云顶专区", "fa fa-trello", [
         makeItem("鸡你太美", "下棋助手，密码：888", "https://wwaoj.lanzoul.com/s/ydjntm4", "鸡"),
-        makeItem("棋魂", "下棋助手 自带拿牌站位等等 密码：6666", "https://wwi.lanzoup.com/b00g2i4uuh", "棋"),
         makeItem("神将", "云顶资源", "http://shenjiang.ysupan.com/login.aspx?d=shenjiang", "神")
     ]);
 
@@ -132,7 +150,8 @@ function patchZhSections(sections) {
         makeItem("RS", "RS是适用于EZ的 大锅菜 缝合怪 小助手，默认为你加载最人性化配置", "https://gitee.com/xiazai888/xiazai/raw/master/xiazai", "儿"),
         makeItem("ST", "提取码：1233", "https://share.feijipan.com/s/o8aoNlnD?code=1233", "ST"),
         makeItem("无名", "无名缓存", "https://wwzd.lanzouu.com/b016kd079i", "无"),
-        makeItem("无名VIP", "无名VIP", "https://wmsaves.top/", "V")
+        makeItem("无名VIP", "无名VIP", "https://wmsaves.top/", "V"),
+        makeItem("FH", "GG专用", "https://funhouseteam.com/login/redeem.php", "FH")
     ]);
 
     upsertSection(sections, "过炫舞专区", "过炫舞专区", "fa fa-music", [
@@ -140,15 +159,16 @@ function patchZhSections(sections) {
     ]);
 
     upsertSection(sections, "小工具专区", "小工具专区", "fa fa-toolbox", [
-        makeItem("亨特", "小工具", "https://a.hoisen.com/d9YgFh", "亨")
+        makeItem("亨特", "小工具", "https://a.hoisen.com/d9YgFh", "亨"),
+        makeItem("键盘侠", "免费工具，一键输入账号密码", "https://mybb.lanzn.com/illyB3p72wgb", "键")
     ]);
 
     upsertSection(sections, "三角洲专区", "三角洲专区", "fa fa-crosshairs", [
-        makeItem("JJ", "密码：6666", "https://ly888.lanzoue.com/b0j1fvgzi", "JJ"),
         makeItem("GTA", "密码：666", "https://wud.lanzoul.com/b00hrkm3pg", "G"),
-        makeItem("红狼", "密码：123", "https://wwbtd.lanzoul.com/b0188d9lli", "红"),
-        makeItem("游龙", "密码：5566", "https://wwaot.lanzn.com/s/89237fas", "游"),
-        makeItem("RANGER", "下载地址", "https://wwayq.lanzouq.com/b00odz9eda", "R")
+        makeItem("KT", "无双/KT最新下载地址，密码：6666", "https://wwazv.lanzout.com/b0he1s4te", "KT"),
+        makeItem("寒冰", "寒冰官网下载地址", "https://www.hb111.top/", "寒"),
+        makeItem("opus", "官网下载地址", "http://www.opus666.top/", "O"),
+        makeItem("战神", "下载地址", "https://yituoshi.lanzouw.com/b023nn2x3g", "战")
     ]);
 
     upsertSection(sections, "PUBG专区", "PUBG专区", "fa fa-gamepad", [
@@ -157,11 +177,24 @@ function patchZhSections(sections) {
     ]);
 
     upsertSection(sections, "瓦洛兰特专区", "瓦洛兰特专区", "fa fa-bolt", [
-        makeItem("RK大瓦国", "密码：0000", "https://wwaly.lanzouq.com/b011m5h4gd", "RK")
+        makeItem("RK大瓦国", "密码：0000", "https://wwaly.lanzouq.com/b011m5h4gd", "RK"),
+        makeItem("opus", "官网下载地址，密码：6666", "http://www.opus666.top/", "O")
     ]);
 
-    upsertSection(sections, "变色龙躲猫猫专区", "Meccha Chameleon 变色龙躲猫猫(变色龙躲猫猫)", "fa fa-puzzle-piece", [
-        makeItem("MC", "密码：123", "https://wwbjv.lanzout.com/b00yb6nuwd", "MC")
+    upsertSection(sections, "穿越火线专区", "穿越火线专区", "fa fa-bullseye", [
+        makeItem("谪仙红名生化", "密码：6666", "https://daguo6.lanzouw.com/b0mbewswf", "谪"),
+        makeItem("天命", "密码：6666", "https://daguo6.lanzouw.com/b0mbewtqf", "天"),
+        makeItem("北帝", "密码：6666", "https://daguo6.lanzouw.com/b0mbewu8d", "北"),
+        makeItem("JZ", "密码：6666", "https://daguo6.lanzouw.com/b0mbewvlc", "JZ"),
+        makeItem("BX", "密码：6666", "https://daguo6.lanzouw.com/b0mbewvta", "BX"),
+        makeItem("BB", "密码：6666", "https://daguo6.lanzouw.com/b0mbewuwh", "BB"),
+        makeItem("凤溪", "密码：6666", "https://daguo6.lanzouw.com/b0mcn84vg", "凤")
+    ]);
+
+    upsertHideAndSeekSection(sections, "躲猫猫专区", [
+        makeItem("MC", "密码：123", "https://wwbjv.lanzout.com/b00yb6nuwd", "MC"),
+        makeItem("涂鸦躲猫猫", "密码：6666", "https://wwbhv.lanzoum.com/b01d713yof", "涂"),
+        makeItem("达芬奇", "密码：6666", "https://wwbhv.lanzoum.com/b01d71e9kh", "达")
     ]);
 
     upsertSection(sections, "上号专区", "上号专区", "fa fa-sign-in", [
@@ -205,9 +238,57 @@ function patchEnSections(sections) {
         makeItem("FJ", "Password: 123", "https://wwaym.lanzoub.com/s/QiHang", "FJ"),
         makeItem("Cherry", "Password: 123", "https://wwbgz.lanzouu.com/b019vx8h5g", "C"),
         makeItem("Lingying", "Password: 0ying", "https://wwus.lanzouu.com/b0zkvz7la", "L"),
-        makeItem("TAB", "Guide: https://a.hoisen.com/6LN45F; Password: tab11", "https://wwus.lanzouu.com/s/TAB1", "TAB"),
+        makeItem("TAB", "Password: tab11", "https://wwus.lanzouu.com/s/TAB1", "TAB"),
         makeItem("ADS", "Feijipan download", "https://share.feijipan.com/s/jBdy32yE", "ADS"),
         makeItem("Xingchen", "Password: 123", "https://wwbgz.lanzouu.com/b019w076jg", "X")
+    ]);
+
+    upsertSection(sections, "云顶专区", "TFT Zone", "fa fa-trello", [
+        makeItem("Ji Ni Tai Mei", "TFT helper, password: 888", "https://wwaoj.lanzoul.com/s/ydjntm4", "J"),
+        makeItem("Shenjiang", "TFT resource", "http://shenjiang.ysupan.com/login.aspx?d=shenjiang", "S")
+    ]);
+
+    upsertSection(sections, "缓存专区", "Cache Zone", "fa fa-viadeo-square", [
+        makeItem("US", "HanBot helper preset", "https://gitee.com/xiazai888/xiazai/raw/master/xiazai", "H"),
+        makeItem("RS", "EZ helper preset", "https://gitee.com/xiazai888/xiazai/raw/master/xiazai", "E"),
+        makeItem("ST", "Code: 1233", "https://share.feijipan.com/s/o8aoNlnD?code=1233", "ST"),
+        makeItem("Wuming", "Cache resource", "https://wwzd.lanzouu.com/b016kd079i", "W"),
+        makeItem("Wuming VIP", "VIP cache resource", "https://wmsaves.top/", "V"),
+        makeItem("FH", "For GG", "https://funhouseteam.com/login/redeem.php", "FH")
+    ]);
+
+    upsertSection(sections, "小工具专区", "Utilities", "fa fa-toolbox", [
+        makeItem("Hunter", "Utility", "https://a.hoisen.com/d9YgFh", "H"),
+        makeItem("Keyboard Warrior", "Free tool for entering account credentials with one click", "https://mybb.lanzn.com/illyB3p72wgb", "K")
+    ]);
+
+    upsertSection(sections, "三角洲专区", "Delta Force Zone", "fa fa-crosshairs", [
+        makeItem("GTA", "Password: 666", "https://wud.lanzoul.com/b00hrkm3pg", "G"),
+        makeItem("KT", "Latest download, password: 6666", "https://wwazv.lanzout.com/b0he1s4te", "KT"),
+        makeItem("Hanbing", "Official download", "https://www.hb111.top/", "H"),
+        makeItem("opus", "Official download", "http://www.opus666.top/", "O"),
+        makeItem("Zhanshen", "Download", "https://yituoshi.lanzouw.com/b023nn2x3g", "Z")
+    ]);
+
+    upsertSection(sections, "瓦洛兰特专区", "VALORANT Zone", "fa fa-bolt", [
+        makeItem("RK", "Password: 0000", "https://wwaly.lanzouq.com/b011m5h4gd", "RK"),
+        makeItem("opus", "Official download, password: 6666", "http://www.opus666.top/", "O")
+    ]);
+
+    upsertSection(sections, "穿越火线专区", "CrossFire Zone", "fa fa-bullseye", [
+        makeItem("Zhexian", "Password: 6666", "https://daguo6.lanzouw.com/b0mbewswf", "Z"),
+        makeItem("Tianming", "Password: 6666", "https://daguo6.lanzouw.com/b0mbewtqf", "T"),
+        makeItem("Beidi", "Password: 6666", "https://daguo6.lanzouw.com/b0mbewu8d", "B"),
+        makeItem("JZ", "Password: 6666", "https://daguo6.lanzouw.com/b0mbewvlc", "JZ"),
+        makeItem("BX", "Password: 6666", "https://daguo6.lanzouw.com/b0mbewvta", "BX"),
+        makeItem("BB", "Password: 6666", "https://daguo6.lanzouw.com/b0mbewuwh", "BB"),
+        makeItem("Fengxi", "Password: 6666", "https://daguo6.lanzouw.com/b0mcn84vg", "F")
+    ]);
+
+    upsertHideAndSeekSection(sections, "Hide-and-Seek Zone", [
+        makeItem("MC", "Password: 123", "https://wwbjv.lanzout.com/b00yb6nuwd", "MC"),
+        makeItem("Graffiti Hide-and-Seek", "Password: 6666", "https://wwbhv.lanzoum.com/b01d713yof", "G"),
+        makeItem("Da Vinci", "Password: 6666", "https://wwbhv.lanzoum.com/b01d71e9kh", "D")
     ]);
 
     patchUrlsInSections(sections);
