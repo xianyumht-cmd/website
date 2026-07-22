@@ -96,15 +96,16 @@ function patchZhSections(sections) {
         makeItem("GUF", "不三年，强烈推荐", "https://wwme.lanzoui.com/b00od4rd1e", "G"),
         makeItem("LTY", "密码：f4sv", "https://wwauv.lanzout.com/b00yb1z1od", "L"),
         makeItem("LO", "密码：123", "https://wwash.lanzouw.com/b019vvm2ve", "LO"),
+        makeItem("万艾可", "密码：123", "https://wwbku.lanzoub.com/b0pndjqmj", "万"),
         makeItem("黎明", "下载地址", "https://wwbpx.lanzoum.com/b00mqeda6d", "黎"),
-        makeItem("HELLO", "HELLO", "http://b-bu.cn/b019vxb1xg", "H"),
         makeItem("时光", "密码：btqo", "https://wwarw.lanzn.com/b00l2sy5gd", "时"),
         makeItem("海豹", "海豹", "https://wwbuq.lanzouu.com/b00jezzfoj", "海"),
-        makeItem("Cpdd", "密码：123", "https://wwbgz.lanzouu.com/b019vtt5yf", "C"),
-        makeItem("van", "飞鸡盘下载", "https://share.feijipan.com/s/ZJ2gFsda", "V"),
-        makeItem("启航", "密码：qihang", "https://wwaym.lanzoub.com/s/QiHang", "启"),
+        makeItem("FJ", "密码：123", "https://wwaym.lanzoub.com/s/QiHang", "FJ"),
         makeItem("樱桃", "密码：123", "https://wwbgz.lanzouu.com/b019vx8h5g", "樱"),
-        makeItem("灵影", "密码：0ying", "https://wwus.lanzouu.com/b0zkvz7la", "灵")
+        makeItem("灵影", "密码：0ying", "https://wwus.lanzouu.com/b0zkvz7la", "灵"),
+        makeItem("TAB", "使用文档：https://a.hoisen.com/6LN45F；密码：tab11", "https://wwus.lanzouu.com/s/TAB1", "TAB"),
+        makeItem("ADS", "飞鸡盘下载", "https://share.feijipan.com/s/jBdy32yE", "ADS"),
+        makeItem("星辰", "密码：123", "https://wwbgz.lanzouu.com/b019w076jg", "星")
     ]);
     weeklySection.items = weeklySection.items.filter(Boolean);
 
@@ -191,6 +192,22 @@ function patchEnSections(sections) {
         makeItem("Shark", "Shark", "https://wwbuq.lanzouu.com/b00jezzfej", "S"),
         makeItem("Legend", "Password: efbk", "https://wwamk.lanzouu.com/b01d70ikvc", "L"),
         makeItem("yun", "Password: yun", "https://wwus.lanzouu.com/s/yunnb", "Y")
+    ]);
+
+    upsertSection(sections, "周卡专区", "Weekly Card Zone", "fa fa-google-wallet", [
+        makeItem("GUF", "Recommended", "https://wwme.lanzoui.com/b00od4rd1e", "G"),
+        makeItem("LTY", "Password: f4sv", "https://wwauv.lanzout.com/b00yb1z1od", "L"),
+        makeItem("LO", "Password: 123", "https://wwash.lanzouw.com/b019vvm2ve", "LO"),
+        makeItem("Viega", "Password: 123", "https://wwbku.lanzoub.com/b0pndjqmj", "V"),
+        makeItem("Dawn", "Download", "https://wwbpx.lanzoum.com/b00mqeda6d", "D"),
+        makeItem("Time", "Password: btqo", "https://wwarw.lanzn.com/b00l2sy5gd", "T"),
+        makeItem("Seal", "Seal", "https://wwbuq.lanzouu.com/b00jezzfoj", "S"),
+        makeItem("FJ", "Password: 123", "https://wwaym.lanzoub.com/s/QiHang", "FJ"),
+        makeItem("Cherry", "Password: 123", "https://wwbgz.lanzouu.com/b019vx8h5g", "C"),
+        makeItem("Lingying", "Password: 0ying", "https://wwus.lanzouu.com/b0zkvz7la", "L"),
+        makeItem("TAB", "Guide: https://a.hoisen.com/6LN45F; Password: tab11", "https://wwus.lanzouu.com/s/TAB1", "TAB"),
+        makeItem("ADS", "Feijipan download", "https://share.feijipan.com/s/jBdy32yE", "ADS"),
+        makeItem("Xingchen", "Password: 123", "https://wwbgz.lanzouu.com/b019w076jg", "X")
     ]);
 
     patchUrlsInSections(sections);
