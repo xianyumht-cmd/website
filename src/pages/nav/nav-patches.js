@@ -77,6 +77,7 @@ function patchZhSections(sections) {
     }
 
     upsertSection(sections, "天卡专区", "天卡专区", "fa fa-book", [
+        makeItem("Space", "Space", "https://wwayq.lanzouq.com/b00odtjzsf", "S"),
         makeItem("蓝鲸", "蓝鲸", "https://wwbpx.lanzoum.com/b00mqcafbi", "蓝"),
         makeItem("FY", "FY", "https://wwbls.lanzouq.com/b0rb4uivc", "FY"),
         makeItem("acme", "密码：8888", "https://wwer.ysupan.com", "A"),
@@ -177,6 +178,7 @@ function patchEnSections(sections) {
     if (!Array.isArray(sections)) return sections;
 
     upsertSection(sections, "天卡专区", "Daily Card Zone", "fa fa-book", [
+        makeItem("Space", "Space", "https://wwayq.lanzouq.com/b00odtjzsf", "S"),
         makeItem("Blue Whale", "Blue Whale", "https://wwbpx.lanzoum.com/b00mqcafbi", "B"),
         makeItem("FY", "FY", "https://wwbls.lanzouq.com/b0rb4uivc", "FY"),
         makeItem("acme", "Password: 8888", "https://wwer.ysupan.com", "A"),
