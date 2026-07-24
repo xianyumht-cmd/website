@@ -3,7 +3,7 @@ const translations = {
   "超凡发卡": "Card Shop",
   "租号陪玩": "Account Rental",
   "下载导航": "Download Hub",
-  "资源导航": "Resource Hub",
+  "下载中心": "Download Center",
   "商务合作": "Business",
   "问题反馈": "Feedback",
   "立即发卡": "Buy Now",
@@ -53,7 +53,7 @@ const attributeTranslations = {
   "业务入口": "Business entries",
   "超凡发卡入口": "Card shop entry",
   "租号陪玩入口": "Account rental entry",
-  "资源导航入口": "Resource hub entry",
+  "下载中心入口": "Download center entry",
   "MySSL 安全认证": "MySSL security certification"
 };
 
