@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import http from 'node:http'
+import { chromium } from '@playwright/test'
 
 const repoRoot = path.resolve('.')
 const logsDir = path.join(repoRoot, 'logs')
@@ -10,13 +11,22 @@ fs.mkdirSync(logsDir, { recursive: true })
 function findBrowser() {
   const env = process.env.CHROME_PATH
   if (env && fs.existsSync(env)) return env
+
   const candidates = [
+    chromium.executablePath(),
     'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
     'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
     'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
   ]
-  return candidates.find((p) => fs.existsSync(p))
+
+  return candidates.find((candidate) => candidate && fs.existsSync(candidate))
 }
 
 function waitForHttp(url, timeoutMs) {
@@ -76,7 +86,7 @@ function runAudit(nodeExe, env, only) {
 
 const nodeExe = process.execPath
 const browser = findBrowser()
-if (!browser) throw new Error('No Chromium-based browser found. Set CHROME_PATH.')
+if (!browser) throw new Error('No Chromium-based browser found. Install Playwright Chromium or set CHROME_PATH.')
 
 const distDir = path.join(repoRoot, 'dist')
 if (!fs.existsSync(path.join(distDir, 'down', 'nav', 'index.html'))) {
