@@ -101,10 +101,14 @@ function enhanceKeyboardControls() {
   });
 }
 
+function isSpiritCard(card) {
+  const label = String(card?.getAttribute('aria-label') || card?.textContent || '').trim().toLowerCase();
+  return label.startsWith('spirit');
+}
+
 function disableSpiritCards() {
   document.querySelectorAll('#content-sections .box2').forEach((card) => {
-    const label = String(card.getAttribute('aria-label') || card.textContent || '').trim().toLowerCase();
-    if (!label.startsWith('spirit')) return;
+    if (!isSpiritCard(card)) return;
 
     card.onclick = null;
     card.classList.add('is-display-only');
@@ -113,6 +117,26 @@ function disableSpiritCards() {
     card.setAttribute('aria-disabled', 'true');
     card.setAttribute('title', '仅作展示，无下载地址');
   });
+}
+
+function installSpiritClickGuard() {
+  if (document.documentElement.dataset.spiritClickGuard === '1') return;
+  document.documentElement.dataset.spiritClickGuard = '1';
+
+  document.addEventListener('click', (event) => {
+    const card = event.target instanceof Element ? event.target.closest('#content-sections .box2') : null;
+    if (!isSpiritCard(card)) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, true);
+
+  document.addEventListener('keydown', (event) => {
+    const card = event.target instanceof Element ? event.target.closest('#content-sections .box2') : null;
+    if (!isSpiritCard(card)) return;
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, true);
 }
 
 function installStyles() {
@@ -136,6 +160,7 @@ patchVersionFallback();
 markSpiritAsDisplayOnly();
 ensureVersionBulletin();
 installStyles();
+installSpiritClickGuard();
 
 const initializeUiFixes = () => {
   patchVersionFallback();
