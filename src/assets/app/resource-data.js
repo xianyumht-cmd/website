@@ -1,10 +1,22 @@
+function deleteCookie(name) {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+}
+
 function getCookie(name) {
   const prefix = `${name}=`;
   const value = document.cookie
     .split(';')
     .map((item) => item.trim())
     .find((item) => item.startsWith(prefix));
-  return value ? decodeURIComponent(value.slice(prefix.length)) : null;
+
+  if (!value) return null;
+
+  try {
+    return decodeURIComponent(value.slice(prefix.length));
+  } catch {
+    deleteCookie(name);
+    return null;
+  }
 }
 
 export function initializeResourceData(translations) {
