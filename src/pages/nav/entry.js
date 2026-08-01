@@ -6,6 +6,7 @@ import './nav-patches.js';
 import './he-patch.js';
 import './nav-loading.js';
 import '../../assets/js/nav-core.js';
+import './nav-confirmed-fixes.js';
 import { initCommonPage } from '../../assets/app/page-common.js';
 
 initCommonPage();
