@@ -3,13 +3,13 @@
 ## Current development state
 
 - Canonical development branch: `source`.
-- Active performance task branch: `perf/user-path-20260809`.
-- Active pull request: #3 `perf: speed up resource pages and add production audit`.
-- The task is focused on normal visitor speed for the homepage/resource pages, especially mobile and lower-performance browsers.
+- Performance optimization PR #3 `perf: speed up resource pages and add production audit` was squash-merged into `source` on 2026-08-09.
+- Code merge commit: `996d26afc2d7a78925cd937bbe6dcdaf08389d13`.
+- The performance work targets normal visitor speed for the homepage/resource pages, especially mobile and lower-performance browsers.
 
 ## Performance task status
 
-Implemented on PR #3:
+Merged from PR #3:
 
 - `/down/games/` no longer parser-blocks on the 51.la visitor widget; the widget is deferred until after page load/idle time.
 - Navigation Baidu analytics and the 51.la visitor widget are no longer injected during the initial HTML critical path.
@@ -21,6 +21,7 @@ Implemented on PR #3:
 
 ## Verification state
 
-- Source-vs-branch diff was reviewed to remove unrelated changes.
-- No GitHub Actions workflow run is currently available for the PR head, so build/lint/browser execution has not been verified by remote CI in this task yet.
-- PR #3 is not merged and these changes are not deployed to production.
+- Source-vs-branch diff was reviewed and unrelated changes were removed before merge.
+- Cloudflare Pages successfully built and deployed the PR preview for head `4c799b4` before merge.
+- PR #3 is merged into `source`.
+- Production-domain verification remains the next step after Cloudflare finishes the `source` deployment; user-visible behavior and speed should be checked on `/`, `/down/nav/`, and `/down/games/`.
