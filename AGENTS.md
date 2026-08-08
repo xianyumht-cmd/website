@@ -80,3 +80,59 @@ At the start of every task:
 Destructive Git operations, branch/tag deletion, deployment, or production-impacting changes require explicit user intent and fresh safety checks immediately before execution.
 
 Persistent branches should stay minimal; temporary branches exist only while their task is active.
+
+## Self-maintaining AI knowledge system
+
+The user should **not** need to remember or repeat project-history and documentation chores. When the user has authorized a repository-changing task, maintaining the repository knowledge files below is part of that task and does not require a separate reminder. Do not perform repository writes during a purely read-only request.
+
+### Knowledge takeover order
+
+After reading all applicable `AGENTS.md` / `CODEX.md`, read these canonical files when they exist, then verify important claims against current Git/Issue/PR/deployment evidence:
+
+1. `docs/AI_CONTEXT.md` — stable project purpose, boundaries, major modules, external dependencies, and terminology.
+2. `docs/PROJECT_STATE.md` — current verified development/deployment state, active Issues/PRs, accepted versions, incomplete work, and next actions.
+3. `docs/PITFALLS.md` — recurring mistakes, failed approaches, root causes, detection signals, and prevention rules.
+4. `docs/DECISIONS.md` — durable technical/product/operations decisions and why they were made.
+5. `docs/ARCHITECTURE.md` — components, ownership boundaries, data flow, contracts, and integration relationships.
+6. `docs/OPERATIONS.md` — build, release, deployment, verification, recovery, rollback, and maintenance runbooks.
+7. `docs/AI_WORKSTYLE.md` — stable repository-relevant collaboration preferences that help AI work effectively with the user.
+
+Missing files are not an error. **Do not create empty boilerplate files.** Create a canonical file only when the first real piece of durable information belongs there.
+
+### Automatic routing rules
+
+- Stable mandatory AI behavior/safety/workflow belongs in `AGENTS.md`.
+- Stable project facts and vocabulary belong in `AI_CONTEXT.md`.
+- Current state belongs in `PROJECT_STATE.md`; keep it concise and replace stale facts instead of appending chat logs.
+- Reusable lessons from failures or user corrections belong in `PITFALLS.md` with cause + prevention.
+- Durable choices between alternatives belong in `DECISIONS.md` with date, reason, consequences, and superseded decisions when applicable.
+- Architecture changes belong in `ARCHITECTURE.md`.
+- Build/deploy/rollback/verification procedure changes belong in `OPERATIONS.md`.
+- Stable repository-relevant collaboration preferences belong in `AI_WORKSTYLE.md`; do not store unrelated personal profile information.
+- Do not create `*-v2.md`, `final-notes.md`, dated handoff duplicates, or parallel knowledge files when a canonical file can be updated.
+- Do not create a separate branch merely for handoff/knowledge updates; include them in the same authorized task branch/PR.
+
+### Automatic maintenance triggers
+
+Before declaring a substantive task complete, decide what knowledge changed and:
+
+1. reconcile docs with actual Git/Issue/PR/deployment evidence;
+2. update `PROJECT_STATE.md` when current state, active task, blocker, accepted result, or next action changed;
+3. update `PITFALLS.md` after a reusable failure/correction;
+4. update `DECISIONS.md` after a durable decision;
+5. update `ARCHITECTURE.md` / `OPERATIONS.md` when their facts changed;
+6. update `AI_CONTEXT.md` / `AI_WORKSTYLE.md` only for stable facts/preferences;
+7. update `AGENTS.md` only for a new long-lived mandatory rule.
+
+A task is **not fully closed** if repository knowledge is materially stale after the change.
+
+### Evidence and hygiene rules
+
+- Current repository/deployment evidence outranks stale documentation.
+- Distinguish **verified current state**, **planned work**, and **inference**.
+- Prefer exact Issue/PR numbers, tags, commit SHAs, paths, and dates when useful for auditability.
+- Never store passwords, API tokens, cookies, private keys, session secrets, or credential-bearing diagnostics in these knowledge files.
+- Do not dump large logs or chat transcripts into the knowledge base; summarize the reusable conclusion and durable evidence.
+- If knowledge conflicts with reality, correct or mark it superseded during the current task instead of silently working around it.
+
+The goal is that a future ChatGPT/Codex session can enter this repository, read the canonical files, inspect live repository state, and continue safely **without relying on the user to remember previous instructions or retell project history**.
