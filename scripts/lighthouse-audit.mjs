@@ -3,9 +3,11 @@ import path from 'node:path'
 import lighthouse from 'lighthouse'
 import chromeLauncher from 'chrome-launcher'
 
-const baseUrl = process.env.BASE_URL || 'http://127.0.0.1:4173'
+const baseUrl = (process.env.BASE_URL || 'http://127.0.0.1:4173').replace(/\/+$/, '')
 const urls = [
+  { id: 'home', url: `${baseUrl}/` },
   { id: 'nav', url: `${baseUrl}/down/nav/index.html` },
+  { id: 'games', url: `${baseUrl}/down/games/index.html` },
   { id: 'tdr', url: `${baseUrl}/down/tdr/index.html` },
 ]
 
@@ -116,6 +118,7 @@ for (const entry of targets) {
 
 const payload = {
   createdAt: new Date().toISOString(),
+  baseUrl,
   chromePath,
   results,
 }
