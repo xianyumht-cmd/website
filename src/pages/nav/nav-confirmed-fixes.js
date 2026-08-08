@@ -162,6 +162,16 @@ ensureVersionBulletin();
 installStyles();
 installSpiritClickGuard();
 
+let spiritRefreshScheduled = false;
+function scheduleSpiritRefresh() {
+  if (spiritRefreshScheduled) return;
+  spiritRefreshScheduled = true;
+  requestAnimationFrame(() => {
+    spiritRefreshScheduled = false;
+    disableSpiritCards();
+  });
+}
+
 const initializeUiFixes = () => {
   patchVersionFallback();
   markSpiritAsDisplayOnly();
@@ -172,7 +182,7 @@ const initializeUiFixes = () => {
   const content = document.getElementById('content-sections');
   if (content && !content.dataset.displayOnlyObserver) {
     content.dataset.displayOnlyObserver = '1';
-    new MutationObserver(disableSpiritCards).observe(content, { childList: true, subtree: true });
+    new MutationObserver(scheduleSpiritRefresh).observe(content, { childList: true });
   }
 };
 
@@ -187,6 +197,6 @@ document.addEventListener('navDataUpdated', () => {
   markSpiritAsDisplayOnly();
   queueMicrotask(() => {
     renderClockImmediately();
-    disableSpiritCards();
+    scheduleSpiritRefresh();
   });
 });
