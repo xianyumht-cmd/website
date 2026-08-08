@@ -134,21 +134,25 @@ function enhanceRow(header, row) {
         count.className = 'nav-section-count';
         header.appendChild(count);
     }
-    count.textContent = currentLang() === 'en'
-        ? `${cards.length} ${text('resourceCount')}`
-        : `${cards.length} ${text('resourceCount')}`;
+    count.textContent = `${cards.length} ${text('resourceCount')}`;
 
     const groupName = cleanSectionName(sectionTitle(header));
     cards.forEach(card => {
-        const oldTags = card.querySelector('.nav-card-tags');
-        if (oldTags) oldTags.remove();
-
-        card.dataset.navVisualEnhanced = '1';
         const cardText = card.textContent || '';
+        const secondTag = /密码|Password|提取码|访问码|解压码|code/i.test(cardText)
+            ? text('codeIncluded')
+            : text('resourceEntry');
+        const signature = `${currentLang()}|${groupName}|${secondTag}`;
+        const existingTags = card.querySelector('.nav-card-tags');
+
+        if (card.dataset.navVisualSignature === signature && existingTags) return;
+        if (existingTags) existingTags.remove();
+
+        card.dataset.navVisualSignature = signature;
         const tags = document.createElement('div');
         tags.className = 'nav-card-tags';
         addTag(tags, groupName);
-        addTag(tags, /密码|Password|提取码|访问码|解压码|code/i.test(cardText) ? text('codeIncluded') : text('resourceEntry'));
+        addTag(tags, secondTag);
         card.appendChild(tags);
     });
 }
@@ -169,18 +173,25 @@ function run() {
     enhanceSections();
 }
 
+let runScheduled = false;
+function scheduleRun() {
+    if (runScheduled) return;
+    runScheduled = true;
+    requestAnimationFrame(() => {
+        runScheduled = false;
+        run();
+    });
+}
+
 function init() {
     run();
     const container = document.getElementById('content-sections');
     if (container && container.dataset.navVisualObserver !== '1') {
         container.dataset.navVisualObserver = '1';
-        const observer = new MutationObserver(() => requestAnimationFrame(run));
+        const observer = new MutationObserver(scheduleRun);
         observer.observe(container, { childList: true });
     }
-    document.addEventListener('navDataUpdated', () => requestAnimationFrame(run));
-    setTimeout(run, 300);
-    setTimeout(run, 1000);
-    setTimeout(run, 2200);
+    document.addEventListener('navDataUpdated', scheduleRun);
 }
 
 if (document.readyState === 'loading') {
