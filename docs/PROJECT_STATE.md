@@ -34,6 +34,7 @@ PR #4 addresses two follow-up reliability issues without intentionally changing 
 
 - PR #4 was created from `source` commit `ec4ac7a52f1581e08e4968f49a328adb6bc4569b` and was not behind `source` when opened.
 - The source-vs-branch file list contains only the intended homepage-link, resource-breakpoint, test, and project-state changes.
+- Cloudflare Pages successfully built and deployed the PR preview for code commit `3751cdf6859acc0b5ae39c3565373371a083df49`; later branch commits only update repository documentation.
 - The new Playwright tests exist in the branch, but no GitHub CI result has verified their execution yet.
 - PR #4 is not merged into `source` and is not a production release.
-- Use the Cloudflare PR preview, when available, to check desktop, normal mobile, and approximately 810px layouts before deciding whether to merge.
+- Use the Cloudflare branch preview to check desktop, normal mobile, and approximately 810px layouts before deciding whether to merge.
