@@ -1,0 +1,21 @@
+/* Keep the resource-page shell on the same 820px breakpoint as the shared drawer. */
+@media (max-width: 820px) {
+  .page-container {
+    display: block;
+  }
+
+  .sidebar-menu {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  .page-container > .main-content {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  .page-container .sidebar-menu .sidebar-menu-inner {
+    overflow: visible;
+  }
+}
