@@ -86,3 +86,39 @@ test('Nav category drawer is open by default, scrollable, and collapsible', asyn
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
 })
 
+test('Nav and Games use the mobile resource shell at 810px', async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 810, height: 900 })
+
+  for (const path of ['/down/nav/index.html', '/down/games/index.html']) {
+    await page.goto(`${baseURL}${path}`, { waitUntil: 'load' })
+    await page.waitForSelector('#main-menu li')
+
+    const shell = await page.locator('.page-container').evaluate((element) => ({
+      display: getComputedStyle(element).display,
+    }))
+    const sidebar = await page.locator('.sidebar-menu').evaluate((element) => ({
+      position: getComputedStyle(element).position,
+      width: getComputedStyle(element).width,
+    }))
+    const mainContent = await page.locator('.main-content').evaluate((element) => ({
+      marginLeft: getComputedStyle(element).marginLeft,
+      width: getComputedStyle(element).width,
+    }))
+
+    expect(shell.display).toBe('block')
+    expect(sidebar.position).toBe('relative')
+    expect(parseFloat(sidebar.width)).toBeGreaterThan(780)
+    expect(mainContent.marginLeft).toBe('0px')
+    expect(parseFloat(mainContent.width)).toBeGreaterThan(760)
+
+    const desktopToggle = page.locator('.resource-sidebar-toggle')
+    const mobileToggle = page.locator('[data-toggle="mobile-menu"]')
+    const menu = page.locator('#main-menu')
+
+    await expect(desktopToggle).toBeHidden()
+    await expect(mobileToggle).toBeVisible()
+    await mobileToggle.click()
+    await expect(menu).toBeHidden()
+  }
+})
+
