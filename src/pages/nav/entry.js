@@ -1,6 +1,7 @@
 import '../../assets/app/page-common.js';
 import '../../assets/app/resource-sidebar.js';
 import '../../assets/css/resource-pages.css';
+import '../../assets/css/resource-breakpoints.css';
 import './data.js';
 import './nav-patches.js';
 import './he-patch.js';
