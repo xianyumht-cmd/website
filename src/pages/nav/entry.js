@@ -3,6 +3,7 @@ import '../../assets/app/resource-sidebar.js';
 import '../../assets/css/resource-pages.css';
 import './data.js';
 import './nav-patches.js';
+import './daily-card-patch.js';
 import './he-patch.js';
 import './weekly-card-patch.js';
 import './delta-force-patch.js';
