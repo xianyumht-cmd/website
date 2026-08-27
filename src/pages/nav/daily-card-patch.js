@@ -33,7 +33,7 @@
             title: '如意',
             description: '如意',
             avatar: '如',
-            url: 'https://wwbpx.lanzoum.com/b00mqcagdg',
+            url: 'https://wwbuq.lanzouu.com/b00jf03wja',
             tooltip: '如意'
         },
         {
@@ -45,9 +45,9 @@
         },
         {
             title: '蓝鲸',
-            description: '蓝鲸',
+            description: '密码：123',
             avatar: '蓝',
-            url: 'https://wwbpx.lanzoum.com/b00mqcafbi',
+            url: 'https://wwbuq.lanzouu.com/b00jezvopa',
             tooltip: '蓝鲸'
         },
         {
@@ -87,7 +87,7 @@
         { ...zhItems[3], description: 'Password: 8888' },
         { ...zhItems[4], title: 'Ruyi', avatar: 'R', tooltip: 'Ruyi' },
         { ...zhItems[5], title: 'Knight', description: 'Download', avatar: 'K', tooltip: 'Knight' },
-        { ...zhItems[6], title: 'Blue Whale', avatar: 'B', tooltip: 'Blue Whale' },
+        { ...zhItems[6], title: 'Blue Whale', description: 'Password: 123', avatar: 'B', tooltip: 'Blue Whale' },
         { ...zhItems[7], description: 'Password: yun' },
         { ...zhItems[8], description: 'Code: DC66' },
         { ...zhItems[9], description: 'Password: 123' },
