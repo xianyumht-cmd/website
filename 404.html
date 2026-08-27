@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面未找到</title>
+    <link rel="canonical" href="https://xn--8pv109c.top/404.html">
+    <style>
+        * { box-sizing: border-box; }
+
+        :root {
+            --paper: #f8f8f5;
+            --paper-soft: #f0f2f5;
+            --ink: #0b0d10;
+            --muted: #6c727d;
+            --line: #d7dbe2;
+            --line-strong: #aeb6c3;
+            --accent: #1264ff;
+            color-scheme: light;
+            font-family: "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        body.night {
+            --paper: #0b0d11;
+            --paper-soft: #12151b;
+            --ink: #f4f6f8;
+            --muted: #9299a6;
+            --line: #292e37;
+            --line-strong: #4a5362;
+            --accent: #4c8dff;
+            color-scheme: dark;
+        }
+
+        html,
+        body { min-height: 100%; margin: 0; }
+
+        body {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background: var(--paper);
+            color: var(--ink);
+            transition: background-color .25s ease, color .25s ease;
+        }
+
+        body::before,
+        body::after {
+            position: fixed;
+            width: 170px;
+            height: 170px;
+            pointer-events: none;
+            content: '';
+            opacity: .75;
+            background-image:
+                linear-gradient(var(--line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 24px 24px;
+            -webkit-mask-image: radial-gradient(circle at center, #000, transparent 70%);
+            mask-image: radial-gradient(circle at center, #000, transparent 70%);
+        }
+
+        body::before { top: -24px; left: -34px; }
+        body::after { right: -34px; bottom: 44px; }
+
+        body .site-header {
+            position: relative;
+            z-index: 2;
+            border-bottom: 1px solid var(--line);
+            background: color-mix(in srgb, var(--paper) 94%, transparent);
+            box-shadow: none;
+            backdrop-filter: blur(14px);
+        }
+
+        .error-shell {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(250px, .45fr);
+            align-items: end;
+            width: min(1180px, calc(100% - 72px));
+            min-height: calc(100vh - 190px);
+            margin: 0 auto;
+            padding: clamp(68px, 10vw, 120px) 0;
+            border-bottom: 1px solid var(--line-strong);
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--accent);
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: clamp(130px, 24vw, 330px);
+            font-weight: 900;
+            line-height: .72;
+            letter-spacing: -.12em;
+        }
+
+        p {
+            margin: 0;
+            padding: 18px 0 0;
+            border-top: 1px solid var(--line-strong);
+            color: var(--muted);
+            font-size: clamp(18px, 2.4vw, 28px);
+            font-weight: 700;
+            line-height: 1.5;
+            letter-spacing: -.025em;
+        }
+
+        .footer-placeholder { position: relative; z-index: 1; width: 100%; margin-top: auto; }
+
+        body .site-header__inner,
+        body .site-footer__inner { width: min(1180px, calc(100% - 72px)); }
+
+        body .site-footer {
+            margin-top: 0;
+            padding: 28px 0;
+            border: 0;
+            background: transparent;
+            box-shadow: none;
+            color: var(--muted);
+            backdrop-filter: none;
+        }
+
+        @media (max-width: 720px) {
+            .error-shell {
+                grid-template-columns: 1fr;
+                gap: 58px;
+                align-content: center;
+                width: min(100% - 30px, 1180px);
+                min-height: calc(100vh - 230px);
+                padding: 64px 0;
+            }
+            h1 { font-size: clamp(124px, 48vw, 210px); }
+            body .site-header__inner,
+            body .site-footer__inner { width: min(100% - 30px, 1180px); }
+            body .site-footer__values { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; }
+        }
+    </style>
+  <script type="module" crossorigin src="./assets/shared-bDYA12lC.js"></script>
+  <script type="module" crossorigin src="./assets/page-common-Mo-hnw29.js"></script>
+  <script type="module" crossorigin src="./assets/info-entry-BA5vW0lf.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/page-common-BzszGBTo.css">
+</head>
+<body>
+    <div data-site-header></div>
+    <main class="error-shell">
+    <h1>404</h1>
+    <p>抱歉，您访问的页面不存在。</p>
+    </main>
+    <div class="footer-placeholder"></div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+{
+  "generatedAt": "2026-08-27T02:04:19.691Z",
+  "totals": {
+    "js": {
+      "raw": 246042,
+      "gzip": 78003,
+      "brotli": 64690,
+      "count": 12
+    },
+    "css": {
+      "raw": 79532,
+      "gzip": 16137,
+      "brotli": 13950,
+      "count": 4
+    },
+    "html": {
+      "raw": 105860,
+      "gzip": 34112,
+      "brotli": 26233,
+      "count": 9
+    },
+    "images": {
+      "raw": 17967,
+      "count": 2
+    }
+  },
+  "largestFiles": [
+    {
+      "file": "js/lol-data.js",
+      "raw": 121175,
+      "gzip": 40378,
+      "brotli": 33832
+    },
+    {
+      "file": "assets/nav-core-Ifc46s_5.css",
+      "raw": 70021,
+      "gzip": 12721,
+      "brotli": 11175
+    },
+    {
+      "file": "assets/nav-CHDBpAeH.js",
+      "raw": 37530,
+      "gzip": 11514,
+      "brotli": 9433
+    },
+    {
+      "file": "assets/tdr-CKD3bJ_x.js",
+      "raw": 33944,
+      "gzip": 4667,
+      "brotli": 4022
+    },
+    {
+      "file": "groupguard/manual.html",
+      "raw": 20159,
+      "gzip": 7060,
+      "brotli": 5578
+    },
+    {
+      "file": "about.html",
+      "raw": 19120,
+      "gzip": 5523,
+      "brotli": 4256
+    },
+    {
+      "file": "assets/nav-core-dT3ucBK-.js",
+      "raw": 16410,
+      "gzip": 6047,
+      "brotli": 4996
+    },
+    {
+      "file": "lol-helper.html",
+      "raw": 15937,
+      "gzip": 4930,
+      "brotli": 3849
+    },
+    {
+      "file": "index.html",
+      "raw": 13231,
+      "gzip": 3618,
+      "brotli": 2893
+    },
+    {
+      "file": "assets/games-3Hbh7y2t.js",
+      "raw": 11099,
+      "gzip": 4238,
+      "brotli": 3372
+    },
+    {
+      "file": "assets/page-common-Mo-hnw29.js",
+      "raw": 10441,
+      "gzip": 4244,
+      "brotli": 3506
+    },
+    {
+      "file": "down/nav/index.html",
+      "raw": 10231,
+      "gzip": 3410,
+      "brotli": 2566
+    },
+    {
+      "file": "down/games/index.html",
+      "raw": 9223,
+      "gzip": 2957,
+      "brotli": 2190
+    },
+    {
+      "file": "privacy.html",
+      "raw": 8089,
+      "gzip": 3017,
+      "brotli": 2226
+    },
+    {
+      "file": "assets/tdr-B9NicexM.css",
+      "raw": 6190,
+      "gzip": 2057,
+      "brotli": 1728
+    },
+    {
+      "file": "assets/game-D18lbc1y.js",
+      "raw": 5923,
+      "gzip": 2111,
+      "brotli": 1861
+    },
+    {
+      "file": "404.html",
+      "raw": 5194,
+      "gzip": 1789,
+      "brotli": 1403
+    },
+    {
+      "file": "assets/main-DygO7wY_.js",
+      "raw": 5142,
+      "gzip": 2739,
+      "brotli": 2044
+    },
+    {
+      "file": "down/tdr/index.html",
+      "raw": 4676,
+      "gzip": 1808,
+      "brotli": 1272
+    },
+    {
+      "file": "assets/page-common-BzszGBTo.css",
+      "raw": 1828,
+      "gzip": 743,
+      "brotli": 581
+    }
+  ],
+  "warnings": []
+}

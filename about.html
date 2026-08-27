@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于我们与商务合作 - 脚本.top</title>
+  <link rel="canonical" href="https://xn--8pv109c.top/about.html">
+  <meta name="description" content="脚本.top 是一个游戏资源、工具导航、自动发卡与商务合作入口，提供资源导航、社群机器人、网站页面、AI辅助和远程技术服务等方向的合作咨询。">
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --blue: #1677ff;
+      --blue-dark: #0f55c8;
+      --purple: #7c3aed;
+      --text: #1d2433;
+      --muted: #6c7484;
+      --line: rgba(70, 90, 120, 0.12);
+      --card: rgba(255, 255, 255, 0.78);
+      --shadow: 0 20px 60px rgba(31, 55, 90, 0.12);
+      --shadow-soft: 0 12px 32px rgba(31, 55, 90, 0.09);
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 12%, rgba(22, 119, 255, 0.14), transparent 32%),
+        radial-gradient(circle at 78% 16%, rgba(124, 58, 237, 0.12), transparent 30%),
+        linear-gradient(180deg, #f7f9fd 0%, #f2f6fc 48%, #eef3fa 100%);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 46px 0 36px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .topbar a {
+      text-decoration: none;
+      color: #64748b;
+    }
+
+    .topbar a:hover {
+      color: var(--blue-dark);
+    }
+
+    .hero {
+      padding: 48px 32px;
+      border-radius: 30px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(18px);
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.68);
+      font-size: 13px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(32px, 5vw, 50px);
+      line-height: 1.08;
+      letter-spacing: -1px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .section {
+      margin-top: 30px;
+      padding: 30px;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.70);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px);
+    }
+
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      letter-spacing: -0.3px;
+    }
+
+    .section .lead {
+      margin: 0;
+      color: var(--muted);
+      max-width: 850px;
+    }
+
+    .about-grid,
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .card {
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 26px rgba(31, 55, 90, 0.07);
+    }
+
+    .card .icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(22, 119, 255, 0.13), rgba(124, 58, 237, 0.10));
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .business-highlight {
+      margin-top: 22px;
+      padding: 24px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(22, 119, 255, 0.14), transparent 30%),
+        linear-gradient(135deg, #1d2433 0%, #263246 100%);
+      color: #fff;
+    }
+
+    .business-highlight h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .business-highlight p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .process {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .step {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .contact {
+      margin-top: 30px;
+      padding: 32px;
+      border-radius: 26px;
+      background: #1d2433;
+      color: #fff;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .contact h2 {
+      margin: 0 0 10px;
+      font-size: 26px;
+    }
+
+    .contact p {
+      margin: 0 auto;
+      max-width: 720px;
+      color: #cbd5e1;
+    }
+
+    .contact a {
+      display: inline-flex;
+      margin-top: 18px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      background: var(--blue);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .contact a:hover {
+      background: var(--blue-dark);
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      color: #8a93a3;
+      font-size: 12px;
+    }
+
+    .footer a {
+      color: #737d90;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    @media (max-width: 820px) {
+      .wrap {
+        padding-top: 30px;
+      }
+
+      .topbar {
+        display: block;
+        line-height: 2;
+      }
+
+      .about-grid,
+      .service-grid,
+      .process {
+        grid-template-columns: 1fr;
+      }
+
+      .hero,
+      .section,
+      .contact {
+        padding: 24px 18px;
+      }
+    }
+
+    /* Swiss minimal theme */
+    :root {
+      --paper: #f8f8f5;
+      --paper-soft: #f0f2f5;
+      --ink: #0b0d10;
+      --muted: #6c727d;
+      --line: #d7dbe2;
+      --line-strong: #aeb6c3;
+      --accent: #1264ff;
+      --accent-soft: rgba(18, 100, 255, 0.08);
+      --signal: #18b870;
+      color-scheme: light;
+      font-family: "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body.night {
+      --paper: #0b0d11;
+      --paper-soft: #12151b;
+      --ink: #f4f6f8;
+      --muted: #9299a6;
+      --line: #292e37;
+      --line-strong: #4a5362;
+      --accent: #4c8dff;
+      --accent-soft: rgba(76, 141, 255, 0.10);
+      --signal: #43da91;
+      color-scheme: dark;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      position: relative;
+      transition: background-color .25s ease, color .25s ease;
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: 0;
+      width: 150px;
+      height: 150px;
+      pointer-events: none;
+      content: '';
+      opacity: .7;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 24px 24px;
+      -webkit-mask-image: radial-gradient(circle at center, #000, transparent 70%);
+      mask-image: radial-gradient(circle at center, #000, transparent 70%);
+    }
+
+    body::before { top: 70px; left: -34px; }
+    body::after { right: -34px; bottom: 70px; }
+
+    body .site-header {
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 94%, transparent);
+      box-shadow: none;
+      backdrop-filter: blur(14px);
+    }
+
+    body .site-header__inner,
+    body .site-footer__inner {
+      width: min(1180px, calc(100% - 72px));
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 72px));
+      padding: 44px 0 28px;
+    }
+
+    .topbar {
+      margin: 0;
+      padding: 0 0 18px;
+      border-bottom: 1px solid var(--line-strong);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .topbar a { color: var(--muted); }
+    .topbar a:hover { color: var(--accent); }
+
+    .hero {
+      padding: clamp(68px, 10vw, 118px) 0 clamp(54px, 8vw, 92px);
+      border: 0;
+      border-bottom: 1px solid var(--line-strong);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      text-align: left;
+      backdrop-filter: none;
+    }
+
+    .badge {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .badge::before {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 10px;
+      background: var(--signal);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--signal) 12%, transparent);
+      content: '';
+    }
+
+    .hero h1 {
+      max-width: 850px;
+      margin: 24px 0 22px;
+      font-size: clamp(56px, 10vw, 128px);
+      font-weight: 950;
+      line-height: .9;
+      letter-spacing: -.075em;
+    }
+
+    .hero h1 span {
+      background: none;
+      color: var(--ink);
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    .section {
+      margin: 0;
+      padding: clamp(48px, 7vw, 78px) 0;
+      border: 0;
+      border-bottom: 1px solid var(--line-strong);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .section h2,
+    .contact h2 {
+      margin: 0 0 18px;
+      color: var(--ink);
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 900;
+      letter-spacing: -.045em;
+      line-height: 1.05;
+    }
+
+    .section .lead {
+      max-width: 820px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .about-grid,
+    .service-grid,
+    .process {
+      gap: 0;
+      margin-top: 34px;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .card,
+    .step {
+      min-width: 0;
+      padding: 26px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      transition: background-color .18s ease, color .18s ease;
+    }
+
+    .card:hover,
+    .step:hover { background: var(--accent-soft); }
+
+    .card .icon {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 26px;
+      border-radius: 0;
+      background: var(--accent);
+      color: #fff;
+      font-size: 17px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 18px;
+      letter-spacing: -.02em;
+    }
+
+    .card p,
+    .step span { color: var(--muted); }
+
+    .business-highlight {
+      margin-top: 34px;
+      padding: 30px;
+      border: 1px solid var(--ink);
+      border-radius: 0;
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .business-highlight h3 { color: var(--paper); }
+    .business-highlight p { color: color-mix(in srgb, var(--paper) 72%, transparent); }
+
+    .step strong {
+      color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 13px;
+      letter-spacing: .02em;
+    }
+
+    .contact {
+      margin: 0;
+      padding: clamp(46px, 7vw, 76px);
+      border-radius: 0;
+      background: var(--accent);
+      box-shadow: none;
+      color: #fff;
+      text-align: left;
+    }
+
+    .contact h2 { color: #fff; }
+    .contact p { max-width: 760px; margin: 0; color: rgba(255, 255, 255, .76); }
+
+    .contact a {
+      margin-top: 28px;
+      padding: 13px 18px;
+      border: 1px solid #fff;
+      border-radius: 0;
+      background: transparent;
+      color: #fff;
+      transition: background-color .18s ease, color .18s ease;
+    }
+
+    .contact a:hover { background: #fff; color: #0b0d10; }
+
+    .wrap > [data-site-footer] { width: 100%; }
+
+    body .site-footer {
+      margin-top: 0;
+      padding: 28px 0 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--muted);
+      backdrop-filter: none;
+    }
+
+    @media (max-width: 820px) {
+      body .site-header__inner,
+      body .site-footer__inner,
+      .wrap { width: min(100% - 30px, 1180px); }
+
+      .wrap { padding-top: 28px; }
+      .topbar { display: flex; gap: 12px; line-height: 1.5; }
+      .hero { padding: 58px 0 50px; }
+      .hero h1 { font-size: clamp(56px, 19vw, 88px); }
+      .about-grid,
+      .service-grid,
+      .process { grid-template-columns: 1fr; }
+      .hero,
+      .section { padding-right: 0; padding-left: 0; }
+      .contact { padding: 42px 22px; }
+      .contact a { max-width: 100%; overflow-wrap: anywhere; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/shared-bDYA12lC.js"></script>
+  <script type="module" crossorigin src="./assets/page-common-Mo-hnw29.js"></script>
+  <script type="module" crossorigin src="./assets/info-entry-BA5vW0lf.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/page-common-BzszGBTo.css">
+</head>
+<body>
+  <div data-site-header></div>
+  <main class="wrap">
+    <div class="topbar">
+      <a href="/">← 返回首页</a>
+      <a href="mailto:xianyumht@gmail.com">xianyumht@gmail.com</a>
+    </div>
+
+    <section class="hero">
+      <div class="badge">关于我们 · 商务合作 · 技术服务</div>
+      <h1><span>脚本.top</span></h1>
+      <p>
+        脚本.top 是一个面向游戏用户和小型项目方的资源入口站，主要提供游戏资源导航、自动发卡入口、租号陪玩入口、问题反馈和商务合作咨询。
+        我们更看重清楚、轻量、可维护，让用户能快速找到需要的入口。
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>关于我们</h2>
+      <p class="lead">
+        脚本.top 最初是为了集中整理常用资源入口，减少客户反复询问链接、版本、下载地址和售后入口的成本。
+        现在它同时承担了资源导航、站点公告、问题反馈和合作展示的作用。
+      </p>
+
+      <div class="about-grid">
+        <div class="card">
+          <div class="icon">🧭</div>
+          <h3>资源导航</h3>
+          <p>聚合常用游戏工具、资源入口、版本信息和下载地址，方便用户快速查找。</p>
+        </div>
+        <div class="card">
+          <div class="icon">💳</div>
+          <h3>自动发卡</h3>
+          <p>为客户提供清晰的购买入口，减少人工重复回复，提升下单效率。</p>
+        </div>
+        <div class="card">
+          <div class="icon">🛠️</div>
+          <h3>维护反馈</h3>
+          <p>链接失效、资源更新、页面问题都可以通过邮箱反馈，便于后续维护。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>商务合作</h2>
+      <p class="lead">
+        如果你需要类似的入口页、导航站、社群管理工具、AI辅助内容或远程技术支持，可以先沟通需求。
+        需求不清楚也没关系，可以先说你想达成什么结果，我会帮你拆成可执行方案。
+      </p>
+
+      <div class="service-grid">
+        <div class="card">
+          <div class="icon">🤖</div>
+          <h3>社群机器人</h3>
+          <p>群管理、关键词提醒、自动回复、黑名单、入群验证、基础风控等方向的部署与维护。</p>
+        </div>
+        <div class="card">
+          <div class="icon">🌐</div>
+          <h3>网站与导航页</h3>
+          <p>个人资源站、产品入口页、导航页、发卡入口、项目介绍页、售后说明页。</p>
+        </div>
+        <div class="card">
+          <div class="icon">✨</div>
+          <h3>AI辅助服务</h3>
+          <p>整理需求、生成页面文案、规划页面结构、制作短视频脚本、整理发布流程。</p>
+        </div>
+        <div class="card">
+          <div class="icon">⚙️</div>
+          <h3>自动化流程</h3>
+          <p>把重复操作拆成流程，适合内容更新、链接检查、资料整理、简单数据处理等场景。</p>
+        </div>
+        <div class="card">
+          <div class="icon">💻</div>
+          <h3>远程技术服务</h3>
+          <p>软件安装、运行库修复、环境配置、常见错误排查、工具使用指导。</p>
+        </div>
+        <div class="card">
+          <div class="icon">📦</div>
+          <h3>项目维护</h3>
+          <p>已有网页或项目可以做内容更新、视觉润色、链接修复、说明文档整理。</p>
+        </div>
+      </div>
+
+      <div class="business-highlight">
+        <h3>适合什么人合作？</h3>
+        <p>
+          适合有资源、有客户、有想法，但不想自己折腾网页、机器人、文案、自动化流程的人。
+          可以先从一个小页面、一个机器人功能、一次远程处理开始，不必一上来做大项目。
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>合作流程</h2>
+      <div class="process">
+        <div class="step">
+          <strong>1. 说明需求</strong>
+          <span>告诉我你想做什么、现在卡在哪里、希望达到什么结果。</span>
+        </div>
+        <div class="step">
+          <strong>2. 拆解方案</strong>
+          <span>我会判断能不能做，适合怎么做，大概需要多少时间和成本。</span>
+        </div>
+        <div class="step">
+          <strong>3. 确认交付</strong>
+          <span>小需求直接做，复杂需求先做可用版本，再逐步完善。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact">
+      <h2>联系合作</h2>
+      <p>
+        发邮件时请尽量写清楚：你想做什么、预算范围、希望什么时候完成、有没有现成素材。
+        描述不专业也没关系，我会先帮你理解真实需求。
+      </p>
+      <a href="mailto:xianyumht@gmail.com">发送邮件：xianyumht@gmail.com</a>
+    </section>
+
+    <div data-site-footer></div>
+  </main>
+</body>
+</html>

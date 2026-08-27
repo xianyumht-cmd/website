@@ -1,0 +1,413 @@
+﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <script defer src="/page-guard.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOL直播速查表 - 主播专用版</title>
+    <style>
+        :root {
+            --primary: #C89B3C; /* Hextech Gold */
+            --bg: #091428; /* Void Dark */
+            --panel: #0A323C; /* Shadow Isles Greenish */
+            --text: #F0E6D2;
+            --accent: #0AC8B9;
+        }
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            font-size: 14px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+        /* Sidebar Styles */
+        .sidebar {
+            background: rgba(10, 50, 60, 0.9);
+            padding: 20px;
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        .emergency-pack h3 {
+            color: #FF4444;
+            border-bottom: 1px solid #FF4444;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .emergency-item {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent);
+        }
+        .emergency-item h4 {
+            margin: 0 0 5px 0;
+            color: var(--primary);
+            font-size: 13px;
+        }
+        
+        /* Main Content Styles */
+        .controls {
+            background: var(--panel);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        input, select, button {
+            padding: 8px;
+            background: #010A13;
+            border: 1px solid var(--primary);
+            color: var(--text);
+            border-radius: 2px;
+        }
+        button {
+            cursor: pointer;
+            background: var(--primary);
+            color: #000;
+            font-weight: bold;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* Table Styles */
+        .hero-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .hero-card {
+            background: rgba(13, 38, 54, 0.8);
+            border: 1px solid #1E282D;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .hero-card:hover {
+            border-color: var(--primary);
+        }
+        .hero-header {
+            display: grid;
+            grid-template-columns: 80px 120px 100px 100px 1fr 50px;
+            padding: 15px;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            cursor: pointer;
+            user-select: none;
+        }
+        .hero-header div {
+            padding: 0 10px;
+        }
+        .hero-name { font-weight: bold; color: var(--primary); font-size: 16px; }
+        .hero-nick { color: #aaa; font-style: italic; }
+        .hero-tag { 
+            display: inline-block; 
+            padding: 2px 6px; 
+            background: #1C3646; 
+            border-radius: 3px; 
+            font-size: 12px;
+            margin-right: 5px;
+        }
+        .expand-btn {
+            text-align: center;
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .hero-details {
+            display: none;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid #333;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .hero-card.expanded .hero-details {
+            display: grid;
+        }
+        .hero-card.expanded .expand-btn {
+            transform: rotate(180deg);
+        }
+
+        .detail-section h4 {
+            color: var(--accent);
+            margin: 0 0 10px 0;
+            border-left: 3px solid var(--primary);
+            padding-left: 10px;
+        }
+        .detail-content {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        .meme-text {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .voice-tip {
+            background: #2A1E05;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #E6C87F;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        /* Utility Classes */
+        .faction-icon { width: 15px; height: 15px; display: inline-block; margin-right: 5px; background: #555; vertical-align: middle; border-radius: 50%; }
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 左侧急救包 -->
+    <div class="sidebar">
+        <div class="emergency-pack">
+            <h3>🚨 突发冷场急救包</h3>
+            
+            <div class="emergency-item">
+                <h4>🎙️ 跨英雄联动梗</h4>
+                <p>“这就跟亚索遇见永恩一样，不是你死就是我送，这就叫兄弟情深。”</p>
+            </div>
+            <div class="emergency-item">
+                <h4>🎙️ 跨英雄联动梗</h4>
+                <p>“这波配合，默契得像霞和洛，可惜我们是两个单身狗。”</p>
+            </div>
+             <div class="emergency-item">
+                <h4>🎙️ 跨英雄联动梗</h4>
+                <p>“要是金克丝在这，肯定得说：‘我是疯子，有医生开的证明！’，我看对面这操作也差不多。”</p>
+            </div>
+            <div class="emergency-item">
+                <h4>🎙️ 跨英雄联动梗</h4>
+                <p>“这草丛里要是钻出个盖伦喊德玛西亚，我当场把键盘吃了。”</p>
+            </div>
+            <div class="emergency-item">
+                <h4>🎙️ 跨英雄联动梗</h4>
+                <p>“提莫队长正在待命，我看对面打野也在待命，蹲了三分钟了还不走。”</p>
+            </div>
+
+            <br>
+            <div class="emergency-item">
+                <h4>🛠️ 版本吐槽模板</h4>
+                <p>“设计师你看看这伤害合理吗？这不削能玩？建议把设计师关进小黑屋和这英雄对线一百把。”</p>
+            </div>
+            <div class="emergency-item">
+                <h4>🛠️ 版本吐槽模板</h4>
+                <p>“现在的版本就是，谁肉谁是大爷，AD现状就是活着。”</p>
+            </div>
+            <div class="emergency-item">
+                <h4>🛠️ 版本吐槽模板</h4>
+                <p>“这装备改得，我奶奶来出装都比推荐出装强。”</p>
+            </div>
+
+            <br>
+            <div class="emergency-item">
+                <h4>🎁 弹幕抽奖话术</h4>
+                <p>“觉得这波操作帅的扣‘666’，觉得下饭的扣‘饱了’，截屏抽一位送出xxx！”</p>
+            </div>
+            <div class="emergency-item">
+                <h4>🎁 弹幕抽奖话术</h4>
+                <p>“弹幕发送‘主播真细’，抽个兄弟送上车位，带你体验什么叫躺赢（或者躺平）。”</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右侧主内容 -->
+    <div class="main-content">
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="🔍 搜索英雄/外号/梗..." style="width: 200px;">
+            
+            <select id="factionFilter">
+                <option value="all">🌐 所有阵营</option>
+                <option value="艾欧尼亚">🌸 艾欧尼亚</option>
+                <option value="诺克萨斯">⚔️ 诺克萨斯</option>
+                <option value="德玛西亚">🛡️ 德玛西亚</option>
+                <option value="皮尔特沃夫">⚙️ 皮尔特沃夫</option>
+                <option value="祖安">🧪 祖安</option>
+                <option value="弗雷尔卓德">❄️ 弗雷尔卓德</option>
+                <option value="虚空">👾 虚空</option>
+                <option value="暗影岛">👻 暗影岛</option>
+                <option value="恕瑞玛">☀️ 恕瑞玛</option>
+                <option value="比尔吉沃特">🏴‍☠️ 比尔吉沃特</option>
+                <option value="班德尔城">🍄 班德尔城</option>
+                <option value="巨神峰">✨ 巨神峰</option>
+            </select>
+
+            <select id="roleFilter">
+                <option value="all">⚔️ 所有定位</option>
+                <option value="战士">🤺 战士</option>
+                <option value="法师">🔮 法师</option>
+                <option value="刺客">🗡️ 刺客</option>
+                <option value="射手">🏹 射手</option>
+                <option value="坦克">🛡️ 坦克</option>
+                <option value="辅助">❤️ 辅助</option>
+            </select>
+
+            <select id="sortOrder">
+                <option value="hot">🔥 按热度排序</option>
+                <option value="diff">⭐ 按难度排序</option>
+                <option value="new">📅 按上线顺序</option>
+            </select>
+
+            <button type="button" onclick="toggleAll(true)">全部展开</button>
+            <button type="button" onclick="toggleAll(false)" style="background:#555; color:#fff;">全部收起</button>
+            <div style="margin-left: auto; color: #888;">共收录 <span id="countDisplay">0</span> 位英雄</div>
+        </div>
+
+        <!-- 列表头 -->
+        <div class="hero-header" style="background: #0A323C; color: #fff; border-bottom: 2px solid var(--primary); font-size:12px;">
+            <div>英雄</div>
+            <div>外号/昵称</div>
+            <div>阵营</div>
+            <div>定位</div>
+            <div>一句话高光梗</div>
+            <div>操作</div>
+        </div>
+
+        <div id="heroList" class="hero-list">
+            <!-- JS 渲染区域 -->
+        </div>
+    </div>
+</div>
+
+<script src="js/lol-data.js"></script>
+<script>
+    // 错误处理与调试
+    window.addEventListener('error', function(e) {
+        console.error("Script Error:", e.message);
+        // 如果是关于 heroes 未定义的错误，提示用户
+        if (e.message && e.message.includes('heroes')) {
+            alert("英雄数据加载失败！请检查 js/lol-data.js 文件是否存在且格式正确。");
+            document.getElementById('heroList').innerHTML = '<div style="color:red; padding:20px; text-align:center;">数据加载失败<br>请检查控制台(F12)获取详细错误信息</div>';
+        }
+    });
+
+    // 初始化渲染
+    function renderHeroes() {
+        // 数据完整性检查
+        if (typeof window.heroes === 'undefined') {
+            console.error("window.heroes is undefined!");
+            alert("错误：英雄数据未能加载(window.heroes undefined)！\n请确保 js/lol-data.js 文件存在且没有语法错误。");
+            document.getElementById('heroList').innerHTML = '<div style="color:red; padding:20px; text-align:center;">数据文件加载失败</div>';
+            return;
+        }
+        
+        if (!Array.isArray(window.heroes) || window.heroes.length === 0) {
+            console.warn("Heroes data is empty or not an array");
+            alert("警告：英雄数据为空！已加载但无内容。");
+            return;
+        }
+
+        const heroes = window.heroes;
+        const searchVal = document.getElementById('searchInput').value.toLowerCase();
+        const factionVal = document.getElementById('factionFilter').value;
+        const roleVal = document.getElementById('roleFilter').value;
+        const sortVal = document.getElementById('sortOrder').value;
+
+        let filtered = heroes.filter(h => {
+            const matchSearch = h.name.includes(searchVal) || h.nickname.includes(searchVal) || h.meme.includes(searchVal);
+            const matchFaction = factionVal === 'all' || h.faction === factionVal;
+            const matchRole = roleVal === 'all' || h.role.includes(roleVal);
+            return matchSearch && matchFaction && matchRole;
+        });
+
+        // 排序
+        filtered.sort((a, b) => {
+            if (sortVal === 'hot') return b.hot - a.hot;
+            if (sortVal === 'diff') return b.difficulty - a.difficulty;
+            if (sortVal === 'new') return b.year - a.year;
+            return 0;
+        });
+
+        const container = document.getElementById('heroList');
+        const countDisplay = document.getElementById('countDisplay');
+        container.innerHTML = '';
+        countDisplay.textContent = filtered.length;
+
+        filtered.forEach(h => {
+            const card = document.createElement('div');
+            card.className = 'hero-card';
+            
+            // 难度星级
+            const stars = '⭐'.repeat(h.difficulty);
+            
+            card.innerHTML = `
+                <div class="hero-header" onclick="toggleCard(this)">
+                    <div class="hero-name">${h.name}</div>
+                    <div class="hero-nick">${h.nickname.split('/')[0]}</div>
+                    <div><span class="faction-icon"></span>${h.faction}</div>
+                    <div>${h.role}</div>
+                    <div style="color:#ddd; font-style:italic;">"${h.meme}"</div>
+                    <div class="expand-btn">⌄</div>
+                </div>
+                <div class="hero-details">
+                    <div class="detail-section">
+                        <h4>📖 30秒背景速讲</h4>
+                        <div class="detail-content">${h.story}</div>
+                        
+                        <h4>🥚 彩蛋/冷知识</h4>
+                        <div class="detail-content" style="color:#aaa;">${h.egg}</div>
+                    </div>
+                    <div class="detail-section">
+                        <h4>🎤 互动提问</h4>
+                        <ul class="detail-content" style="padding-left:20px; margin:0;">
+                            ${h.interactions.map(i => `<li>${i}</li>`).join('')}
+                        </ul>
+                        
+                        <h4 style="margin-top:15px;">🗣️ 语音口播提示</h4>
+                        <div class="detail-content">
+                            <span class="voice-tip">${h.voice}</span>
+                        </div>
+                        
+                        <div style="margin-top:10px; font-size:12px; color:#666;">
+                            上线年份: ${h.year} | 难度: ${stars} | 热度: ${h.hot}
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function toggleCard(header) {
+        header.parentElement.classList.toggle('expanded');
+    }
+
+    function toggleAll(expand) {
+        const cards = document.querySelectorAll('.hero-card');
+        cards.forEach(card => {
+            if (expand) card.classList.add('expanded');
+            else card.classList.remove('expanded');
+        });
+    }
+
+    // 事件监听
+    document.getElementById('searchInput').addEventListener('input', renderHeroes);
+    document.getElementById('factionFilter').addEventListener('change', renderHeroes);
+    document.getElementById('roleFilter').addEventListener('change', renderHeroes);
+    document.getElementById('sortOrder').addEventListener('change', renderHeroes);
+
+    // 初始加载
+    renderHeroes();
+
+</script>
+
+</body>
+</html>

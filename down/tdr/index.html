@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+        <meta name="robots" content="all">
+        <meta name="referrer" content="always">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="Cache-Control" content="no-transform" />
+        <meta name="format-detection" content="telephone=no"/>
+        <meta name="description" content="吃豆人（Pac-Man）是上世纪80年代一款经典街机游戏，游戏的主角小精灵的形象甚至被作为一种大众文化符号。本游戏使用HTML5完美移植该游戏，设置了多个关卡并改良了幽灵的寻路算法，可作为Canvas游戏学习的案例演示。">
+        <meta name="keywords" content="吃豆人,FC吃豆子,吃豆游戏,Pac-Man,HTML5游戏,Javascript游戏引擎">
+        <title>吃豆人 ・ Pac-Man</title>
+        <link rel="shortcut icon" href="../../../assets/favicon-GHb4rha6.png">
+      <script type="module" crossorigin src="../../../assets/tdr-CKD3bJ_x.js"></script>
+      <link rel="modulepreload" crossorigin href="../../../assets/shared-bDYA12lC.js">
+      <link rel="modulepreload" crossorigin href="../../../assets/page-common-Mo-hnw29.js">
+      <link rel="stylesheet" crossorigin href="../../../assets/page-common-BzszGBTo.css">
+      <link rel="stylesheet" crossorigin href="../../../assets/tdr-B9NicexM.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <header class="game-header">
+                <div class="game-header__inner">
+                    <a class="game-brand" href="/" aria-label="返回脚本.top首页">脚本.top</a>
+                    <div class="game-status" role="status" aria-label="游戏运行状态：在线">
+                        <span class="game-status__dot" aria-hidden="true"></span>
+                        <span>ARCADE 04 / ONLINE</span>
+                    </div>
+                    <nav class="game-actions" aria-label="游戏页导航">
+                        <a href="/down/nav/">资源导航</a>
+                        <a href="mailto:xianyumht@gmail.com">问题反馈</a>
+                        <a class="game-actions__primary" href="/">返回首页 <span aria-hidden="true">→</span></a>
+                    </nav>
+                </div>
+            </header>
+            <main class="container">
+                <section class="game-heading" aria-labelledby="game-title">
+                    <div>
+                        <p class="game-heading__index">HTML5 GAME / 04</p>
+                        <h1 id="game-title">吃豆人</h1>
+                    </div>
+                    <div class="game-heading__controls" role="group" aria-label="游戏操作说明">
+                        <span><b>ENTER</b> 开始</span>
+                        <span><b>方向键</b> 移动</span>
+                        <span><b>SPACE</b> 暂停</span>
+                    </div>
+                </section>
+                <div class="mod-panel">
+                    <div class="inner">
+                        <div class="bd">
+                            <canvas id="canvas" width="960" height="640">不支持画布</canvas>
+                        </div>
+                        <div class="ft">
+                            <div class="info">
+                                <p><span class="info__signal" aria-hidden="true"></span>经典模式已就绪</p>
+                                <p>ENTER 开始 · 方向键移动 · SPACE 暂停或继续</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mod-introtion">
+                    <div class="inner">
+                        <div class="hd">
+                            <p class="section-index">HOW TO PLAY / 游戏说明</p>
+                            <h2 class="title">保持移动，吃完所有豆子。</h2>
+                        </div>
+                        <div class="bd">
+                            <p><strong>目标</strong> 吃完迷宫里的全部豆子并避开幽灵。吃下大力丸后，可以在短时间内反击。</p>
+                            <p><strong>提示</strong> 幽灵会协作追踪路线。提前规划转角，保留大力丸，往往比一味加速更有效。</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>

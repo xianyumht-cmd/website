@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>脚本.top - 首页</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --paper: #f8f8f5;
+      --paper-soft: #f0f2f5;
+      --ink: #0b0d10;
+      --muted: #6c727d;
+      --line: #d7dbe2;
+      --line-strong: #aeb6c3;
+      --accent: #1264ff;
+      --accent-soft: rgba(18, 100, 255, .08);
+      --signal: #18b870;
+      font-family: "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body.night {
+      --paper: #0b0d11;
+      --paper-soft: #12151b;
+      --ink: #f4f6f8;
+      --muted: #9299a6;
+      --line: #292e37;
+      --line-strong: #4a5362;
+      --accent: #4c8dff;
+      --accent-soft: rgba(76, 141, 255, .1);
+      --signal: #43da91;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      transition: background-color .25s ease, color .25s ease;
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: 0;
+      width: 150px;
+      height: 150px;
+      pointer-events: none;
+      content: '';
+      opacity: .75;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 24px 24px;
+      -webkit-mask-image: radial-gradient(circle at center, #000, transparent 70%);
+      mask-image: radial-gradient(circle at center, #000, transparent 70%);
+    }
+
+    body::before { top: 70px; left: -34px; }
+    body::after { right: -34px; bottom: 70px; }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .main-wrapper {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      width: min(1440px, calc(100% - 72px));
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 0 0 28px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr) auto;
+      align-items: center;
+      min-height: 86px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+    }
+
+    .brand::after {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-left: 8px;
+      background: var(--accent);
+      content: '';
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: center;
+      gap: clamp(22px, 3.2vw, 54px);
+    }
+
+    .top-nav a,
+    .text-link {
+      position: relative;
+      color: var(--muted);
+      font-size: 13px;
+      transition: color .18s ease;
+    }
+
+    .top-nav a::after,
+    .text-link::after {
+      position: absolute;
+      right: 0;
+      bottom: -7px;
+      left: 0;
+      height: 1px;
+      background: var(--accent);
+      content: '';
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .18s ease;
+    }
+
+    .top-nav a:hover,
+    .text-link:hover { color: var(--ink); }
+    .top-nav a:hover::after,
+    .text-link:hover::after { transform: scaleX(1); }
+
+    .utility-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .utility-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 40px;
+      padding: 0 11px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color .18s ease, color .18s ease, background .18s ease;
+    }
+
+    .utility-button:hover {
+      border-color: var(--line);
+      background: var(--paper-soft);
+      color: var(--ink);
+    }
+
+    .theme-icon-element,
+    .lang-icon-element {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+    }
+
+    .theme-text-element,
+    .lang-text-element {
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .hero {
+      flex: 1 0 auto;
+      padding: clamp(64px, 9vh, 118px) 0 52px;
+    }
+
+    .hero-intro {
+      display: grid;
+      grid-template-columns: minmax(0, .7fr) minmax(520px, 1fr);
+      gap: 60px;
+      align-items: end;
+    }
+
+    .intro-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .intro-label::before {
+      width: 8px;
+      height: 8px;
+      background: var(--signal);
+      box-shadow: 0 0 0 5px rgba(24, 184, 112, .1);
+      content: '';
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(72px, 10vw, 152px);
+      font-weight: 950;
+      line-height: .88;
+      letter-spacing: -.085em;
+    }
+
+    .directory-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-strong);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .service-index { border-bottom: 1px solid var(--line-strong); }
+
+    .service-row {
+      display: grid;
+      grid-template-columns: 86px minmax(210px, .8fr) minmax(220px, 1fr) 132px;
+      align-items: center;
+      min-height: 112px;
+      border-top: 1px solid var(--line);
+      transition: color .2s ease, background .2s ease, padding .2s ease;
+    }
+
+    .service-row:first-child { border-top: 0; }
+
+    .service-row:hover,
+    .service-row:focus-visible {
+      padding: 0 18px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      outline-offset: -2px;
+    }
+
+    .service-number {
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .service-title {
+      font-size: clamp(30px, 3.4vw, 50px);
+      font-weight: 900;
+      letter-spacing: -.045em;
+    }
+
+    .service-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .service-action {
+      justify-self: end;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .support-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 28px;
+    }
+
+    .support-label {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: .12em;
+    }
+
+    .support-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 18px 34px;
+    }
+
+    .home-footer {
+      width: 100%;
+      margin-top: auto;
+      padding-top: clamp(54px, 8vh, 100px);
+    }
+
+    .home-footer .site-footer {
+      padding: 24px 0 0 !important;
+      border: 0 !important;
+      border-top: 1px solid var(--line) !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      color: var(--muted) !important;
+    }
+
+    .home-footer .site-footer__inner { width: 100%; }
+
+    @media (max-width: 1080px) {
+      .topbar { grid-template-columns: 150px minmax(0, 1fr) auto; }
+      .top-nav { gap: 20px; }
+      .hero-intro { grid-template-columns: 1fr; gap: 44px; }
+      .service-row { grid-template-columns: 72px minmax(210px, .85fr) minmax(190px, 1fr) 110px; }
+    }
+
+    @media (max-width: 760px) {
+      .main-wrapper { width: min(100% - 30px, 1440px); }
+
+      .topbar {
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        padding: 10px 0;
+      }
+
+      .top-nav {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-content: flex-start;
+        gap: 24px;
+        padding: 12px 0 4px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .top-nav::-webkit-scrollbar { display: none; }
+      .utility-button { padding: 0 7px; }
+      .theme-text-element { display: none; }
+
+      .hero { padding: 58px 0 30px; }
+      .hero-intro { gap: 34px; }
+      h1 { font-size: clamp(64px, 22vw, 92px); }
+      .directory-head { padding-bottom: 12px; }
+
+      .service-row {
+        grid-template-columns: 44px minmax(0, 1fr) 72px;
+        min-height: 92px;
+      }
+
+      .service-copy { display: none; }
+      .service-title { font-size: clamp(26px, 8vw, 38px); }
+      .service-action { font-size: 0; }
+      .service-action::after { font-size: 24px; content: '→'; }
+
+      .support-bar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .support-links { justify-content: flex-start; gap: 16px 24px; }
+      .home-footer { padding-top: 58px; }
+      .home-footer .site-footer__nav { gap: 8px 14px; }
+      .home-footer .site-footer__values { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/main-DygO7wY_.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/shared-bDYA12lC.js">
+  <link rel="modulepreload" crossorigin href="./assets/page-common-Mo-hnw29.js">
+  <link rel="modulepreload" crossorigin href="./assets/language-switcher.min-DfFYz8TR.js">
+  <link rel="stylesheet" crossorigin href="./assets/page-common-BzszGBTo.css">
+</head>
+<body>
+  <main class="main-wrapper">
+    <header class="topbar">
+      <a class="brand" href="/">脚本.top</a>
+      <nav class="top-nav" aria-label="主要入口">
+        <a href="https://an.24vv.cn/s/" target="_blank" rel="noopener noreferrer">超凡发卡</a>
+        <a href="https://kkk.ewnco.cn/shop/99BA0CEF" target="_blank" rel="noopener noreferrer">租号陪玩</a>
+        <a href="/down/nav/">下载中心</a>
+        <a href="/about.html">商务合作</a>
+      </nav>
+      <div class="utility-actions" role="group" aria-label="页面工具">
+        <button class="utility-button" type="button" onclick="themeMode.toggleMode()" title="切换主题模式">
+          <span class="theme-icon-element" aria-hidden="true"></span>
+          <span class="theme-text-element">自动模式</span>
+        </button>
+        <button class="utility-button" type="button" onclick="languageSwitcher.switchLanguage()" title="切换语言">
+          <span class="lang-icon-element" aria-hidden="true">文</span>
+          <span class="lang-text-element">Switch to English</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-intro">
+        <div>
+          <div class="intro-label">24 小时自助服务</div>
+          <h1>脚本.top</h1>
+        </div>
+        <div>
+          <div class="directory-head">
+            <span>服务目录</span>
+            <span>Direct access / 01—03</span>
+          </div>
+          <nav class="service-index" aria-label="业务入口">
+            <a class="service-row" id="qunliao1" href="https://an.24vv.cn/s/" target="_blank" rel="noopener noreferrer" aria-label="超凡发卡入口">
+              <span class="service-number">01</span>
+              <span class="service-title">超凡发卡</span>
+              <span class="service-copy">购买与自动发货</span>
+              <span class="service-action">进入服务 →</span>
+            </a>
+            <a class="service-row" id="qunliao3" href="https://kkk.ewnco.cn/shop/99BA0CEF" target="_blank" rel="noopener noreferrer" aria-label="租号陪玩入口">
+              <span class="service-number">02</span>
+              <span class="service-title">租号陪玩</span>
+              <span class="service-copy">全区租号与陪玩入口</span>
+              <span class="service-action">进入服务 →</span>
+            </a>
+            <a class="service-row" id="qunliao4" href="/down/nav/" aria-label="下载中心入口">
+              <span class="service-number">03</span>
+              <span class="service-title">下载中心</span>
+              <span class="service-copy">脚本、工具与修复资源</span>
+              <span class="service-action">进入服务 →</span>
+            </a>
+          </nav>
+          <div class="support-bar">
+            <span class="support-label">服务支持 / Support</span>
+            <div class="support-links">
+              <a class="text-link" id="qunliao5" href="https://an.krlkm.cn/s/" target="_blank" rel="noopener noreferrer">备用发卡</a>
+              <a class="text-link" id="qunliao6" href="https://d.qkang.com/F34A3F2C" target="_blank" rel="noopener noreferrer">备用租号</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="home-footer" data-site-footer></div>
+  </main>
+
+</body>
+</html>

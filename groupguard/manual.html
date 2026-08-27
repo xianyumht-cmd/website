@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#eef4ff">
+<title>GroupGuard 群管理使用手册</title>
+<style>
+:root{--bg:#edf3ff;--bg2:#fbfdff;--text:#172033;--muted:#68748a;--glass:rgba(255,255,255,.7);--strong:rgba(255,255,255,.88);--line:rgba(255,255,255,.82);--soft:rgba(80,104,155,.14);--accent:#3478f6;--accent2:#8064ff;--shadow:0 18px 55px rgba(46,69,124,.14);--radius:28px}
+[data-theme="dark"]{--bg:#0b1020;--bg2:#141b2f;--text:#f3f6ff;--muted:#aab4ca;--glass:rgba(19,28,48,.74);--strong:rgba(27,38,63,.92);--line:rgba(255,255,255,.13);--soft:rgba(255,255,255,.09);--accent:#72a8ff;--accent2:#a58eff;--shadow:0 20px 62px rgba(0,0,0,.34)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:radial-gradient(circle at 8% 5%,rgba(68,133,255,.28),transparent 30%),radial-gradient(circle at 92% 13%,rgba(151,88,255,.22),transparent 27%),linear-gradient(145deg,var(--bg),var(--bg2));min-height:100vh}button,input{font:inherit}.wrap{max-width:1120px;margin:auto;padding:16px 14px 50px}.glass{background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px) saturate(145%);-webkit-backdrop-filter:blur(24px) saturate(145%)}.top{position:sticky;top:8px;z-index:20;display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:22px}.logo{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;color:#fff;font-size:23px;background:linear-gradient(145deg,var(--accent),var(--accent2),#22c59c)}.top strong{font-size:16px}.top small{display:block;color:var(--muted);margin-top:2px}.top-actions{margin-left:auto;display:flex;gap:7px}.icon{width:40px;height:40px;border:1px solid var(--line);background:var(--strong);border-radius:13px;cursor:pointer}.hero{margin-top:17px;padding:31px;border-radius:34px}.hero em{display:inline-block;font-style:normal;color:var(--accent);font-weight:800;background:rgba(52,120,246,.11);padding:7px 11px;border-radius:999px}h1{font-size:clamp(32px,6vw,54px);line-height:1.08;margin:17px 0 10px}.hero p{color:var(--muted);font-size:16px;line-height:1.75}.badges{display:flex;flex-wrap:wrap;gap:8px;margin:17px 0}.badges b{font-size:12px;padding:8px 10px;border:1px solid var(--line);background:var(--strong);border-radius:999px}.search{display:flex;gap:8px;align-items:center;padding:9px 10px 9px 15px;background:var(--strong);border:1px solid var(--line);border-radius:18px}.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--text);padding:8px 0;font-size:16px}.search button,.copy{border:0;border-radius:11px;background:rgba(52,120,246,.12);color:var(--accent);font-weight:800;padding:8px 11px;cursor:pointer}#result{font-size:12px;color:var(--muted);margin-top:8px;min-height:18px}.nav{display:flex;flex-wrap:wrap;gap:8px;overflow:visible;position:static;padding:13px 1px 9px}.nav a{flex:0 1 auto;text-decoration:none;color:var(--muted);font-weight:750;background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:9px 13px}.section{padding:21px;margin-bottom:13px;border-radius:27px;scroll-margin-top:90px}.section.hidden{display:none}.section>header{display:flex;align-items:center;gap:12px;margin-bottom:15px}.section>header>span{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;font-size:24px;background:linear-gradient(145deg,rgba(52,120,246,.17),rgba(128,100,255,.13));border:1px solid var(--line)}.section small{color:var(--accent);font-weight:800}.section h2{font-size:21px;margin:2px 0 0}.section h3{font-size:17px;margin:22px 0 10px}.section p,.section li{font-size:14px;line-height:1.75}.section p{color:var(--muted)}.easy-list{padding-left:22px}.inline{font-family:Consolas,monospace;color:var(--accent);background:rgba(52,120,246,.1);border-radius:6px;padding:2px 5px}.code-card{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:start;margin:10px 0;padding:11px;border-radius:16px;border:1px solid var(--soft);background:rgba(255,255,255,.28)}[data-theme="dark"] .code-card{background:rgba(255,255,255,.035)}pre{margin:0;overflow:auto}pre code{font-family:Consolas,monospace;font-size:13px;line-height:1.7;white-space:pre-wrap}.table-wrap{overflow:auto;margin:10px 0;border:1px solid var(--soft);border-radius:17px}table{width:100%;border-collapse:collapse;min-width:620px;background:rgba(255,255,255,.2)}th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--soft);font-size:13px;line-height:1.55}th{color:var(--muted);font-size:12px}tr:last-child td{border-bottom:0}hr{border:0;border-top:1px solid var(--soft);margin:20px 0}.empty{display:none;text-align:center;padding:36px;border-radius:25px;color:var(--muted)}.empty.show{display:block}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,14px);opacity:0;background:rgba(20,28,45,.9);color:#fff;padding:10px 15px;border-radius:999px;font-size:13px;font-weight:800;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}footer{text-align:center;color:var(--muted);font-size:12px;line-height:1.8;padding:21px 5px 0}@media(max-width:650px){.wrap{padding-left:10px;padding-right:10px}.hero{padding:24px 18px;border-radius:28px}.top small{display:none}.nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.nav a{width:100%;text-align:center;white-space:normal;line-height:1.35}.section{padding:17px;border-radius:23px}.code-card{grid-template-columns:1fr}}@media print{body{background:#fff}.top,.nav,.search,.copy,.toast{display:none!important}.glass{background:#fff;box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top glass"><div class="logo">🛡️</div><div><strong>GroupGuard</strong><small>群管理使用手册 · 1.2.14</small></div><div class="top-actions"><button class="icon" id="print">🖨️</button><button class="icon" id="theme">◐</button></div></header>
+<section class="hero glass"><em>✨ 找到指令，复制后发送</em><h1>群管理，不用记。</h1><p>完整的客户管理员说明已经直接写入本页。按分类查看，或搜索“禁言、欢迎词、查战绩”等关键词。</p><div class="badges"><b>适用版本：GroupGuard 1.2.14</b><b>适用对象：已开通服务的 QQ 群主、群管理员和群成员</b><b>📱 手机友好</b><b>📋 一键复制</b></div><div class="search"><span>⌕</span><input id="query" placeholder="搜索：禁言、违禁词、欢迎词、战绩……"><button id="clear">清空</button></div><div id="result">完整内容已加载。</div></section>
+<nav class="nav"><a href="#s1">先做这 4 步</a><a href="#s2">授权与状态</a><a href="#s3">常用管理</a><a href="#s4">黑名单与针对</a><a href="#s5">消息防护</a><a href="#s6">入群设置</a><a href="#s7">自动问答</a><a href="#s8">定时消息</a><a href="#s9">签到与积分</a><a href="#s10">查询功能</a><a href="#s11">其他功能</a><a href="#s12">常见问题</a><a href="#s13">重要提醒</a></nav>
+<main>
+<section class="glass section searchable" id="s1" data-search="首次使用 查询授权 运行状态 管理员 测试"><header><span>✅</span><div><small>开始</small><h2>先做这 4 步</h2></div></header><ol class="easy-list"><li>发送 <code class="inline">查询授权</code>，确认没有过期。</li><li>把机器人 QQ 设置为群管理员。</li><li>发送 <code class="inline">运行状态</code>，确认机器人在线。</li><li>先在测试群或用小号试一次，再用于正式群。</li></ol></section>
+<section class="glass section searchable" id="s2" data-search="授权 状态 激活 菜单 运行"><header><span>✅</span><div><small>第 1 类</small><h2>授权与状态</h2></div></header><div class="table-wrap"><table><thead><tr><th>谁能用</th><th>指令</th><th>作用</th><th>操作</th></tr></thead><tbody><tr><td>所有人</td><td><code class="inline">查询授权</code></td><td>查看授权和到期时间</td><td><button class="copy" data-copy="查询授权">复制</button></td></tr><tr><td>所有人</td><td><code class="inline">授权状态</code></td><td>查看授权状态</td><td><button class="copy" data-copy="授权状态">复制</button></td></tr><tr><td>管理员</td><td><code class="inline">激活 &lt;激活码&gt;</code></td><td>给当前群开通授权</td><td><button class="copy" data-copy="激活 <激活码>">复制</button></td></tr><tr><td>所有人</td><td><code class="inline">群管菜单</code></td><td>查看常用入口</td><td><button class="copy" data-copy="群管菜单">复制</button></td></tr><tr><td>所有人</td><td><code class="inline">运行状态</code></td><td>检查机器人是否正常</td><td><button class="copy" data-copy="运行状态">复制</button></td></tr></tbody></table></div><p>激活码不要发给别人。激活成功后，建议撤回包含激活码的消息。</p></section>
+<section class="glass section searchable" id="s3" data-search="踢出 禁言 解禁 警告 头衔 名片"><header><span>👥</span><div><small>第 2 类</small><h2>常用管理</h2></div></header><div class="code-card"><pre><code>踢出 @成员
+禁言 @成员 30
+解禁 @成员
+全体禁言
+全体解禁
+警告 &lt;QQ号&gt;
+查看警告 &lt;QQ号&gt;
+清除警告 &lt;QQ号&gt;</code></pre><button class="copy" data-copy="踢出 @成员">复制示例</button></div><h3>群头衔</h3><div class="code-card"><pre><code>授予头衔 @成员 &lt;头衔&gt;
+清除头衔 @成员</code></pre><button class="copy" data-copy="授予头衔 @成员 <头衔>">复制</button></div><h3>群名片锁定</h3><div class="code-card"><pre><code>锁定名片 @成员
+解锁名片 @成员
+名片锁定列表</code></pre><button class="copy" data-copy="锁定名片 @成员">复制</button></div><p>机器人不能处理权限高于自己的成员。操作失败时，先检查机器人是否为群管理员。</p></section>
+<section class="glass section searchable" id="s4" data-search="黑名单 针对 撤回"><header><span>⛔</span><div><small>第 3 类</small><h2>黑名单与针对</h2></div></header><div class="code-card"><pre><code>群拉黑 @成员
+群取消拉黑 @成员
+群黑名单列表
+针对 @成员
+取消针对 @成员
+针对列表
+清除针对</code></pre><button class="copy" data-copy="群拉黑 @成员">复制</button></div><p>“针对”会持续撤回消息，只建议短时间使用。</p></section>
+<section class="glass section searchable" id="s5" data-search="消息防护 屏蔽 二维码 违禁词 刷屏 复读 宵禁 防撤回"><header><span>🛡️</span><div><small>第 4 类</small><h2>消息防护</h2></div></header><h3>屏蔽消息</h3><div class="code-card"><pre><code>屏蔽 链接
+取消屏蔽 链接
+开启二维码撤回
+关闭二维码撤回</code></pre><button class="copy" data-copy="屏蔽 链接">复制</button></div><p>类型可换成：图片、视频、语音、链接、二维码、名片、小程序、转发。</p><h3>违禁词</h3><div class="code-card"><pre><code>添加违禁词 广告
+删除违禁词 广告
+违禁词列表
+设置违禁词惩罚 2
+设置违禁词禁言 10</code></pre><button class="copy" data-copy="添加违禁词 广告">复制</button></div><p>处罚等级：1 只撤回；2 撤回并禁言；3 撤回并踢出；4 撤回、踢出并拉黑。建议先用等级 1 或 2 测试。</p><h3>刷屏与复读</h3><div class="code-card"><pre><code>开启刷屏检测
+关闭刷屏检测
+设置复读阈值 3
+设置刷屏窗口 10
+设置刷屏阈值 6
+设置刷屏禁言 10</code></pre><button class="copy" data-copy="开启刷屏检测">复制</button></div><h3>宵禁与防撤回</h3><div class="code-card"><pre><code>开启宵禁 00:00 06:00
+关闭宵禁
+开启防撤回
+关闭防撤回</code></pre><button class="copy" data-copy="开启宵禁 00:00 06:00">复制</button></div></section>
+<section class="glass section searchable" id="s6" data-search="入群 验证 审批 暗号 拒绝词 欢迎词 私聊"><header><span>🚪</span><div><small>第 5 类</small><h2>入群设置</h2></div></header><div class="code-card"><pre><code>开启入群验证
+关闭入群验证
+开启自动审批
+关闭自动审批
+开启退群拉黑
+关闭退群拉黑
+设置入群暗号 已阅读群规
+关闭入群暗号
+开启暗号回落
+关闭暗号回落
+添加拒绝词 引流
+删除拒绝词 引流
+拒绝词列表</code></pre><button class="copy" data-copy="开启入群验证">复制</button></div><h3>欢迎词</h3><div class="code-card"><pre><code>设置欢迎词 欢迎{user}加入本群，请先阅读群公告。
+开启功能 入群欢迎
+关闭功能 入群欢迎</code></pre><button class="copy" data-copy="设置欢迎词 欢迎{user}加入本群，请先阅读群公告。">复制</button></div><p><code class="inline">{user}</code> 是新成员 QQ，<code class="inline">{group}</code> 是群号。</p><h3>新人私聊</h3><div class="code-card"><pre><code>设置入群私聊 欢迎加入，请先阅读群公告。
+开启入群私聊
+关闭入群私聊</code></pre><button class="copy" data-copy="设置入群私聊 欢迎加入，请先阅读群公告。">复制</button></div></section>
+<section class="glass section searchable" id="s7" data-search="自动问答 精确 模糊 删除 问答列表"><header><span>🤖</span><div><small>第 6 类</small><h2>自动问答</h2></div></header><div class="code-card"><pre><code>精确问下载地址答请查看群公告
+模糊问怎么续费答请联系群管理员
+问答列表
+删问 下载地址
+删除问答 怎么续费</code></pre><button class="copy" data-copy="精确问下载地址答请查看群公告">复制</button></div><p>旧写法“添加问答”“添加模糊问答”已停止使用。</p></section>
+<section class="glass section searchable" id="s8" data-search="定时消息 定时任务 定时列表 删除"><header><span>⏰</span><div><small>第 7 类</small><h2>定时消息</h2></div></header><div class="code-card"><pre><code>定时任务 08:00 早上好，请记得签到。
+定时列表
+删除定时任务 &lt;ID&gt;</code></pre><button class="copy" data-copy="定时任务 08:00 早上好，请记得签到。">复制</button></div><p>时间要写成 <code class="inline">08:00</code>，不要写成 <code class="inline">8:00</code>。</p></section>
+<section class="glass section searchable" id="s9" data-search="签到 积分 抽奖 商城 兑换 邀请 活跃"><header><span>🎁</span><div><small>第 8 类</small><h2>签到与积分</h2></div></header><div class="code-card"><pre><code>签到
+签到榜
+我的积分
+抽奖
+积分商城
+兑换 免死金牌
+兑换 头衔 &lt;内容&gt;
+兑换 解禁
+活跃统计
+开启发言奖励 1
+关闭发言奖励
+邀请查询
+邀请榜
+查邀请&lt;QQ号&gt;
+查来源&lt;QQ号&gt;
+重置邀请统计</code></pre><button class="copy" data-copy="签到">复制</button></div><p>重置邀请统计后无法恢复。</p></section>
+<section class="glass section searchable" id="s10" data-search="查询 封号 战绩 隐藏 合集 海符榜 骗子 同行 视频 ELE"><header><span>🔎</span><div><small>第 9 类</small><h2>查询功能</h2></div></header><h3>LOL 查询</h3><div class="code-card"><pre><code>查封号 123456789
+查封号 @成员
+查战绩 张三#12345
+查隐藏 TheShy 1
+查合集 亚索
+海符榜 亚索</code></pre><button class="copy" data-copy="查战绩 张三#12345">复制</button></div><p>查战绩必须带 <code class="inline">#标签</code>。发送后请等待，不要连续重复查询。</p><h3>风险查询与举报</h3><div class="code-card"><pre><code>查骗子 123456789
+举报骗子 123456789 收款后拉黑，有聊天记录
+查同行 wxid_test
+举报同行 wxid_test 多次恶意抢单</code></pre><button class="copy" data-copy="查骗子 123456789">复制</button></div><h3>视频和下载</h3><div class="code-card"><pre><code>我要看 搞笑
+视频 搞笑
+ele下载 &lt;32位卡密&gt;</code></pre><button class="copy" data-copy="我要看 搞笑">复制</button></div><p>ELE 卡密建议私聊机器人发送，不要在群里公开。</p></section>
+<section class="glass section searchable" id="s11" data-search="SUB quote 点歌 其他功能"><header><span>🎮</span><div><small>第 10 类</small><h2>其他可选功能</h2></div></header><div class="code-card"><pre><code>SUB帮助
+quote
+点歌 &lt;歌曲名&gt;</code></pre><button class="copy" data-copy="SUB帮助">复制</button></div><p>这些功能可能因网络或群设置暂时不可用。</p></section>
+<section class="glass section searchable" id="s12" data-search="常见问题 不回复 失败 频繁 定时"><header><span>🧰</span><div><small>帮助</small><h2>常见问题</h2></div></header><h3>机器人不回复</h3><ol class="easy-list"><li>发送“查询授权”。</li><li>发送“运行状态”。</li><li>检查指令、空格、QQ 号和时间格式。</li><li>等十几秒再试。</li><li>仍无回复时，提供群号、发送时间和完整指令联系客服。</li></ol><h3>禁言、踢人、撤回失败</h3><ul class="easy-list"><li>机器人不是群管理员。</li><li>目标权限不低于机器人。</li><li>操作太频繁。</li><li>QQ 暂时限制了该操作。</li></ul><h3>查询失败或太频繁</h3><p>等待一会儿再试，不要连续发送相同查询。</p><h3>定时任务没有发送</h3><ul class="easy-list"><li>发送“定时列表”，确认任务存在。</li><li>时间必须是 HH:mm。</li><li>确认机器人当时在线。</li></ul></section>
+<section class="glass section searchable" id="s13" data-search="重要提醒 风险 误踢 拉黑"><header><span>⚠️</span><div><small>请注意</small><h2>重要提醒</h2></div></header><ul class="easy-list"><li>违禁词处罚等级 3 或 4。</li><li>退群拉黑。</li><li>针对成员。</li><li>全体禁言和宵禁。</li><li>屏蔽图片、链接、小程序或转发。</li><li>很低的刷屏阈值。</li><li>重置邀请统计。</li></ul><p><strong>建议顺序：先撤回，再禁言，确认没有误判后再踢出或拉黑。</strong></p></section>
+</main>
+<section class="empty glass" id="empty">没有找到相关内容。换一个简单词试试，例如“禁言”“欢迎”“战绩”。</section>
+<footer>GroupGuard 群管理使用手册<br>说明与机器人实际回复不一致时，以机器人当前回复为准。</footer>
+</div><div class="toast" id="toast">已复制</div>
+<script>
+(()=>{const root=document.documentElement,q=document.getElementById('query'),clear=document.getElementById('clear'),result=document.getElementById('result'),empty=document.getElementById('empty'),toast=document.getElementById('toast');const saved=localStorage.getItem('gg-theme');if(saved)root.dataset.theme=saved;else if(matchMedia('(prefers-color-scheme:dark)').matches)root.dataset.theme='dark';document.getElementById('theme').onclick=()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';localStorage.setItem('gg-theme',root.dataset.theme)};document.getElementById('print').onclick=()=>print();function filter(){const k=q.value.trim().toLowerCase();let n=0;document.querySelectorAll('.searchable').forEach(s=>{const ok=!k||(s.dataset.search||'').toLowerCase().includes(k)||s.textContent.toLowerCase().includes(k);s.classList.toggle('hidden',!ok);if(ok)n++});result.textContent=k?`找到 ${n} 个相关区域。`:'完整内容已加载。';empty.classList.toggle('show',n===0)}q.addEventListener('input',filter);clear.onclick=()=>{q.value='';filter();q.focus()};document.addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;const value=b.dataset.copy;try{await navigator.clipboard.writeText(value)}catch{const t=document.createElement('textarea');t.value=value;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}toast.textContent='已复制';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1200)});})();
+</script>
+</body></html>
