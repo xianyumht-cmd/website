@@ -1,9 +1,9 @@
 {
   "zh": {
     "gameInfo": {
-      "version": "16.1",
-      "updateDate": "2026年1月22日",
-      "nextUpdateDate": "2026年2月5日",
+      "version": "",
+      "updateDate": "",
+      "nextUpdateDate": "",
       "feedbackEmail": "xianyumht@gmail.com"
     },
     "sections": [
@@ -233,9 +233,9 @@
   },
   "en": {
     "gameInfo": {
-      "version": "15.17",
-      "updateDate": "August 28, 2025",
-      "nextUpdateDate": "September 9, 2025",
+      "version": "",
+      "updateDate": "",
+      "nextUpdateDate": "",
       "feedbackEmail": "xianyumht@gmail.com"
     },
     "sections": [

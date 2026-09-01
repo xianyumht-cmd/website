@@ -1,9 +1,7 @@
-name: Deploy to GitHub Pages
+name: Legacy Deploy to GitHub Pages (Manual Only)
 
 on:
-  push:
-    branches:
-      - source  # 监听 source 分支的变动
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -54,4 +52,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: main  # 发布到 main 分支
-          force_orphan: true    # 每次发布都覆盖历史（保持 main 分支只有最新代码，类似您脚本里的 git push -f）
+      force_orphan: false   # Local PowerShell deployment is primary; never force-overwrite main.

@@ -1,4 +1,5 @@
-import lolVersionUrl from '../data/lol-version.json?url';
+import lolVersion from '../data/lol-version.json';
+import { applyNavStaticLanguage, formatVersionDate, getCurrentNavLanguage, navText, parseVersionDate } from './nav-i18n.js';
 
 /**
  * Navigation Core Logic
@@ -11,7 +12,13 @@ const getNavData = () => {
     return window.navData;
 };
 
-import { applyNavStaticLanguage, formatVersionDate, getCurrentNavLanguage, navText, parseVersionDate } from './nav-i18n.js';
+function applyCanonicalVersion(gameInfo) {
+    if (!gameInfo) return;
+
+    gameInfo.version = lolVersion.version;
+    gameInfo.updateDate = formatVersionDate(lolVersion.update);
+    gameInfo.nextUpdateDate = formatVersionDate(lolVersion.next);
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     // Clock Functionality
@@ -110,34 +117,13 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(autoScroll, 3000);
     }
 
-    Promise.resolve()
-        .then(() => {
-            if (!window.navData) throw new Error('navData is not initialized');
-            return fetch(lolVersionUrl)
-                .then(response => {
-                    if (response.ok) return response.json();
-                    throw new Error('LOL version fetch failed');
-                })
-                .then(data => {
-                    if (window.navData && window.navData.gameInfo) {
-                        window.navData.gameInfo.version = data.version;
-                        window.navData.gameInfo.updateDate = formatVersionDate(data.update);
-                        window.navData.gameInfo.nextUpdateDate = formatVersionDate(data.next);
-                    }
-                })
-                .catch(() => {});
-        })
-        .catch(error => {
-            console.error('Failed to initialize nav data:', error);
-        })
-        .finally(() => {
-            if (window.navData) {
-                applyNavStaticLanguage();
-                generateContentSafe();
-                resolveLastUpdateDate();
-                updateUpdateTime();
-            }
-        });
+    if (window.navData) {
+        applyCanonicalVersion(window.navData.gameInfo);
+        applyNavStaticLanguage();
+        generateContentSafe();
+        resolveLastUpdateDate();
+        updateUpdateTime();
+    }
 
     setInterval(updateUpdateTime, 60 * 1000);
 
@@ -148,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.detail && event.detail.navData) {
             window.navData = event.detail.navData;
         }
+        applyCanonicalVersion(window.navData && window.navData.gameInfo);
         applyNavStaticLanguage();
         var box = document.querySelector(".box");
         if (box) box.innerHTML = getTime();

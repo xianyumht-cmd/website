@@ -1,19 +1,6 @@
 // Runtime patches for navigation data that is rendered by nav-core.js.
 // Keep this file explicit so link/date hotfixes and resource-list updates do not require rewriting the large nav-data file.
 
-const patchedGameInfo = {
-    zh: {
-        version: "26.14",
-        updateDate: "2026年7月16日",
-        nextUpdateDate: "2026年7月30日"
-    },
-    en: {
-        version: "26.14",
-        updateDate: "July 16, 2026",
-        nextUpdateDate: "July 30, 2026"
-    }
-};
-
 const urlPatches = new Map([
     ["gitee.com/xiazai888/xiazai/raw/master/xiazai", "https://gitee.com/xiazai888/xiazai/raw/master/xiazai"],
     ["https://xn--8pv109c.top/blog/", "https://blog.xn--8pv109c.top/"]
@@ -299,12 +286,6 @@ function patchNavData() {
     const translations = window.navDataTranslations;
     if (!translations) return;
 
-    Object.entries(patchedGameInfo).forEach(([lang, gameInfo]) => {
-        if (translations[lang] && translations[lang].gameInfo) {
-            Object.assign(translations[lang].gameInfo, gameInfo);
-        }
-    });
-
     if (translations.zh && Array.isArray(translations.zh.sections)) {
         translations.zh.sections = patchZhSections(translations.zh.sections);
     }
@@ -320,7 +301,6 @@ function patchNavData() {
     const currentLanguage = window.currentNavLanguage || "zh";
     const currentData = translations[currentLanguage] || translations.zh;
     if (window.navData && currentData) {
-        window.navData.gameInfo = currentData.gameInfo;
         window.navData.sections = currentData.sections;
     }
 }

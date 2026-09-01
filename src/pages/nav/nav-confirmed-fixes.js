@@ -1,34 +1,5 @@
 // Confirmed navigation fixes that must run after nav-patches.js and nav-core.js.
 
-const CURRENT_GAME_INFO = {
-  zh: {
-    version: '26.15',
-    updateDate: '2026年7月30日',
-    nextUpdateDate: '2026年8月13日'
-  },
-  en: {
-    version: '26.15',
-    updateDate: 'July 30, 2026',
-    nextUpdateDate: 'August 13, 2026'
-  }
-};
-
-function patchVersionFallback() {
-  const translations = window.navDataTranslations;
-  if (translations && typeof translations === 'object') {
-    Object.entries(CURRENT_GAME_INFO).forEach(([language, gameInfo]) => {
-      if (translations[language] && translations[language].gameInfo) {
-        Object.assign(translations[language].gameInfo, gameInfo);
-      }
-    });
-  }
-
-  const language = window.currentNavLanguage === 'en' ? 'en' : 'zh';
-  if (window.navData && window.navData.gameInfo) {
-    Object.assign(window.navData.gameInfo, CURRENT_GAME_INFO[language]);
-  }
-}
-
 function markSpiritAsDisplayOnly() {
   const patchSections = (sections) => {
     if (!Array.isArray(sections)) return;
@@ -156,7 +127,6 @@ function installStyles() {
   document.head.appendChild(style);
 }
 
-patchVersionFallback();
 markSpiritAsDisplayOnly();
 ensureVersionBulletin();
 installStyles();
@@ -173,7 +143,6 @@ function scheduleSpiritRefresh() {
 }
 
 const initializeUiFixes = () => {
-  patchVersionFallback();
   markSpiritAsDisplayOnly();
   renderClockImmediately();
   enhanceKeyboardControls();
@@ -193,7 +162,6 @@ if (document.readyState === 'loading') {
 }
 
 document.addEventListener('navDataUpdated', () => {
-  patchVersionFallback();
   markSpiritAsDisplayOnly();
   queueMicrotask(() => {
     renderClockImmediately();

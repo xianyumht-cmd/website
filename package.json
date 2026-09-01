@@ -9,6 +9,8 @@
     "lint": "npm run lint:html && npm run lint:css",
     "dev": "vite",
     "build": "vite build && node scripts/organize-dist.mjs && node scripts/postbuild-optimize.mjs",
+    "deploy:local": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/deploy-local.ps1",
+    "update:lol-version": "node scripts/update-lol-version.js",
     "preview": "vite preview",
     "test:unit": "jest tests/unit --runInBand",
     "test:smoke": "playwright test tests/down.spec.ts tests/e2e",
