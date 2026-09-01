@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-01T03:54:50.100Z",
+  "generatedAt": "2026-09-01T04:28:29.087Z",
   "totals": {
     "js": {
       "raw": 247489,
-      "gzip": 77730,
-      "brotli": 64360,
+      "gzip": 77732,
+      "brotli": 64336,
       "count": 12
     },
     "css": {
@@ -15,8 +15,8 @@
     },
     "html": {
       "raw": 107005,
-      "gzip": 34285,
-      "brotli": 26307,
+      "gzip": 34281,
+      "brotli": 26330,
       "count": 9
     },
     "images": {
@@ -38,10 +38,10 @@
       "brotli": 11226
     },
     {
-      "file": "assets/nav-Cwbv60rW.js",
+      "file": "assets/nav-BHircXsB.js",
       "raw": 36676,
       "gzip": 11279,
-      "brotli": 9247
+      "brotli": 9226
     },
     {
       "file": "assets/tdr-CKD3bJ_x.js",
@@ -68,10 +68,10 @@
       "brotli": 3846
     },
     {
-      "file": "assets/nav-core-qGi1zjBO.js",
+      "file": "assets/nav-core-C8cgu29B.js",
       "raw": 16037,
-      "gzip": 5878,
-      "brotli": 4795
+      "gzip": 5880,
+      "brotli": 4790
     },
     {
       "file": "index.html",
@@ -80,10 +80,10 @@
       "brotli": 2896
     },
     {
-      "file": "assets/games-D6L9o5kK.js",
+      "file": "assets/games-CeFhqjV4.js",
       "raw": 11099,
       "gzip": 4238,
-      "brotli": 3372
+      "brotli": 3374
     },
     {
       "file": "assets/page-common-Mo-hnw29.js",
@@ -94,14 +94,14 @@
     {
       "file": "down/nav/index.html",
       "raw": 10408,
-      "gzip": 3433,
-      "brotli": 2580
+      "gzip": 3430,
+      "brotli": 2579
     },
     {
       "file": "down/games/index.html",
       "raw": 9381,
-      "gzip": 2975,
-      "brotli": 2200
+      "gzip": 2974,
+      "brotli": 2224
     },
     {
       "file": "privacy.html",
