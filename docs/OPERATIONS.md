@@ -99,6 +99,40 @@ The source worktree is never switched to `main`. No force-push is used. Remote d
 
 `.github/workflows/deploy.yml` remains available only through manual dispatch and no longer runs on `source` pushes. Use the local PowerShell path as the primary deployment mechanism. Do not run the legacy workflow and local deployment for the same release.
 
+## One-Click Maintenance
+
+The Windows 10 primary entrypoint is `onekeyup.cmd` at the repository root. It invokes `scripts\onekeyup.ps1` through Windows PowerShell 5.1 and reuses the existing updater and local deployment commands. It does not add scheduling, GitHub Actions publication, or another version source.
+
+Normal mode:
+
+```text
+onekeyup.cmd
+```
+
+Dry-run mode:
+
+```text
+onekeyup.cmd --dry-run
+```
+
+Automation-friendly no-pause mode:
+
+```text
+onekeyup.cmd --no-pause
+```
+
+Dry-run without the final console pause:
+
+```text
+onekeyup.cmd --dry-run --no-pause
+```
+
+Normal mode requires the `source` branch, a clean tracked source tree, and local `HEAD` equal to `origin/source`. It runs the updater dry-run first, then the real updater, and accepts only `src/assets/data/lol-version.json` as the maintenance change. It validates the new JSON, runs unit tests, builds, runs the NAV lifecycle Playwright test, checks the diff, commits the actual version, performs a second remote check, pushes `source` normally, runs the deployment dry-run, and finally reuses `npm run deploy:local` for production publication.
+
+The command exits `0` for a successful dry-run, an already-current version, or a completed maintenance cycle. It exits nonzero for blocked or failed stages. It never stages `design-previews/` or `output/`, never uses `git clean`, never resets source automatically, never force-pushes, and never disables TLS verification. If source is pushed but main deployment fails, it reports the partial state and does not roll source backward.
+
+The lower-level manual commands documented above remain the recovery path when a maintainer needs to inspect or operate each stage separately.
+
 ## LOL NAV Version Maintenance
 
 `src/assets/data/lol-version.json` is the only canonical NAV LOL version file. Riot's official patch notes are the preferred source; the legacy cc1990 provider is an optional fallback only and requires `LOL_API_KEY` from the environment. No scheduled updater, cron job, Windows Task Scheduler job, build-time network update, or GitHub scheduled updater is used.
