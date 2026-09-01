@@ -98,3 +98,87 @@ The source worktree is never switched to `main`. No force-push is used. Remote d
 ## Legacy workflow
 
 `.github/workflows/deploy.yml` remains available only through manual dispatch and no longer runs on `source` pushes. Use the local PowerShell path as the primary deployment mechanism. Do not run the legacy workflow and local deployment for the same release.
+
+## LOL NAV Version Maintenance
+
+`src/assets/data/lol-version.json` is the only canonical NAV LOL version file. Riot's official patch notes are the preferred source; the legacy cc1990 provider is an optional fallback only and requires `LOL_API_KEY` from the environment. No scheduled updater, cron job, Windows Task Scheduler job, build-time network update, or GitHub scheduled updater is used.
+
+### Normal version update workflow
+
+Run these steps from the repository root:
+
+1. Inspect the live candidate without writing:
+
+   ```text
+   npm run update:lol-version -- --dry-run
+   ```
+
+2. If the Riot candidate is valid and newer, update the canonical file through the updater:
+
+   ```text
+   npm run update:lol-version
+   ```
+
+3. Review the canonical change:
+
+   ```text
+   git diff -- src/assets/data/lol-version.json
+   ```
+
+4. Run validation:
+
+   ```text
+   npm run test:unit
+   npm run build
+   npx playwright test tests/e2e/nav-version-lifecycle.spec.ts
+   ```
+
+5. Stage only explicitly reviewed paths and commit the source change:
+
+   ```text
+   git add -- <explicit reviewed paths>
+   git commit -m "<appropriate message>"
+   ```
+
+6. Push `source` normally after a fresh check:
+
+   ```text
+   git fetch origin source main
+   git push origin source
+   ```
+
+7. Preview production publication:
+
+   ```text
+   npm run deploy:local -- --dry-run
+   ```
+
+8. Publish through the primary local Plan B path:
+
+   ```text
+   npm run deploy:local
+   ```
+
+9. Verify `origin/source`, `origin/main`, `https://xn--8pv109c.top`, and the deployed NAV version data.
+
+### Failure and recovery
+
+- If Riot is unavailable or ambiguous, leave the canonical file unchanged; do not guess patch data.
+- If cc1990 is unavailable, the Riot path remains valid. The fallback is optional.
+- A missing `LOL_API_KEY` must not block a successful Riot operation.
+- If the official schedule is unavailable, `fallback:+14 days` is only an approximation and must remain visible in updater diagnostics.
+- On Git TLS failure, retry the secure operation later. Never disable certificate verification.
+- If `origin/source` changes, reconcile first. Do not rebase and publish automatically, and never force-push.
+- If deployment dry-run fails, do not publish `main`.
+- If `main` changes unexpectedly, run a new fresh dry-run; never force-push.
+- For CDN propagation delay, verify Git `main` first and do not repeatedly redeploy.
+
+### Canonical data ownership
+
+Only `src/assets/data/lol-version.json` owns the NAV version, update date, and next update date. `src/assets/data/nav-data.json`, `src/pages/nav/nav-patches.js`, `src/pages/nav/nav-confirmed-fixes.js`, Games-page data, and frontend fallbacks are not authoritative and must not introduce another NAV version source. The normal build imports the canonical JSON locally and does not contact Riot or cc1990.
+
+### Deployment and security policy
+
+`npm run deploy:local` is the primary deployment path. It builds from `source`, fetches a fresh `origin/main`, uses a temporary production worktree, and pushes a traceable `Deploy source <short-sha>` commit. Never deploy from local `main` and never run `git push --force origin main`.
+
+`.github/workflows/deploy.yml` remains manual-only and is not required for publication. `deploy_to_github.ps1` remains only as a compatibility wrapper around the local deployment script. No embedded API credential, committed `.env`, TLS bypass, or secret logging is permitted. Historical Git credential exposure is out of scope for this workflow and must not be rewritten here.
