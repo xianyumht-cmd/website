@@ -6,11 +6,14 @@ const path = require('path');
 
 const DATA_FILE = path.resolve(__dirname, '../src/assets/data/lol-version.json');
 const API_BASE_URL = 'http://api.cc1990.cc/api/hotlist/game';
+const RIOT_GAME_UPDATES_URL = 'https://www.leagueoflegends.com/en-us/news/game-updates/';
+const RIOT_PATCH_SCHEDULE_API_URL = 'https://skye-production.sgp.riotgames.com/api/v1/articles/league-of-legends/gameplay/patch-schedule-league-of-legends?locale=en-us';
 const REQUEST_TIMEOUT_MS = 15000;
 const VERSION_TITLE_KEYWORDS = ['版本更新公告', '版本更新', '版本公告'];
 const VERSION_PATTERN = /\b(\d{1,3}\.\d{1,3})\b/;
 const TITLE_DATE_PATTERN = /(\d{1,2})月(\d{1,2})日/;
 const ISO_DATE_PATTERN = /^(\d{4}-\d{2}-\d{2})/;
+const RIOT_PATCH_HREF_PATTERN = /\/en-us\/news\/game-updates\/league-of-legends-patch-(\d{1,3})-(\d{1,3})-notes\/?$/i;
 
 class UpdaterError extends Error {
     constructor(message, code = 'UPDATER_ERROR') {
@@ -104,6 +107,199 @@ function extractVersionFromHtml(html) {
     return extractVersion($('title').text()) ||
         extractVersion($('h1').text()) ||
         extractVersion($('body').text().slice(0, 1000));
+}
+
+function normalizeRiotUrl(value) {
+    try {
+        const parsed = new URL(value, RIOT_GAME_UPDATES_URL);
+        if (parsed.protocol !== 'https:' || parsed.hostname !== 'www.leagueoflegends.com') return null;
+        return parsed.toString();
+    } catch (error) {
+        return null;
+    }
+}
+
+function getRiotDateFromElement($, element) {
+    return $(element).find('time[datetime]').first().attr('datetime') ||
+        $(element).closest('article').find('time[datetime]').first().attr('datetime') ||
+        $(element).find('meta[property="article:published_time"]').first().attr('content') ||
+        '';
+}
+
+function extractRiotPatchListing(html) {
+    if (typeof html !== 'string' || html.trim() === '') {
+        throw new UpdaterError('Riot game updates page is empty', 'RIOT_INVALID_HTML');
+    }
+
+    const $ = cheerio.load(html);
+    const candidates = [];
+    $('a[href]').each((_, element) => {
+        const url = normalizeRiotUrl($(element).attr('href'));
+        if (!url) return;
+
+        const pathMatch = new URL(url).pathname.match(RIOT_PATCH_HREF_PATTERN);
+        if (!pathMatch) return;
+
+        const version = `${pathMatch[1]}.${pathMatch[2]}`;
+        const title = $(element).find('[data-testid="card-title"], h1, h2, h3').first().text().replace(/\s+/g, ' ').trim() ||
+            ($(element).attr('aria-label') || '').replace(/\s+/g, ' ').trim() ||
+            $(element).text().replace(/\s+/g, ' ').trim();
+        const titlePattern = new RegExp(`^League of Legends Patch ${version.replace('.', '\\.')} Notes$`, 'i');
+        if (!titlePattern.test(title)) return;
+
+        const publishedAt = getRiotDateFromElement($, element);
+        if (!publishedAt) return;
+
+        let update;
+        try {
+            update = normalizeProviderDate(publishedAt, 'Riot publication date');
+        } catch (error) {
+            return;
+        }
+
+        candidates.push({ version, update, url });
+    });
+
+    if (candidates.length === 0) {
+        throw new UpdaterError('Riot game updates page contains no usable patch article', 'RIOT_NO_PATCH');
+    }
+
+    candidates.sort((left, right) => {
+        const versionOrder = compareVersions(right.version, left.version);
+        return versionOrder || right.update.localeCompare(left.update);
+    });
+    return candidates[0];
+}
+
+function extractRiotPatchArticle(html, expectedVersion) {
+    if (typeof html !== 'string' || html.trim() === '') {
+        throw new UpdaterError('Riot patch article is empty', 'RIOT_INVALID_HTML');
+    }
+
+    const $ = cheerio.load(html);
+    const title = $('h1').first().text().replace(/\s+/g, ' ').trim() ||
+        $('title').first().text().replace(/\s+/g, ' ').trim();
+    const titleMatch = title.match(/^League of Legends Patch (\d{1,3}\.\d{1,3}) Notes$/i);
+    if (!titleMatch) {
+        throw new UpdaterError('Riot page is not a League patch article', 'RIOT_IRRELEVANT_ARTICLE');
+    }
+
+    const version = titleMatch[1];
+    parseVersionParts(version);
+    if (expectedVersion && compareVersions(version, expectedVersion) !== 0) {
+        throw new UpdaterError('Riot patch listing and article versions differ', 'RIOT_VERSION_MISMATCH');
+    }
+
+    const publishedAt = $('time[datetime]').first().attr('datetime') ||
+        $('meta[property="article:published_time"]').first().attr('content') ||
+        $('meta[name="date"]').first().attr('content');
+    if (!publishedAt) {
+        throw new UpdaterError('Riot patch article publication date is missing', 'RIOT_MISSING_DATE');
+    }
+
+    return {
+        version,
+        update: normalizeProviderDate(publishedAt, 'Riot publication date')
+    };
+}
+
+function parseRiotSchedule(html) {
+    if (typeof html !== 'string' || html.trim() === '') {
+        throw new UpdaterError('Riot patch schedule is empty', 'RIOT_SCHEDULE_INVALID');
+    }
+
+    const $ = cheerio.load(html);
+    const entries = [];
+    $('table tr').each((_, row) => {
+        const cells = $(row).find('td');
+        if (cells.length < 2) return;
+
+        const version = cells.eq(0).text().replace(/\s+/g, ' ').trim();
+        if (!/^\d{1,3}\.\d{1,3}$/.test(version)) return;
+
+        const dateText = cells.eq(1).text().replace(/\([^)]*\)/g, '').replace(/\s+/g, ' ').trim();
+        const date = new Date(`${dateText} UTC`);
+        if (Number.isNaN(date.getTime())) return;
+
+        entries.push({ version, date: date.toISOString().slice(0, 10) });
+    });
+
+    if (entries.length === 0) {
+        throw new UpdaterError('Riot patch schedule contains no usable rows', 'RIOT_SCHEDULE_INVALID');
+    }
+    return entries;
+}
+
+function selectRiotNextDate(schedule, currentVersion, updateDate) {
+    const candidates = schedule
+        .filter(entry => compareVersions(entry.version, currentVersion) > 0 && entry.date > updateDate)
+        .sort((left, right) => left.date.localeCompare(right.date));
+    return candidates.length > 0 ? candidates[0].date : null;
+}
+
+async function requestRiotResponse(url, { axiosGet = axios.get } = {}) {
+    let response;
+    try {
+        response = await axiosGet(url, {
+            timeout: REQUEST_TIMEOUT_MS,
+            validateStatus: () => true
+        });
+    } catch (error) {
+        if (error && (error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT' || /timeout/i.test(error.message || ''))) {
+            throw new UpdaterError('Riot request timed out', 'RIOT_TIMEOUT');
+        }
+        throw new UpdaterError('Riot request failed', 'RIOT_REQUEST_ERROR');
+    }
+
+    if (!response || typeof response.status !== 'number' || response.status < 200 || response.status >= 300) {
+        const status = response && response.status ? `HTTP ${response.status}` : 'invalid HTTP response';
+        throw new UpdaterError(`Riot request failed: ${status}`, 'RIOT_HTTP_ERROR');
+    }
+    return response;
+}
+
+async function fetchRiotHtml(url, { axiosGet = axios.get } = {}) {
+    const response = await requestRiotResponse(url, { axiosGet });
+    if (typeof response.data !== 'string') {
+        throw new UpdaterError('Riot response is not HTML', 'RIOT_INVALID_RESPONSE');
+    }
+    return response.data;
+}
+
+async function fetchRiotScheduleHtml({ axiosGet = axios.get } = {}) {
+    const response = await requestRiotResponse(RIOT_PATCH_SCHEDULE_API_URL, { axiosGet });
+    if (!response.data || typeof response.data.content !== 'string') {
+        throw new UpdaterError('Riot schedule response format is invalid', 'RIOT_SCHEDULE_INVALID');
+    }
+    return response.data.content;
+}
+
+async function fetchRiotCandidate({ axiosGet = axios.get } = {}) {
+    const listingHtml = await fetchRiotHtml(RIOT_GAME_UPDATES_URL, { axiosGet });
+    const listing = extractRiotPatchListing(listingHtml);
+    const articleHtml = await fetchRiotHtml(listing.url, { axiosGet });
+    const article = extractRiotPatchArticle(articleHtml, listing.version);
+
+    let next = getNextUpdate(article.update);
+    let nextSource = 'fallback:+14 days';
+    try {
+        const scheduleHtml = await fetchRiotScheduleHtml({ axiosGet });
+        const scheduledNext = selectRiotNextDate(parseRiotSchedule(scheduleHtml), article.version, article.update);
+        if (scheduledNext) {
+            next = scheduledNext;
+            nextSource = 'Riot official schedule';
+        }
+    } catch (error) {
+        // The current patch remains trustworthy when the optional schedule is unavailable.
+    }
+
+    return {
+        version: article.version,
+        update: article.update,
+        next,
+        nextSource,
+        versionSource: 'Riot official patch notes'
+    };
 }
 
 function getProviderYear(item, now) {
@@ -331,29 +527,96 @@ async function fetchDetailPage(url, { axiosGet = axios.get } = {}) {
     }
 }
 
-async function runUpdate({
-    filePath = DATA_FILE,
-    dryRun = false,
-    provider = () => fetchProviderData(),
+async function fetchLegacyCandidate({
+    environment = process.env,
+    axiosGet = axios.get,
     detailFetcher = fetchDetailPage,
     now = new Date()
 } = {}) {
-    const current = readCurrentVersion(filePath);
-    const payload = await provider();
+    const apiKey = requireApiKey(environment);
+    const payload = await fetchProviderData({ apiKey, axiosGet });
     const candidate = await extractCandidate(payload, { fetchDetail: detailFetcher, now });
+    return { ...candidate, versionSource: 'legacy third-party' };
+}
+
+async function resolveCandidate({
+    riotProvider = () => fetchRiotCandidate(),
+    legacyProvider = null
+} = {}) {
+    let riotError;
+    try {
+        const candidate = await riotProvider();
+        return {
+            candidate,
+            versionSource: candidate.versionSource || 'Riot official'
+        };
+    } catch (error) {
+        riotError = error;
+    }
+
+    if (typeof legacyProvider !== 'function') {
+        throw new UpdaterError(
+            `Riot provider failed: ${riotError instanceof Error ? riotError.message : 'request failed'}`,
+            'RIOT_PROVIDER_FAILED'
+        );
+    }
+
+    try {
+        const candidate = await legacyProvider();
+        return {
+            candidate,
+            versionSource: candidate.versionSource || 'legacy third-party'
+        };
+    } catch (legacyError) {
+        const riotCode = riotError && riotError.code ? riotError.code : 'RIOT_ERROR';
+        const legacyCode = legacyError && legacyError.code ? legacyError.code : 'LEGACY_ERROR';
+        throw new UpdaterError(
+            `Riot provider failed (${riotCode}); legacy fallback failed (${legacyCode})`,
+            'ALL_PROVIDERS_FAILED'
+        );
+    }
+}
+
+async function runUpdate({
+    filePath = DATA_FILE,
+    dryRun = false,
+    provider,
+    riotProvider,
+    legacyProvider,
+    detailFetcher = fetchDetailPage,
+    now = new Date(),
+    environment = process.env
+} = {}) {
+    const current = readCurrentVersion(filePath);
+    let candidate;
+    let versionSource;
+    if (typeof provider === 'function') {
+        const payload = await provider();
+        candidate = await extractCandidate(payload, { fetchDetail: detailFetcher, now });
+        versionSource = 'legacy third-party';
+    } else {
+        const resolved = await resolveCandidate({
+            riotProvider: riotProvider || (() => fetchRiotCandidate()),
+            legacyProvider: legacyProvider === undefined
+                ? (() => fetchLegacyCandidate({ environment, detailFetcher, now }))
+                : legacyProvider
+        });
+        candidate = resolved.candidate;
+        versionSource = resolved.versionSource;
+    }
     const validated = validateCandidate(candidate, current);
     const versionOrder = compareVersions(validated.version, current.version);
     const nextDateSource = candidate.nextSource || 'unknown';
 
     if (versionOrder === 0) {
-        return { current, candidate: validated, nextDateSource, result: 'unchanged', changed: false };
+        return { current, candidate: validated, nextDateSource, versionSource, result: 'unchanged', changed: false };
     }
     if (dryRun) {
-        return { current, candidate: validated, nextDateSource, result: 'would update', changed: false };
+        return { current, candidate: validated, nextDateSource, versionSource, result: 'would update', changed: false };
     }
 
     writeVersionAtomically(filePath, validated);
-    return { current, candidate: validated, nextDateSource, result: 'updated', changed: true };
+    return { current, candidate: validated, nextDateSource, versionSource, result: 'updated', changed: true };
 }
 
 function sanitizeErrorMessage(error, secrets = []) {
@@ -367,6 +630,7 @@ function sanitizeErrorMessage(error, secrets = []) {
 function logResult(logger, result) {
     logger.log(`Current: ${JSON.stringify(result.current)}`);
     logger.log(`Candidate: ${JSON.stringify(result.candidate)}`);
+    logger.log(`Version source: ${result.versionSource}`);
     logger.log(`Next date source: ${result.nextDateSource}`);
     logger.log(`Result: ${result.result}`);
 }
@@ -383,41 +647,62 @@ async function main(args = process.argv.slice(2), environment = process.env, opt
         return 0;
     }
 
-    let apiKey;
+    let apiKey = environment && typeof environment.LOL_API_KEY === 'string'
+        ? environment.LOL_API_KEY
+        : undefined;
     try {
-        apiKey = requireApiKey(environment);
-        const provider = options.provider || (() => fetchProviderData({ apiKey }));
+        const provider = options.provider;
         const detailFetcher = options.detailFetcher || fetchDetailPage;
+        const riotProvider = options.riotProvider || (() => fetchRiotCandidate());
+        const legacyProvider = options.legacyProvider === undefined ? (async () => {
+            apiKey = requireApiKey(environment);
+            return fetchLegacyCandidate({ environment, apiKey, detailFetcher });
+        }) : options.legacyProvider;
         const result = await runUpdate({
             filePath: options.filePath || DATA_FILE,
             dryRun: args.includes('--dry-run'),
             provider,
+            riotProvider,
+            legacyProvider,
             detailFetcher,
-            now: options.now || new Date()
+            now: options.now || new Date(),
+            environment
         });
         logResult(logger, result);
         return 0;
     } catch (error) {
-        logger.error(`Result: rejected\nError: ${sanitizeErrorMessage(error, [apiKey])}`);
+        const errorCode = error && error.code ? `${error.code}: ` : '';
+        logger.error(`Result: rejected\nError: ${errorCode}${sanitizeErrorMessage(error, [apiKey])}`);
         return 1;
     }
 }
 
 module.exports = {
     DATA_FILE,
+    RIOT_GAME_UPDATES_URL,
+    RIOT_PATCH_SCHEDULE_API_URL,
     UpdaterError,
     compareVersions,
     determineNextDate,
     extractCandidate,
+    extractRiotPatchArticle,
+    extractRiotPatchListing,
     extractVersion,
     fetchDetailPage,
+    fetchLegacyCandidate,
     fetchProviderData,
+    fetchRiotCandidate,
+    fetchRiotHtml,
+    fetchRiotScheduleHtml,
     getNextUpdate,
     main,
+    parseRiotSchedule,
     readCurrentVersion,
     requireApiKey,
+    resolveCandidate,
     runUpdate,
     sanitizeErrorMessage,
+    selectRiotNextDate,
     validateCandidate,
     writeVersionAtomically
 };
