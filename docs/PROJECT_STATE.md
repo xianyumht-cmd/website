@@ -12,8 +12,8 @@
 - Active task branch: `fix/nav-catalog-single-source-20260910`.
 - NAV resource membership and links have been consolidated into `src/assets/data/nav-catalog.js` on the task branch.
 - Legacy parallel resource sources (`nav-data.json`, `nav-patches.js`, daily/weekly/HE/Delta patch files) have been retired on the task branch.
-- Chinese and English resource catalogs now use the same section IDs/order/resource membership.
-- The current daily-card catalog includes Space, MD, LSC, KDA, acme, 如意/Ruyi, yun, DC, FE, SPOT, and SF; retired FY, HP, 骑士/Knight, and 蓝鲸/Blue Whale entries are not in that catalog.
+- Chinese and English catalogs are now loaded from the same canonical file; existing intentional locale-specific resource differences are preserved instead of being changed by import order.
+- The updated daily-card catalog includes Space, MD, LSC, KDA, acme, 如意/Ruyi, yun, DC, FE, SPOT, and SF; retired FY, HP, 骑士/Knight, and 蓝鲸/Blue Whale entries are not in that catalog.
 - This task is not merged or deployed yet. Review/build/browser verification is still required before merge.
 
 ## Performance task status
