@@ -140,18 +140,21 @@ zh: {
     s("常用工具","Common Tools","fa-solid fa-star",[
       i("News & Announcements","News & Announcements","https://blog.xn--8pv109c.top/","News"),
       i("Game Resources","Game tools, account services, and official support","/down/games/","Game"),
-      i("Runtime + DX + Tool Box","Runtime components, DirectX repair, and cleaning tools","https://avgorange.lanzoub.com/b0dppnjpg","Tools",{"tooltip":"Tool Box"}),
-      i("Shadow Defender","Auto-restore utility for reducing residual changes","https://pan-su.lanzoum.com/ih8H00xoy2ze","Shadow"),
-      i("Match History Query","League of Legends match-history query service","https://so1.lol/","Query",{"tooltip":"Match History"}),
-      i("HanBot Database","Champion collection daily win rates and version win-rate rankings","https://badspacebar.github.io/sdk/index.html#/","HanBot"),
-      i("EZ Database","DS / GS / EZ resource library","https://champions.legendsen.se/","EZ")
+      i("Raylink","Raylink - Ultra-smooth remote control software!","https://www.raylink.live/download.html","Remote",{"tooltip":"raylink"}),
+      i("ToDesk","ToDesk remote assistance - Fast and convenient file transfer with speed limit","https://www.todesk.com/download.html","Remote",{"tooltip":"todesk"}),
+      i("Runtime Components","Four-piece runtime components - Solve most runtime issues","https://pan-su.lanzoum.com/iRF2K0xbyv7c","Runtime"),
+      i("DirectX Repair","DirectX repair - Solve most runtime issues","https://pan-su.lanzoum.com/iuec80xbywwd","DX",{"tooltip":"DirectX"}),
+      i("Tool Box","Professional, targeted, self-developed cleaning tool with entertainment features","https://avgorange.lanzoub.com/b0dppnjpg","Clean",{"tooltip":"Cleaning Tool"}),
+      i("Shadow Defender","Shadow Defender - Similar to internet cafe auto-restore on restart, eliminates residual effects, third-party software","https://pan-su.lanzoum.com/ih8H00xoy2ze","Shadow"),
+      i("HanBot Database","Champion collection daily win rates and version win rate rankings","https://badspacebar.github.io/sdk/index.html#/","HanBot"),
+      i("EZ Database","DS GS EZ resource library","https://champions.legendsen.se/","EZ"),
+      i("Frank [Free & Open Source]","Free League of Legends assistant - Can replace WeGame, supports match history query","https://www.yuque.com/java-s/frank/introduction","Frank")
     ]),
-    s("足本专区","Script Zone","fa fa-toggle-on",[
-      i("EZ","Single-board EZ - Password: 123","https://wwme.lanzouq.com/b00oco2z0j","EZ"),
-      i("EZPro","Integrated build with privileges - Password: 123","https://wwme.lanzouq.com/s/ezpro","EZ"),
-      i("HE","Integrated build (smoother driver) - Password: 123","https://wwayq.lanzouq.com/s/he1","HE"),
-      i("Kernel","Prediction activation address - Requires VPN","https://kernel-front-end.vercel.app/","K"),
-      i("OS","Script-zone resource","https://wwayq.lanzouq.com/s/outis","OS")
+    s("GS专区","GS Zone","fa fa-toggle-on",[
+      i("EZ","Single-board EZ - Not stronger than bot! Password: 123","https://wwme.lanzouq.com/b00oco2z0j","EZ"),
+      i("EZPro","EZ+FF integrated with built-in privileges - Password: 123","https://wwme.lanzouq.com/s/ezpro","EZ",{"tooltip":"ezpro"}),
+      i("HE","EZ+FF integrated (smoother driver) - Password: 123","https://wwayq.lanzouq.com/s/he1","HE"),
+      i("Kernel","K prediction activation address - Requires VPN","https://kernel-front-end.vercel.app/","Kernel")
     ]),
     s("BGX专区","BGX Zone","fa fa-xing-square",[]),
     s("天卡专区","Daily Card Zone","fa fa-book",[
@@ -163,32 +166,33 @@ zh: {
       i("Ruyi","Ruyi","https://wwbuq.lanzouu.com/b00jf03wja","R"),
       i("yun","Password: yun","https://wwus.lanzouu.com/s/yunnb","Y"),
       i("DC","Code: DC66","https://share.feijipan.com/s/xiark1VW?code=DC66","DC"),
-      i("FE","Password: bp03","https://wwarw.lanzn.com/b00l2sy5re","FE"),
       i("SPOT","Password: 123","https://wwavz.lanzout.com/s/Spotyyds","SP"),
+      i("FE","Password: bp03","https://wwarw.lanzn.com/b00l2sy5re","FE"),
       i("SF","Daily-card resource","https://wwbuq.lanzouu.com/b00jfjslcb","SF")
     ]),
     s("周卡专区","Weekly Card Zone","fa fa-google-wallet",[
-      i("Gulf","Recommended","https://wwme.lanzoui.com/b00od4rd1e","G"),
+      i("GUF","Recommended","https://wwme.lanzoui.com/b00od4rd1e","G"),
       i("LTY","Password: f4sv","https://wwauv.lanzout.com/b00yb1z1od","L"),
-      i("TSL","Password: d5y7","https://wwauv.lanzn.com/b00ybc9xsj","TSL"),
+      i("LO","Password: 123","https://wwash.lanzouw.com/b019vvm2ve","LO"),
+      i("Viega","Password: 123","https://wwbku.lanzoub.com/b0pndjqmj","V"),
+      i("Dawn","Download","https://wwbpx.lanzoum.com/b00mqeda6d","D"),
       i("Time","Password: btqo","https://wwarw.lanzn.com/b00l2sy5gd","T"),
       i("Seal","Seal","https://wwbuq.lanzouu.com/b00jezzfoj","S"),
+      i("FJ","Password: 123","https://wwaym.lanzoub.com/s/QiHang","FJ"),
+      i("Cherry","Password: 123","https://wwbgz.lanzouu.com/b019vx8h5g","C"),
+      i("Lingying","Password: 0ying","https://wwus.lanzouu.com/b0zkvz7la","L"),
       i("TAB","Password: tab11","https://wwus.lanzouu.com/s/TAB1","TAB"),
-      i("B5","Feijipan download","https://share.feijipan.com/s/xScahwCk","B5"),
-      i("VK","Code: 1234","https://share.feijipan.com/s/TU6XC6Li?code=1234","VK"),
       i("ADS","Feijipan download","https://share.feijipan.com/s/jBdy32yE","ADS"),
-      i("SOL","Download","https://share.feijipan.com/s/CN55YlBQ","SOL"),
-      i("TEST","Password: 123","https://wwavz.lanzout.com/b00v08n3ah","TEST")
+      i("Xingchen","Password: 123","https://wwbgz.lanzouu.com/b019w076jg","X")
     ]),
     s("月卡专区","Monthly Card Zone","fa fa-delicious",[
-      i("Noble","Contact support if needed; recommended","https://install.noble.vin/","N",{"tooltip":"NS"}),
-      i("spirit","Display only; obtain the current build from your upstream agent","","S",{"displayOnly":true}),
-      i("TOOL","TOOL","http://211.154.22.179:88/2","T"),
-      i("LEI","LEI","http://211.154.22.179:88/3","L")
+      i("KS","KS with built-in hamburger, supports BGX - Registration open during holidays - Password: 112233","https://wwer.lanzouw.com/b00y9snm5i","K"),
+      i("LEI","LEI integrated with ZPX - Registration open during holidays - Password: 112233","https://wwer.lanzouw.com/b00y9snmha","L")
     ]),
     s("一体化区","Integrated Zone","fa fa-y-combinator-square",[
-      i("Wuxin","Integrated kiting - Password: hhwn","https://wud.lanzoul.com/b00hq90ire","W"),
-      i("NS","Noble download","https://download.noble.vin/","NS")
+      i("Wuxin","Wuxin integrated kiting - Password: hhwn","https://wud.lanzoul.com/b00hq90ire","Wuxin"),
+      i("TE","TE foreign integrated","https://wwjv.lanzouv.com/b02z1mtkzg","T"),
+      i("NB","Integrated NB - NB is just the name, not that it's awesome - Password: 123","https://wwsi.lanzouq.com/b00pzt0cng","N")
     ]),
     s("云顶专区","TFT Zone","fa fa-trello",[
       i("Ji Ni Tai Mei","TFT helper, password: 888","https://wwaoj.lanzoul.com/s/ydjntm4","J"),
@@ -203,12 +207,9 @@ zh: {
       i("FH","For GG","https://funhouseteam.com/login/redeem.php","FH")
     ]),
     s("特权专区","Privilege Zone","fa fa-yelp",[
-      i("Panda Privilege","Internet-cafe privilege utility","https://wwv.lanzouh.com/b00mone1bc","P")
+      i("Panda Privilege","Panda Privilege is an accelerator for machines without internet cafe privileges","https://wwv.lanzouh.com/b00mone1bc","Panda")
     ]),
     s("过机器码专区","HWID Bypass Zone","fa fa-windows",[]),
-    s("过炫舞专区","QQ Dance Bypass","fa fa-music",[
-      i("QQ Dance Bypass","Tutorial / resources","https://www.yuque.com/u64769050/mi2tlv/ylsvoeyxy4gz7abn","D")
-    ]),
     s("小工具专区","Utilities","fa fa-toolbox",[
       i("Hunter","Utility","https://a.hoisen.com/d9YgFh","H"),
       i("Keyboard Warrior","Free tool for entering account credentials with one click","https://mybb.lanzn.com/illyB3p72wgb","K")
@@ -225,10 +226,6 @@ zh: {
       i("NN","Download","https://link.3ceng.cn/view/48763698","NN"),
       i("VX","Install the latest WeChat and keep its window open after signing in.","http://www.vxsjz.cc/","VX"),
       i("HN","Password: 6666","https://wwbls.lanzn.com/b014xgdecf","HN")
-    ]),
-    s("PUBG专区","PUBG Zone","fa fa-gamepad",[
-      i("Jueying","PUBG resource","https://wwas.lanzouj.com/b00xq0uaf","J"),
-      i("Lunhui","PUBG resource","https://wwas.lanzouj.com/b00xziv7a","L")
     ]),
     s("瓦洛兰特专区","VALORANT Zone","fa fa-bolt",[
       i("RK","Password: 0000","https://wwaly.lanzouq.com/b011m5h4gd","RK"),
@@ -247,12 +244,6 @@ zh: {
       i("MC","Password: 123","https://wwbjv.lanzout.com/b00yb6nuwd","MC"),
       i("Graffiti Hide-and-Seek","Password: 6666","https://wwbhv.lanzoum.com/b01d713yof","G"),
       i("Da Vinci","Password: 6666","https://wwbhv.lanzoum.com/b01d71e9kh","D")
-    ]),
-    s("上号专区","Login Tools","fa fa-sign-in",[
-      i("Ultraman Rental","Login-tool download, password: 6666","https://wwyq.lanzoui.com/b0zjywmud","U"),
-      i("Fangcun Rental","Login-tool download","https://wwi.lanzoue.com/b0a6jcuyh","F"),
-      i("Dongpeng","Password: 6666","https://wwwj.lanzouw.com/b00ro37qdc","D"),
-      i("Xiaotian","WeGame login resource","https://jbh.lanzouu.com/s/WeGame","X")
     ])
     ]
   }
