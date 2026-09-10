@@ -7,6 +7,15 @@
 - Code merge commit: `996d26afc2d7a78925cd937bbe6dcdaf08389d13`.
 - The performance work targets normal visitor speed for the homepage/resource pages, especially mobile and lower-performance browsers.
 
+## Active NAV catalog cleanup
+
+- Active task branch: `fix/nav-catalog-single-source-20260910`.
+- NAV resource membership and links have been consolidated into `src/assets/data/nav-catalog.js` on the task branch.
+- Legacy parallel resource sources (`nav-data.json`, `nav-patches.js`, daily/weekly/HE/Delta patch files) have been retired on the task branch.
+- Chinese and English catalogs are now loaded from the same canonical file; existing intentional locale-specific resource differences are preserved instead of being changed by import order.
+- The updated daily-card catalog includes Space, MD, LSC, KDA, acme, 如意/Ruyi, yun, DC, FE, SPOT, and SF; retired FY, HP, 骑士/Knight, and 蓝鲸/Blue Whale entries are not in that catalog.
+- This task is not merged or deployed yet. Review/build/browser verification is still required before merge.
+
 ## Performance task status
 
 Merged from PR #3:
@@ -21,7 +30,7 @@ Merged from PR #3:
 
 ## Verification state
 
-- Source-vs-branch diff was reviewed and unrelated changes were removed before merge.
-- Cloudflare Pages successfully built and deployed the PR preview for head `4c799b4` before merge.
+- Source-vs-branch diff for PR #3 was reviewed and unrelated changes were removed before merge.
+- Cloudflare Pages successfully built and deployed the PR #3 preview for head `4c799b4` before merge.
 - PR #3 is merged into `source`.
-- Production-domain verification remains the next step after Cloudflare finishes the `source` deployment; user-visible behavior and speed should be checked on `/`, `/down/nav/`, and `/down/games/`.
+- Production-domain verification of `/`, `/down/nav/`, and `/down/games/` remains part of normal release validation.
