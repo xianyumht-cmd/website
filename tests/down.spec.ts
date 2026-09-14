@@ -61,6 +61,32 @@ test('Nav category drawer is open on desktop, collapsed on mobile, and remains u
   expect(desktopMenu.scrollHeight).toBeGreaterThan(desktopMenu.clientHeight)
   expect(desktopMenu.overflowY).toBe('auto')
 
+  const desktopVisualOwnership = await page.evaluate(() => {
+    const sidebarElement = document.querySelector('.sidebar-menu')
+    const firstMenuLink = document.querySelector('#main-menu > li > a')
+    const logo = document.querySelector('.logo-env')
+    if (!sidebarElement || !firstMenuLink || !logo) throw new Error('Resource sidebar shell is incomplete')
+
+    const sidebarStyle = getComputedStyle(sidebarElement)
+    const linkStyle = getComputedStyle(firstMenuLink)
+    const logoStyle = getComputedStyle(logo)
+
+    return {
+      sidebarBoxShadow: sidebarStyle.boxShadow,
+      sidebarBackdropFilter: sidebarStyle.backdropFilter,
+      linkBorderRadius: linkStyle.borderRadius,
+      linkMarginLeft: linkStyle.marginLeft,
+      linkFontSize: linkStyle.fontSize,
+      logoMinHeight: logoStyle.minHeight,
+    }
+  })
+  expect(desktopVisualOwnership.sidebarBoxShadow).toBe('none')
+  expect(desktopVisualOwnership.sidebarBackdropFilter).toBe('none')
+  expect(desktopVisualOwnership.linkBorderRadius).toBe('0px')
+  expect(desktopVisualOwnership.linkMarginLeft).toBe('0px')
+  expect(desktopVisualOwnership.linkFontSize).toBe('13px')
+  expect(desktopVisualOwnership.logoMinHeight).toBe('96px')
+
   await desktopToggle.click()
   await expect(pageContainer).toHaveClass(/resource-sidebar-closed/)
   await expect(desktopToggle).toHaveAttribute('aria-expanded', 'false')
