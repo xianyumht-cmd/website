@@ -76,6 +76,7 @@ describe('local deployment safety contract', () => {
         expect(deployWorkflow).toContain('run: npm run lint');
         expect(deployWorkflow).toContain('run: npm run test:unit');
         expect(deployWorkflow).toContain('run: npm run test:smoke');
+        expect(deployWorkflow).toContain('run: npm run test:perf');
         expect(deployWorkflow).toContain('force_orphan: false');
     });
 });
