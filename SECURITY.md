@@ -1,54 +1,85 @@
-# Frontend Security Architecture
+# Security
 
-## Overview
-This project implements a "Zero-Server" security architecture designed to protect static assets without a backend. It uses a combination of AES-256-GCM encryption, key splitting (Secret Sharing), and WebAssembly obfuscation.
+## Current architecture
 
-## Architecture
+This repository builds a static Vite site and publishes static output to Cloudflare Pages. Browser-delivered JavaScript, CSS, HTML, images, and configuration must be treated as public to the visitor.
 
-### 1. Build Process
-- **Tooling**: Vite + Rollup
-- **Obfuscation**: `javascript-obfuscator` applies control flow flattening and string array encryption.
-- **Encryption**: `scripts/encrypt-assets.mjs` encrypts the `index.html` entry point.
+The project does **not** rely on frontend obfuscation, hidden key material, client-side asset encryption, DevTools blocking, or split secrets as a security boundary. Secrets must never be committed to the repository or embedded into browser bundles.
 
-### 2. Encryption Scheme
-- **Algorithm**: AES-256-GCM (Authenticated Encryption).
-- **Key Generation**: A random 32-byte key is generated at build time.
-- **Key Splitting**: The key ($K$) is split into 3 parts ($A, B, C$) using XOR:
-  $$ C = K \oplus A \oplus B $$
-  - **Part A**: Injected into CSS Custom Properties (`--k-part-a`).
-  - **Part B**: Hidden in the trailing bytes of `assets/key-carrier.png` (Steganography).
-  - **Part C**: Served via a Service Worker (`sw.js`) constant.
+## Security controls
 
-### 3. Runtime Decryption
-The `security-loader.js`:
-1.  Extracts Part A from CSS.
-2.  Fetches Part B from the image file.
-3.  Requests Part C from the Service Worker via MessageChannel.
-4.  Recombines the key: $K = A \oplus B \oplus C$.
-5.  Decrypts the payload using Web Crypto API.
-6.  Replaces the document content with the decrypted HTML.
+The current repository-level controls are:
 
-### 4. Anti-Debugging
-- **Debugger Trap**: Recursive debugger calls.
-- **Console**: Cleared periodically.
-- **DevTools Detection**: Monitors window dimension changes and time drift.
+- Cloudflare Pages response headers from `public/_headers`.
+- `X-Content-Type-Options: nosniff`.
+- `Referrer-Policy: strict-origin-when-cross-origin`.
+- Same-origin framing restrictions through `X-Frame-Options` and CSP `frame-ancestors`.
+- Browser capability restrictions for camera, microphone, and geolocation through `Permissions-Policy`.
+- A conservative CSP baseline restricting `base-uri`, plugins/objects, and framing without yet constraining the site's legacy script/style/CDN loading model.
+- Blocking dependency audit for high/critical npm advisories in CI and deployment paths.
+- Blocking lint, unit, Playwright smoke, production build, and repeated Lighthouse checks on task/PR quality gates.
 
-## Build & Deploy
+A stricter `script-src` / `style-src` CSP should only be introduced after the remaining inline and third-party resources have been inventoried and migrated. Do not add a policy that breaks existing site functionality merely to obtain a stricter header score.
+
+## Threat model and rules
+
+### Client-side secrets
+
+Anything shipped to the browser can be inspected by a user. API credentials, private tokens, signing keys, passwords, or other server-side secrets must not be placed in:
+
+- Vite client environment variables,
+- source files,
+- generated JavaScript bundles,
+- CSS custom properties,
+- images or other static assets,
+- service workers,
+- localStorage/sessionStorage as a secrecy mechanism.
+
+If a feature requires a real secret, it needs a trusted server-side or edge-side component that does not expose that secret to the browser.
+
+### Dependency security
+
+Use the repository lockfile and normal non-breaking dependency remediation first. Release paths run:
+
 ```bash
-# Install dependencies
-npm install
-
-# Build (Produce dist/)
-npm run build
-
-# Verify
-npm run test:e2e
+npm audit --audit-level=high
 ```
 
-## Security Matrix
-| Attack Vector | Defense | Effectiveness |
-|---------------|---------|---------------|
-| Static Analysis | Obfuscation + WASM | High |
-| Network Sniffing | TLS + Encrypted Payload | Medium (Key parts are separate) |
-| DevTools Inspection | Anti-Debug Script | Medium |
-| XSS | CSP + Safe DOM APIs | High |
+Do not use `npm audit fix --force` only to make the audit green. Major dependency changes require normal regression testing.
+
+### Response headers
+
+`public/_headers` is the source of truth for Cloudflare Pages static response headers. Changes to security headers must preserve current runtime compatibility and should be covered by automated tests.
+
+HSTS is intentionally not hard-coded here. TLS/HSTS policy is better managed at the Cloudflare zone/domain layer because preview domains and custom domains can have different requirements.
+
+## Supported code
+
+Security fixes target the canonical `source` branch and the currently deployed production build. Historical commits, abandoned task branches, and old local builds are not maintained as supported releases.
+
+## Reporting a vulnerability
+
+Please report security issues privately rather than publishing exploit details in a normal public issue.
+
+Preferred reporting path:
+
+1. Use a private GitHub Security Advisory for this repository when that option is available.
+2. Otherwise contact the repository owner privately and include the affected path, reproduction steps, impact, and any proposed mitigation.
+
+Do not include real credentials, private tokens, or unrelated personal data in a report.
+
+## Verification
+
+For security-related repository changes, use the same release-quality path as normal code changes:
+
+```bash
+npm ci
+npm audit --audit-level=high
+npm run lint
+npm run test:unit
+npm run test:smoke
+npm run build
+npm run test:perf
+```
+
+Production deployment must remain blocked when required quality or dependency-security checks fail.
