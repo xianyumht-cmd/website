@@ -44,11 +44,14 @@ test('Nav category drawer is open on desktop, collapsed on mobile, and remains u
   await page.goto(`${baseURL}/down/nav/index.html`, { waitUntil: 'load' })
   await page.waitForSelector('#main-menu li')
 
+  const pageContainer = page.locator('.page-container')
+  const sidebar = page.locator('.sidebar-menu')
   const desktopToggle = page.locator('.resource-sidebar-toggle')
   const menu = page.locator('#main-menu')
 
   await expect(desktopToggle).toBeVisible()
   await expect(desktopToggle).toHaveAttribute('aria-expanded', 'true')
+  await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
 
   const desktopMenu = await menu.evaluate((element) => ({
     clientHeight: element.clientHeight,
@@ -59,11 +62,13 @@ test('Nav category drawer is open on desktop, collapsed on mobile, and remains u
   expect(desktopMenu.overflowY).toBe('auto')
 
   await desktopToggle.click()
-  await expect(page.locator('.page-container')).toHaveClass(/resource-sidebar-closed/)
+  await expect(pageContainer).toHaveClass(/resource-sidebar-closed/)
   await expect(desktopToggle).toHaveAttribute('aria-expanded', 'false')
+  await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
 
   await desktopToggle.click()
-  await expect(page.locator('.page-container')).not.toHaveClass(/resource-sidebar-closed/)
+  await expect(pageContainer).not.toHaveClass(/resource-sidebar-closed/)
+  await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
 
   await page.setViewportSize({ width: 375, height: 667 })
   await page.reload({ waitUntil: 'load' })
@@ -71,13 +76,15 @@ test('Nav category drawer is open on desktop, collapsed on mobile, and remains u
 
   const mobileToggle = page.locator('[data-toggle="mobile-menu"]')
   await expect(mobileToggle).toBeVisible()
-  await expect(page.locator('.page-container')).toHaveClass(/resource-sidebar-closed/)
+  await expect(pageContainer).toHaveClass(/resource-sidebar-closed/)
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
+  await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
   await expect(menu).toBeHidden()
 
   await mobileToggle.click()
-  await expect(page.locator('.page-container')).not.toHaveClass(/resource-sidebar-closed/)
+  await expect(pageContainer).not.toHaveClass(/resource-sidebar-closed/)
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'true')
+  await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
   await expect(menu).toBeVisible()
 
   const mobileMenu = await menu.evaluate((element) => ({
@@ -95,6 +102,7 @@ test('Nav category drawer is open on desktop, collapsed on mobile, and remains u
   await mobileToggle.click()
   await expect(menu).toBeHidden()
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
+  await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
 })
 
 test('Games category drawer uses the shared vertical mobile layout', async ({ page, baseURL }) => {
@@ -103,17 +111,20 @@ test('Games category drawer uses the shared vertical mobile layout', async ({ pa
   await page.waitForSelector('#main-menu li', { state: 'attached' })
 
   const pageContainer = page.locator('.page-container')
+  const sidebar = page.locator('.sidebar-menu')
   const mobileToggle = page.locator('[data-toggle="mobile-menu"]')
   const menu = page.locator('#main-menu')
 
   await expect(mobileToggle).toBeVisible()
   await expect(pageContainer).toHaveClass(/resource-sidebar-closed/)
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
+  await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
   await expect(menu).toBeHidden()
 
   await mobileToggle.click()
   await expect(pageContainer).not.toHaveClass(/resource-sidebar-closed/)
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'true')
+  await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
   await expect(menu).toBeVisible()
 
   const mobileMenu = await menu.evaluate((element) => ({
@@ -128,4 +139,5 @@ test('Games category drawer uses the shared vertical mobile layout', async ({ pa
   await mobileToggle.click()
   await expect(menu).toBeHidden()
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
+  await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
 })
