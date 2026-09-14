@@ -1,0 +1,42 @@
+name: Apply Dependency Remediation
+
+on:
+  push:
+    branches:
+      - tmp/apply-dependency-remediation-20260914
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout remediation branch
+        uses: actions/checkout@v7
+        with:
+          ref: fix/dependency-audit-20260914
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Apply validated dependency remediation
+        run: |
+          npm pkg delete devDependencies.@lhci/cli
+          npm pkg set devDependencies.lighthouse='^13.4.1'
+          npm install --package-lock-only --ignore-scripts
+          npm audit fix --package-lock-only --ignore-scripts
+          npm audit --audit-level=low
+          git diff --check
+
+      - name: Commit package metadata only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git diff --cached --quiet && exit 0
+          git commit -m "deps: remove unused lhci and refresh secure lockfile"
+          git push origin HEAD:fix/dependency-audit-20260914
