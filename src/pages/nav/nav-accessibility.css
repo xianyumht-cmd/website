@@ -72,3 +72,12 @@
   outline: 2px solid var(--resource-accent);
   outline-offset: 3px;
 }
+
+@media (max-width: 820px) {
+  .nav-page #search .gg,
+  .nav-page #search #notice {
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100%;
+  }
+}
