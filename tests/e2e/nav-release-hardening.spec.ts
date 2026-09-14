@@ -70,11 +70,26 @@ test('NAV mobile controls meet touch sizing and keyboard drawer behavior without
       return { width: rect.width, height: rect.height }
     }
 
+    const overflowElements = Array.from(document.querySelectorAll('body *'))
+      .map((element) => {
+        const rect = element.getBoundingClientRect()
+        return {
+          selector: `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}${element.classList.length ? `.${Array.from(element.classList).join('.')}` : ''}`,
+          left: Math.round(rect.left * 100) / 100,
+          right: Math.round(rect.right * 100) / 100,
+          width: Math.round(rect.width * 100) / 100,
+        }
+      })
+      .filter((item) => item.left < -1 || item.right > window.innerWidth + 1)
+      .sort((a, b) => b.right - a.right)
+      .slice(0, 12)
+
     return {
       theme: sizeOf('.nav-mobile-theme-toggle'),
       menu: sizeOf('[data-toggle="mobile-menu"]'),
       scrollWidth: document.documentElement.scrollWidth,
       viewportWidth: window.innerWidth,
+      overflowElements,
     }
   })
 
@@ -82,7 +97,10 @@ test('NAV mobile controls meet touch sizing and keyboard drawer behavior without
   expect(touchTargets.theme.height).toBeGreaterThanOrEqual(40)
   expect(touchTargets.menu.width).toBeGreaterThanOrEqual(40)
   expect(touchTargets.menu.height).toBeGreaterThanOrEqual(40)
-  expect(touchTargets.scrollWidth).toBeLessThanOrEqual(touchTargets.viewportWidth + 1)
+  expect(
+    touchTargets.scrollWidth,
+    `Horizontal overflow: ${JSON.stringify(touchTargets.overflowElements)}`,
+  ).toBeLessThanOrEqual(touchTargets.viewportWidth + 1)
 
   const pageContainer = page.locator('.page-container')
   await expect(pageContainer).toHaveClass(/resource-sidebar-closed/)
