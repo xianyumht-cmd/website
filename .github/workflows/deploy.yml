@@ -44,6 +44,9 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Lighthouse performance thresholds
+        run: npm run test:perf
+
       - name: Print build size report
         run: cat dist/build-size-report.json
 
