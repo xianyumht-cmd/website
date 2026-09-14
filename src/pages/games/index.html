@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Allow Referer to be sent to 51.la for localhost/IP access -->
     <meta name="referrer" content="no-referrer-when-downgrade">
     <title>游戏资源 - 脚本.top</title>
@@ -28,7 +28,7 @@
             <div class="sidebar-menu-inner">
                 <header class="logo-env">
                     <div class="logo">
-                        <a href="#navbar">
+                        <a href="#navbar" aria-label="返回游戏资源顶部">
                             <i class="fa-solid fa-gamepad"></i>
                         </a>
                         <div class="logo-text">
@@ -39,7 +39,7 @@
                         <a onclick="themeMode.toggleMode()" title="切换主题模式">
                             <i id="theme-icon" class="fa-solid fa-circle-half-stroke theme-icon-element"></i>
                         </a>
-                        <a href="" data-toggle="mobile-menu">
+                        <a href="" data-toggle="mobile-menu" aria-label="打开分类菜单">
                             <i class="fa-solid fa-bars"></i>
                         </a>
                     </div>
@@ -57,7 +57,7 @@
             <nav class="navbar user-info-navbar" id="navbar">
                 <ul class="left-links list-inline list-unstyled user-info-menu">
                     <li class="menu-item">
-                        <a href="../../../index.html" target="_blank">
+                        <a href="../../../index.html" target="_blank" rel="noopener noreferrer">
                             <i class="fa-solid fa-house"></i>
                             <span>主站</span>
                         </a>
@@ -93,7 +93,7 @@
                             <!-- Bulletin content will be loaded from games-data.js -->
                         </ul>
                     </div>
-                    <a href="javascript:;" rel="external nofollow" onclick='var b=document.getElementById("bulletin_box"); if(b){ b.style.display="none"; }' style="margin-left: auto;" title="关闭公告">
+                    <a href="javascript:;" rel="external nofollow" onclick='var b=document.getElementById("bulletin_box"); if(b){ b.style.display="none"; }' style="margin-left: auto;" title="关闭公告" aria-label="关闭公告">
                         <i class="fa-solid fa-xmark"></i>
                     </a>
                 </div>

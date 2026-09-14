@@ -24,13 +24,14 @@ describe('local deployment safety contract', () => {
 
     test('checks both remote branches and classifies source relation', () => {
         expect(deployScript).toContain("@('fetch', 'origin', 'source', 'main')");
-        expect(deployScript).toContain("refs/remotes/origin/source");
-        expect(deployScript).toContain("refs/remotes/origin/main");
+        expect(deployScript).toContain('refs/remotes/origin/source');
+        expect(deployScript).toContain('refs/remotes/origin/main');
         expect(deployScript).toContain("'behind'");
         expect(deployScript).toContain("'diverged'");
     });
 
     test('runs the mandatory validation and rejects incomplete dist', () => {
+        expect(deployScript).toContain("@('audit', '--audit-level=high')");
         expect(deployScript).toContain("@('run', 'test:unit')");
         expect(deployScript).toContain("@('run', 'build')");
         expect(deployScript).toContain('Build output directory was not generated');
@@ -62,13 +63,20 @@ describe('local deployment safety contract', () => {
     test('creates traceable non-empty deployment commits only when output changes', () => {
         expect(deployScript).toContain('Deploy source $shortSourceSha');
         expect(deployScript).toContain('Source SHA: $FullSourceSha');
-        expect(deployScript).toContain("} elseif ($diff.HasChanges) {");
+        expect(deployScript).toContain('} elseif ($diff.HasChanges) {');
         expect(deployScript).toContain('No production changes to deploy; no empty commit was created.');
     });
 
-    test('keeps the legacy workflow manual-only', () => {
+    test('keeps automatic source deployment behind required quality gates', () => {
         expect(deployWorkflow).toContain('workflow_dispatch:');
-        expect(deployWorkflow).not.toContain('  push:');
+        expect(deployWorkflow).toContain('  push:');
+        expect(deployWorkflow).toContain('      - source');
+        expect(deployWorkflow).not.toContain('continue-on-error: true');
+        expect(deployWorkflow).toContain('run: npm audit --audit-level=high');
+        expect(deployWorkflow).toContain('run: npm run lint');
+        expect(deployWorkflow).toContain('run: npm run test:unit');
+        expect(deployWorkflow).toContain('run: npm run test:smoke');
+        expect(deployWorkflow).toContain('run: npm run test:perf');
         expect(deployWorkflow).toContain('force_orphan: false');
     });
 });

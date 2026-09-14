@@ -11,31 +11,41 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # 允许写入仓库（用于推送到 main 分支）
+      contents: write  # required to publish the generated site to main
 
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Dependency audit
+        run: npm audit --audit-level=high
+
       - name: Lint
         run: npm run lint
-        continue-on-error: true
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
 
       - name: Smoke tests
         run: npm run test:smoke
-        continue-on-error: true
 
       - name: Build project
         run: npm run build
+
+      - name: Lighthouse performance thresholds
+        run: npm run test:perf
 
       - name: Print build size report
         run: cat dist/build-size-report.json

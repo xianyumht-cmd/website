@@ -1,141 +1,171 @@
-# 脚本.top 开发者指南 (Developer Guide)
+# Developer Guide
 
-本文档旨在为开发人员提供项目的详细结构说明、文件用途解析及开发维护指南。
+本文档描述当前仓库的实际开发、构建和维护方式。历史目录、已经退役的数据源和旧安全方案不要继续作为开发依据。
 
 ## 1. 项目概览
 
-**脚本.top** 是一个集成了资源导航、发卡服务跳转、工具下载及互动游戏（吃豆人）的综合性静态网站。项目基于现代前端技术栈构建，支持响应式设计、多语言切换及高性能加载。
+这是一个以静态页面为主的 Vite 多入口站点，生产部署目标为 Cloudflare Pages。
 
-- **构建工具**: Vite
-- **部署平台**: Cloudflare Pages
-- **核心技术**: HTML5, CSS3, ES6 JavaScript, Rust (WASM)
+当前主要入口：
 
-## 2. 目录结构详解
+- `index.html`：首页。
+- `about.html`、`privacy.html`、`404.html`：基础页面。
+- `src/pages/nav/index.html`：资源导航页。
+- `src/pages/games/index.html`：游戏资源页。
+- `src/pages/tdr/index.html`：TDR 互动页面。
 
-### 根目录 (`/`)
+构建后，`scripts/organize-dist.mjs` 会把 `dist/src/pages/*` 重排为生产路径 `dist/down/*`，所以源码路径和线上路径不要混用。
 
-| 文件/目录 | 用途说明 |
-| :--- | :--- |
-| `index.html` | **网站首页**。包含核心导航入口（QQ群/频道跳转）、多语言支持及页脚信息。 |
-| `about.html` | **关于我们页面**。展示平台简介、优势及联系方式。 |
-| `privacy.html` | **隐私政策页面**。详述数据收集与使用规则，符合合规要求。 |
-| `404.html` | **404 错误页面**。自定义的未找到页面，引导用户返回首页。 |
-| `vite.config.js` | **Vite 构建配置**。定义了多入口打包、代码混淆插件、输出目录等核心构建逻辑。 |
-| `package.json` | **项目依赖管理**。包含 `scripts`（启动/打包命令）及 `devDependencies`（开发依赖）。 |
-| `.gitignore` | **Git 忽略规则**。指定不应上传到版本控制的文件（如 `node_modules`, `dist`）。 |
-| `_redirects` | **重定向规则**。用于本地测试或某些静态托管服务的路由重定向配置。 |
+## 2. 关键目录与所有权
 
-### 核心子系统
+### `src/pages/`
 
-#### 1. 资源导航系统 (`down/nav/`)
-这是网站的核心功能区，提供各类游戏辅助与工具的下载导航。
+页面源码目录：
 
-| 文件 | 用途 |
-| :--- | :--- |
-| `index.html` | **导航页入口**。包含侧边栏、内容卡片网格及搜索功能。 |
-| `nav-data.min.js` | **数据源文件**。存储所有导航条目（标题、链接、图标、描述）。**修改导航内容请编辑此文件**。 |
-| `nav-core.js` | **核心逻辑**。负责读取数据源并动态渲染页面、处理搜索、公告滚动及时间显示。 |
-| `help.md` | 导航系统的帮助文档（开发用）。 |
+- `src/pages/nav/`：NAV 页面入口及页面级逻辑。
+- `src/pages/games/`：Games 页面入口及页面级逻辑。
+- `src/pages/tdr/`：TDR 页面及其历史脚本资源。
+- `src/pages/common/`：页面共享片段或公共页面资源。
 
-#### 2. 吃豆人游戏 (`down/tdr/`)
-一个移植的经典 Pac-Man 游戏，作为网站的互动彩蛋。
+TDR 的 `src/pages/tdr/static/script/**` 属于历史脚本区域，目前仍是 JavaScript lint 的明确窄范围排除项。不要为了让 lint 变绿扩大这个排除范围。
 
-| 文件 | 用途 |
-| :--- | :--- |
-| `index.html` | **游戏页入口**。包含 Canvas 画布及游戏控制 UI。 |
-| `static/script/` | 包含 `game.js` (游戏引擎) 和 `index.js` (页面交互逻辑)。 |
-| `static/style/` | 游戏页面的样式表。 |
+### `src/assets/data/`
 
-### 资源目录
+当前数据所有权：
 
-#### 公共资源 (`public/`)
-存放不经过构建处理的静态文件，部署时会原样复制到根目录。
+- `nav-catalog.js`：NAV 资源分类、标题、描述、图标和链接的唯一目录数据源。
+- `games-data.json`：Games 页面数据。
+- `lol-version.json`：LOL 版本元数据。
+- `site-config.json`：站点配置数据。
 
-| 文件 | 用途 |
-| :--- | :--- |
-| `_headers` | **Cloudflare 缓存配置**。定义浏览器和 CDN 的缓存策略（重要）。 |
-| `robots.txt` | **爬虫协议**。指导搜索引擎如何抓取网站。 |
-| `favicon.ico` | 网站图标。 |
+修改 NAV 资源时，应编辑 `src/assets/data/nav-catalog.js`。不要重新引入 `nav-data.json`、`nav-data.min.js` 或运行时 patch 文件作为第二套目录数据源。
 
-#### 静态资源 (`static/`)
-主要用于首页 (`index.html`) 的样式和脚本。
+### `src/assets/app/`
 
-| 文件 | 用途 |
-| :--- | :--- |
-| `css/index.css` | 首页的主样式表。 |
-| `js/main.js` | 首页的交互逻辑。 |
-| `js/location.js` | 处理首页卡片的点击跳转逻辑（QQ跳转等）。 |
-| `picture/*.svg` | 首页使用的 SVG 图标资源。 |
+页面运行逻辑位于这里。资源页 sidebar/drawer 的当前运行时状态由 `resource-sidebar.js` 管理，正式开关状态是 `.page-container.resource-sidebar-closed`。
 
-#### 共享资源 (`shared/`)
-全站通用的功能模块。
+不要重新使用旧 `.sidebar-menu.collapsed` 或 `.mobile-is-visible` 作为当前资源页菜单状态。
 
-| 文件 | 用途 |
-| :--- | :--- |
-| `responsive-base.js` | 响应式基座脚本，处理移动端适配。 |
-| `responsive.css` | 全局响应式样式。 |
-| `page-guard.js` | 全站防复制与快捷键干扰脚本。 |
+### `src/assets/css/`
 
-#### 第三方库 (`down/`)
-历史遗留的静态资源库，包含 jQuery, Bootstrap, FontAwesome 等。
-*注意：新开发建议使用现代 ESM 模块，逐步减少对这些旧库的依赖。*
+NAV/Games 仍有历史 CSS 叠层，但当前资源页最终视觉和 drawer 所有权由 `resource-pages.css` 持有。
 
-### WebAssembly (`src-wasm/`)
-使用 Rust 编写的高性能模块（目前主要用于验证或许可证检查逻辑）。
+清理旧 CSS 时必须按“最终 computed style + Playwright + Lighthouse”验证，不能只因为某个 selector 看起来没有 JavaScript 调用就直接删除。Phase 2 已经验证过：部分旧移动 CSS 虽然没有显式运行时入口，删除后仍可能造成 CLS 回归。
 
-| 文件 | 用途 |
-| :--- | :--- |
-| `src/lib.rs` | Rust 源代码。 |
-| `Cargo.toml` | Rust 项目配置。 |
+### `shared/`
 
----
+全站共享代码：
 
-## 3. 开发与维护指南
+- `responsive-base.js` / `responsive.css`：响应式基础能力。
+- `page-guard.js`：共享页面保护逻辑；构建时会复制到 `dist/page-guard.js`。
 
-### 常用命令
-在项目根目录下运行：
+### `public/`
 
-- **安装依赖**: `npm install`
-- **启动本地服务器**: `npm run dev` (访问 http://localhost:3000)
-- **构建生产版本**: `npm run build` (生成 `dist` 目录)
-- **预览生产构建**: `npm run preview`
+Vite 会把这里的静态文件复制到构建产物根目录。
 
-### 如何修改导航内容？
-1. 打开 `down/nav/nav-data.min.js`。
-2. 找到 `navDataTranslations.zh.sections` 数组。
-3. 在对应的分类 (`items`) 中添加或修改对象：
-   ```javascript
-   {
-       title: "新资源名称",
-       description: "资源描述",
-       avatar: "图标文字", // 或 imgUrl: "图片路径"
-       url: "跳转链接",
-       tooltip: "悬停提示"
-   }
-   ```
-4. 保存后刷新页面即可生效。
+- `_headers`：Cloudflare Pages 的缓存与安全响应头配置。
+- `groupguard/manual.html`：GroupGuard 客户使用手册。
+- 其他不需要 Vite 转换的静态资源。
 
-### 如何更新统计代码？
-目前使用了百度统计。如需更换：
-1. 打开 `index.html`, `down/nav/index.html`, `down/tdr/index.html`。
-2. 搜索 `百度统计` 或 `hm.baidu.com`。
-3. 替换 `<script>` 标签内的代码 ID。
+`npm run build` 最后会运行 `scripts/verify-dist-security.mjs`，如果 `dist/_headers` 丢失或关键安全头被移除，构建会失败。
 
-### 部署注意事项
-- 本项目配置了 Cloudflare Pages 自动部署。
-- 每次 `git push` 后，Cloudflare 会自动拉取代码并执行 `npm run build`。
-- 确保 `public/_headers` 文件存在，否则可能导致缓存问题（旧页面加载新资源失败）。
+## 3. 构建流程
 
----
+正式构建命令：
 
-## 4. 常见问题 (FAQ)
+```bash
+npm run build
+```
 
-**Q: 为什么修改了文件但网站没变化？**
-A: Cloudflare 可能有缓存。请检查 `public/_headers` 配置，或在 Cloudflare 后台手动清除缓存。开发时请禁用浏览器缓存。
+实际链路：
 
-**Q: `dist` 目录需要上传吗？**
-A: 不需要。`dist` 是构建产物，应该被 `.gitignore` 忽略。Cloudflare 会在服务器端构建生成它。
+1. `vite build`
+2. `scripts/organize-dist.mjs`
+3. `scripts/postbuild-optimize.mjs`
+4. `scripts/verify-dist-security.mjs`
 
-**Q: 如何添加新页面？**
-1. 在根目录创建 `.html` 文件。
-2. 在 `vite.config.js` 的 `build.rollupOptions.input` 中添加该文件的入口配置。
+Vite 当前使用多入口构建和 Terser 压缩。仓库没有 SECURITY.md 旧版本曾描述的 AES 前端加密、密钥拆分、图片隐写、Service Worker 密钥下发或 Rust/WASM 安全边界。
+
+## 4. 常用命令
+
+```bash
+npm ci
+npm run dev
+npm run lint
+npm run test:unit
+npm run test:smoke
+npm run build
+npm run test:perf
+npm run test
+```
+
+说明：
+
+- CI 使用 Node 24。
+- `package.json` 要求 Node `>=22.19`。
+- `npm run test:perf` 对 NAV 和 TDR 各运行 3 次 Lighthouse，要求性能分中位数 `>= 0.90`，并要求任意一次 CLS 都不超过 `0.10`。
+- 高危和严重 npm advisory 由 `npm audit --audit-level=high` 阻断质量门槛和发布路径。
+
+## 5. 修改 NAV 数据
+
+NAV 目录数据只改：
+
+```text
+src/assets/data/nav-catalog.js
+```
+
+修改后至少执行：
+
+```bash
+npm run lint
+npm run test:smoke
+npm run build
+```
+
+涉及布局、sidebar、异步渲染或首屏样式时，还必须执行：
+
+```bash
+npm run test:perf
+```
+
+不要用加载顺序 patch 或 MutationObserver 补丁重新维护第二份资源目录。
+
+## 6. CSS / sidebar 维护规则
+
+资源页当前约定：
+
+- Desktop：sidebar 默认打开。
+- `<= 820px`：drawer 默认收起，通过现有 toggle 打开。
+- 正式运行时状态：`resource-sidebar-closed`。
+- 最终资源页视觉层：`resource-pages.css`。
+
+已有 Playwright 测试会检查 NAV/Games 移动 drawer 的纵向布局，以及 NAV desktop 的最终 sidebar/menu computed style。修改相关 CSS 时不要绕过这些测试。
+
+## 7. 安全模型
+
+这是公开静态前端。发送到浏览器的 HTML、CSS、JavaScript、JSON 和图片都应视为公开内容。
+
+不要把 API secret、私钥、管理员凭据或长期 token 放进：
+
+- `src/`
+- `public/`
+- Vite 客户端环境变量
+- 任何最终进入 `dist/` 的文件
+
+安全策略和漏洞报告方式以 `SECURITY.md` 为准。Cloudflare Pages 安全响应头以 `public/_headers` 为准，并由构建脚本验证最终产物。
+
+## 8. 分支与发布
+
+- 规范开发基线：`source`。
+- 一个任务使用一个任务分支。
+- 不要 force push、reset/clean 掉其他工作。
+- 未经明确授权，不 merge 到生产分支，也不执行生产部署。
+- Task/PR Quality Gate 必须保持阻断式：dependency audit、lint、unit、Playwright smoke、production build、Lighthouse 都不能靠 `continue-on-error` 绕过。
+
+## 9. 添加新页面
+
+1. 在合适的 `src/pages/<name>/` 下创建入口 HTML 和页面资源。
+2. 在 `vite.config.js` 的 `optimizeDeps.entries` 和 `build.rollupOptions.input` 中注册入口。
+3. 如果线上路径需要位于 `/down/<name>/`，确认 `scripts/organize-dist.mjs` 的重排逻辑覆盖该页面。
+4. 添加最小 smoke 测试，至少保证无 console error、请求失败和 4xx/5xx。
+5. 运行完整质量门槛后再进入 review。

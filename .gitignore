@@ -6,6 +6,12 @@ dist/
 dist-ssr/
 *.local
 
+# Test / analysis artifacts
+test-results/
+playwright-report/
+coverage/
+.eslintcache
+
 # Logs
 logs/
 npm-debug.log*

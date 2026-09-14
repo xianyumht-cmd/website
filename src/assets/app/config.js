@@ -45,7 +45,7 @@ function initializeLinks() {
             element.addEventListener('click', function(e) {
                 console.log('Clicked:', id);
                 e.preventDefault();
-                
+
                 // 立即执行打开逻辑，避免被浏览器拦截
                 if (id === 'qunliao4') {
                     window.location.href = linkConfig[id];
@@ -65,17 +65,6 @@ function initializeLinks() {
                     element.click();
                 }
             });
-        }
-    });
-}
-
-function preloadLinks() {
-    Object.values(linkConfig).forEach(url => {
-        if (url.startsWith('http')) {
-            const link = document.createElement('link');
-            link.rel = 'prefetch';
-            link.href = url;
-            document.head.appendChild(link);
         }
     });
 }
