@@ -85,7 +85,7 @@ test('Nav category drawer is open on desktop, collapsed on mobile, and remains u
   expect(desktopVisualOwnership.linkBorderRadius).toBe('0px')
   expect(desktopVisualOwnership.linkMarginLeft).toBe('0px')
   expect(desktopVisualOwnership.linkFontSize).toBe('13px')
-  expect(desktopVisualOwnership.logoMinHeight).toBe('96px')
+  expect(desktopVisualOwnership.logoMinHeight).toBe('84px')
 
   await desktopToggle.click()
   await expect(pageContainer).toHaveClass(/resource-sidebar-closed/)
@@ -129,6 +129,55 @@ test('Nav category drawer is open on desktop, collapsed on mobile, and remains u
   await expect(menu).toBeHidden()
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
   await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
+})
+
+test('Nav uses a directory-first hierarchy without dashboard decoration', async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 1256, height: 920 })
+  await page.goto(`${baseURL}/down/nav/index.html`, { waitUntil: 'load' })
+  await page.waitForSelector('#content-sections .xe-widget')
+
+  await expect(page.locator('.nav-directory-head h1')).toHaveText('资源导航')
+  await expect(page.locator('.nav-directory-head p')).toContainText('按分类浏览')
+  await expect(page.locator('.nav-visual-status-grid')).toHaveCount(0)
+  await expect(page.locator('.nav-card-tags')).toHaveCount(0)
+  await expect(page.locator('.nav-section-count').first()).toContainText('项')
+
+  const visuals = await page.evaluate(() => {
+    const row = document.querySelector('#content-sections .row')
+    const card = document.querySelector('#content-sections .xe-widget')
+    const topbar = document.querySelector('.nav-topbar')
+    const search = document.querySelector('#search #ss')
+    if (!row || !card || !topbar || !search) throw new Error('Directory shell is incomplete')
+
+    const cardStyle = getComputedStyle(card)
+    return {
+      navVisualMode: document.documentElement.dataset.navVisual,
+      pageDecoration: getComputedStyle(document.body, '::before').display,
+      rowDisplay: getComputedStyle(row).display,
+      cardShadow: cardStyle.boxShadow,
+      cardTransform: cardStyle.transform,
+      cardRadius: cardStyle.borderRadius,
+      cardStatusDot: getComputedStyle(card, '::after').display,
+      topbarShadow: getComputedStyle(topbar).boxShadow,
+      topbarMinHeight: getComputedStyle(topbar).minHeight,
+      searchMinHeight: getComputedStyle(search).minHeight,
+    }
+  })
+
+  expect(visuals.navVisualMode).toBe('directory')
+  expect(visuals.pageDecoration).toBe('none')
+  expect(visuals.rowDisplay).toBe('grid')
+  expect(visuals.cardShadow).toBe('none')
+  expect(visuals.cardTransform).toBe('none')
+  expect(visuals.cardRadius).toBe('4px')
+  expect(visuals.cardStatusDot).toBe('none')
+  expect(visuals.topbarShadow).toBe('none')
+  expect(visuals.topbarMinHeight).toBe('58px')
+  expect(visuals.searchMinHeight).toBe('48px')
+
+  const firstCard = page.locator('#content-sections .xe-widget').first()
+  await firstCard.hover()
+  await expect(firstCard).toHaveCSS('transform', 'none')
 })
 
 test('Games category drawer uses the shared vertical mobile layout', async ({ page, baseURL }) => {
