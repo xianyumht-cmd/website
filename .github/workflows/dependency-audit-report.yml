@@ -1,0 +1,56 @@
+name: Dependency Audit Report
+
+on:
+  push:
+    branches:
+      - tmp/dependency-audit-report-20260914
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Print compact dependency audit
+        shell: bash
+        run: |
+          set +e
+          npm audit --json > audit.json
+          AUDIT_EXIT=$?
+          set -e
+          node - <<'NODE'
+          const fs = require('fs');
+          const report = JSON.parse(fs.readFileSync('audit.json', 'utf8'));
+          const vulnerabilities = report.vulnerabilities || {};
+          const rows = Object.entries(vulnerabilities)
+            .map(([name, v]) => ({
+              name,
+              severity: v.severity,
+              direct: Boolean(v.isDirect),
+              range: v.range,
+              via: Array.isArray(v.via) ? v.via.map(x => typeof x === 'string' ? x : `${x.source}:${x.title}`).join(' | ') : String(v.via),
+              effects: Array.isArray(v.effects) ? v.effects.join(',') : '',
+              fix: v.fixAvailable === false ? 'none' : JSON.stringify(v.fixAvailable)
+            }))
+            .sort((a, b) => {
+              const rank = { critical: 0, high: 1, moderate: 2, low: 3, info: 4 };
+              return (rank[a.severity] ?? 9) - (rank[b.severity] ?? 9) || Number(b.direct) - Number(a.direct) || a.name.localeCompare(b.name);
+            });
+          console.log('AUDIT_METADATA=' + JSON.stringify(report.metadata || {}));
+          for (const r of rows) {
+            console.log(`AUDIT|${r.severity}|${r.direct ? 'direct' : 'transitive'}|${r.name}|range=${r.range}|fix=${r.fix}|effects=${r.effects}|via=${r.via}`);
+          }
+          NODE
+          exit $AUDIT_EXIT
