@@ -6,6 +6,9 @@ import { chromium } from '@playwright/test'
 
 const repoRoot = path.resolve('.')
 const logsDir = path.join(repoRoot, 'logs')
+const RUN_COUNT = 3
+const SCORE_THRESHOLD = 0.9
+const CLS_THRESHOLD = 0.1
 fs.mkdirSync(logsDir, { recursive: true })
 
 function findBrowser() {
@@ -90,6 +93,55 @@ function runAudit(nodeExe, env, only) {
   })
 }
 
+function median(values) {
+  const sorted = [...values].sort((a, b) => a - b)
+  const middle = Math.floor(sorted.length / 2)
+  return sorted.length % 2 === 1
+    ? sorted[middle]
+    : (sorted[middle - 1] + sorted[middle]) / 2
+}
+
+async function runTarget(nodeExe, env, target) {
+  const runs = []
+
+  for (let run = 1; run <= RUN_COUNT; run += 1) {
+    const audit = await runAudit(nodeExe, env, target)
+    const result = audit.json.results?.[0]
+    const score = result?.performanceScore
+    const cls = result?.metrics?.cls
+
+    if (typeof score !== 'number' || typeof cls !== 'number') {
+      throw new Error(`${target} run ${run} returned invalid Lighthouse metrics (${audit.out})`)
+    }
+
+    runs.push({ run, score, cls, out: audit.out })
+    process.stdout.write(`${target} run ${run}/${RUN_COUNT}: score=${score.toFixed(2)} cls=${cls.toFixed(4)}\n`)
+  }
+
+  const medianScore = median(runs.map((entry) => entry.score))
+  const maxCls = Math.max(...runs.map((entry) => entry.cls))
+  const scores = runs.map((entry) => entry.score.toFixed(2)).join(', ')
+  const clsValues = runs.map((entry) => entry.cls.toFixed(4)).join(', ')
+
+  process.stdout.write(
+    `${target} summary: median=${medianScore.toFixed(2)} maxCls=${maxCls.toFixed(4)} scores=[${scores}] cls=[${clsValues}]\n`
+  )
+
+  if (medianScore < SCORE_THRESHOLD) {
+    throw new Error(
+      `${target} median performanceScore < ${SCORE_THRESHOLD}: ${medianScore} (${runs.map((entry) => entry.out).join(', ')})`
+    )
+  }
+
+  if (maxCls > CLS_THRESHOLD) {
+    throw new Error(
+      `${target} CLS > ${CLS_THRESHOLD}: ${maxCls} (${runs.map((entry) => entry.out).join(', ')})`
+    )
+  }
+
+  return { medianScore, maxCls }
+}
+
 const nodeExe = process.execPath
 const browser = findBrowser()
 if (!browser) throw new Error('No Chromium-based browser found. Install Playwright Chromium or set CHROME_PATH.')
@@ -109,21 +161,13 @@ try {
   await waitForHttp('http://127.0.0.1:4173/down/nav/index.html', 60_000)
 
   const env = { CHROME_PATH: browser }
+  const nav = await runTarget(nodeExe, env, 'nav')
+  const tdr = await runTarget(nodeExe, env, 'tdr')
 
-  const nav = await runAudit(nodeExe, env, 'nav')
-  const tdr = await runAudit(nodeExe, env, 'tdr')
-
-  const navScore = nav.json.results?.[0]?.performanceScore
-  const tdrScore = tdr.json.results?.[0]?.performanceScore
-
-  if (typeof navScore !== 'number' || navScore < 0.9) {
-    throw new Error(`nav performanceScore < 0.9: ${navScore} (${nav.out})`)
-  }
-  if (typeof tdrScore !== 'number' || tdrScore < 0.9) {
-    throw new Error(`tdr performanceScore < 0.9: ${tdrScore} (${tdr.out})`)
-  }
-
-  process.stdout.write(`OK nav=${navScore} tdr=${tdrScore}\n`)
+  process.stdout.write(
+    `OK nav median=${nav.medianScore.toFixed(2)} maxCls=${nav.maxCls.toFixed(4)} ` +
+      `tdr median=${tdr.medianScore.toFixed(2)} maxCls=${tdr.maxCls.toFixed(4)}\n`
+  )
 } finally {
   try {
     server.kill('SIGTERM')
