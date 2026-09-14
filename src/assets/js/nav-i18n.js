@@ -7,11 +7,13 @@ const navUiText = {
         updatedAt: "更新时间:",
         nextUpdate: "预计下版本更新时间:",
         feedbackEmail: "未找到新FF或地址失效反馈邮箱:",
-        searchPlaceholder: "输入关键词，自动筛选资源...",
+        searchPlaceholder: "输入关键词，筛选资源",
         notice: "页面将永久存在，失效请邮箱反馈",
         searchLabel: "搜索",
         home: "主站",
         visitors: "最近活跃访客",
+        directoryTitle: "资源导航",
+        directoryIntro: "按分类浏览，或直接搜索名称与说明。",
         topButton: "返回顶部",
         themeTitle: "切换主题模式",
         languageTitle: "切换语言",
@@ -30,11 +32,13 @@ const navUiText = {
         updatedAt: "Updated:",
         nextUpdate: "Expected next update:",
         feedbackEmail: "Missing new FF or invalid link feedback:",
-        searchPlaceholder: "Enter keywords to filter resources...",
+        searchPlaceholder: "Enter keywords to filter resources",
         notice: "This page will remain available. Please report invalid links by email.",
         searchLabel: "Search",
         home: "Home",
         visitors: "Recent visitors",
+        directoryTitle: "Resource directory",
+        directoryIntro: "Browse by category or search names and descriptions.",
         topButton: "Back to top",
         themeTitle: "Switch theme mode",
         languageTitle: "Switch language",
@@ -90,8 +94,14 @@ export function applyNavStaticLanguage() {
     const updateLabel = document.querySelector('#navbar .fa-clock-o + span');
     if (updateLabel) updateLabel.textContent = navText('updateTime');
 
+    const directoryTitle = document.querySelector('.nav-directory-head h1');
+    if (directoryTitle) directoryTitle.textContent = navText('directoryTitle');
+
+    const directoryIntro = document.querySelector('.nav-directory-head p');
+    if (directoryIntro) directoryIntro.textContent = navText('directoryIntro');
+
     const searchText = document.getElementById('search-text');
-    if (searchText) searchText.placeholder = " " + navText('searchPlaceholder');
+    if (searchText) searchText.placeholder = navText('searchPlaceholder');
 
     const searchButton = document.querySelector('#ss button');
     if (searchButton) searchButton.setAttribute('aria-label', navText('searchLabel'));
