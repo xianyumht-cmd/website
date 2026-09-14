@@ -1,6 +1,10 @@
 name: Quality Gate
 
 on:
+  push:
+    branches-ignore:
+      - source
+      - main
   pull_request:
     branches:
       - source
