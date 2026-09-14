@@ -1,5 +1,17 @@
 # Decisions
 
+## 2026-09-15 — Resource-page visual ownership and static security baseline
+
+`resource-pages.css` is the final visual/layout owner for the NAV and Games resource-page shell. Legacy imported styles may remain temporarily for compatibility, but current runtime state must use `.page-container.resource-sidebar-closed`; `.sidebar-menu.collapsed` is not a current control state. Playwright locks the final desktop Swiss-style computed values and the shared vertical mobile drawer behavior so import-order regressions fail CI.
+
+Do not delete legacy sidebar CSS merely because a class has no current JavaScript caller. The Phase 2 cleanup already demonstrated that apparently unused mobile CSS could still affect first-paint geometry and Lighthouse CLS. Remove only rules proven to be fully overridden or migrate residual declarations explicitly with browser/performance verification.
+
+The repository security model is a normal static Vite site deployed to Cloudflare Pages. Browser-delivered assets are public and frontend obfuscation/encryption is not a security boundary. The stale AES/key-splitting/anti-debug architecture documentation is retired.
+
+`public/_headers` is the source of truth for repository-managed Cloudflare Pages headers. The baseline uses `nosniff`, strict-origin referrer policy, same-origin framing, limited Permissions Policy, and a compatibility-safe CSP covering `base-uri`, `object-src`, and `frame-ancestors`. A strict `script-src`/`style-src` CSP is deferred until legacy inline and third-party resources are inventoried. HSTS remains a Cloudflare zone/domain concern rather than a hard-coded static header.
+
+The production build must verify that `dist/_headers` exists and still contains the required security baseline. Security-header regressions therefore block the same build path used by CI and deployment.
+
 ## 2026-09-14 — Lighthouse performance gates use repeated runs and a hard CLS ceiling
 
 NAV and TDR local-production Lighthouse checks keep the existing performance threshold of `>= 0.90`; the threshold must not be lowered merely to make CI green.
