@@ -1,0 +1,33 @@
+name: Phase 1 Performance Baseline
+
+on:
+  push:
+    branches:
+      - tmp/perf-baseline-phase1-20260914
+
+permissions:
+  contents: read
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Measure existing Lighthouse threshold
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: npm run test:perf
