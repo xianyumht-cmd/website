@@ -7,6 +7,18 @@
 - Code merge commit: `996d26afc2d7a78925cd937bbe6dcdaf08389d13`.
 - The performance work targets normal visitor speed for the homepage/resource pages, especially mobile and lower-performance browsers.
 
+## Active quality-gate hardening
+
+- Active task branch: `chore/phase1-quality-gates-20260914`.
+- Draft PR: #7 `ci: establish phase-one quality gates`.
+- The task adds JavaScript ESLint coverage for authored project code, keeps legacy TDR game scripts as an explicit narrow exclusion, and makes production lint/unit/smoke failures blocking.
+- Pull requests and non-production task branches run the same Quality Gate before merge: lint, unit tests, Playwright Chromium smoke tests, then a production build.
+- CI uses Node 24; `package.json` requires Node `>=22.19` to match the Lighthouse 13 engine requirement.
+- Recommended HTML link-text accessibility checks are enforced again; existing implicit button/input type debt in `public/groupguard/manual.html` remains visible as warnings instead of being globally disabled.
+- `test-results/`, `playwright-report/`, coverage output, and ESLint cache are ignored; the previously tracked `test-results/.last-run.json` is removed on the task branch.
+- During CI verification, `npm ci` reported 56 dependency vulnerabilities (4 low, 24 moderate, 27 high, 1 critical). Dependency remediation is a separate follow-up and must not use a blind breaking `npm audit fix --force` as part of this quality-gate task.
+- This task is not merged or deployed yet. Final PR checks must remain green before it is considered ready to merge.
+
 ## Active NAV catalog cleanup
 
 - Active task branch: `fix/nav-catalog-single-source-20260910`.
