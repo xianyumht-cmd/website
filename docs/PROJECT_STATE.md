@@ -7,6 +7,16 @@
 - Code merge commit: `996d26afc2d7a78925cd937bbe6dcdaf08389d13`.
 - The performance work targets normal visitor speed for the homepage/resource pages, especially mobile and lower-performance browsers.
 
+## Active Phase 2 CSS/security hardening
+
+- Active task branch: `chore/phase2-2-css-security-20260915`, stacked on Phase 2.1D head `be87005d69dc5d65ce59ee8185022904b2dc15a8`.
+- `resource-pages.css` remains the final NAV/Games resource-page visual owner. Legacy imported CSS is not being mass-deleted merely because selectors look unused; Playwright now locks the final Swiss desktop sidebar/menu computed styles and the existing `resource-sidebar-closed` runtime state contract.
+- The previous `SECURITY.md` described a no-longer-existing AES-256-GCM/key-splitting/steganography/anti-debug frontend design. It has been replaced with the current static Vite + Cloudflare Pages threat model: all browser-delivered assets are public and secrets must not be embedded in client output.
+- `public/_headers` now defines a conservative security baseline: `X-Content-Type-Options`, strict-origin referrer policy, same-origin framing, limited Permissions Policy, and a CSP limited to `base-uri`, `object-src`, and `frame-ancestors` so current legacy script/style/CDN loading is not broken.
+- The build now runs `scripts/verify-dist-security.mjs` after normal Vite organization/postbuild work and fails if `dist/_headers` is missing or loses a required security header.
+- Unit coverage protects both the header baseline and the accuracy of the security documentation. Final Quality Gate must pass before this task is considered complete.
+- This task is not merged or deployed.
+
 ## Active NAV Lighthouse stabilization
 
 - Active task branch: `perf/phase1-6-nav-lighthouse-20260914`, stacked on the dependency-remediation head.
