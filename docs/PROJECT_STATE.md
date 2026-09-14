@@ -3,14 +3,44 @@
 ## Current development state
 
 - Canonical development branch: `source`.
-- Current task branch: `feat/phase3-nav-human-directory-20260915`.
-- Phase 3 is stacked directly on the completed Phase 2 finalization head `a8e8b956f9be304816759ad1757bd41a7826a8bb`.
-- No Phase 1, Phase 2, or Phase 3 branch in this stack has been merged or deployed by this task.
+- Current task branch: `test/phase4-nav-release-hardening-20260915`.
+- Phase 4 is stacked directly on the completed Phase 3 head `f117f9df1612015f906d79b0e59d1fcbea453523`.
+- No Phase 1, Phase 2, Phase 3, or Phase 4 branch in this stack has been merged or deployed by this task.
 - Production baseline still includes performance PR #3, squash-merged into `source` on 2026-08-09 as `996d26afc2d7a78925cd937bbe6dcdaf08389d13`.
 
-## Active Phase 3 — NAV human-directory redesign
+## Active Phase 4 — NAV release hardening
 
-Phase 3 intentionally changes only the NAV page presentation. Games remains on the shared resource-page shell and is protected by existing regression tests.
+Phase 4 hardens the redesigned NAV for release without changing the resource catalog or redesigning other pages.
+
+Implemented on this branch:
+
+- NAV now exposes useful search/social metadata: a descriptive page title, meta description, robots directive and Open Graph title/description/locale.
+- Chinese/English switching keeps the document title, description, Open Graph text/locale and accessibility labels synchronized with the active language.
+- A keyboard-visible skip link targets the main content.
+- The search field has an explicit accessible name.
+- The mobile theme control and the three floating utility actions use native buttons instead of click-only anchor/div controls.
+- NAV-only `:focus-visible` treatment covers utility controls, search, sidebar links, cards and the skip link.
+- Mobile theme/menu controls are locked to at least `40x40` CSS pixels.
+- Playwright now exercises realistic keyboard and search workflows rather than only checking element presence: skip-link navigation, keyboard language switching, search/filter/clear focus behavior, mobile Enter/Escape drawer behavior, touch-target sizing and horizontal-overflow detection.
+- The overflow assertion found a real 375px bug in `#notice`: its legacy width/box model extended from `left=15` to `right=388`, making a 375px viewport scroll to 388px. NAV mobile CSS now constrains the notice/search notice wrapper with border-box sizing and the test keeps element-level overflow diagnostics for future regressions.
+
+Validated implementation head before documentation closeout: `eb0be2e2df1e3f653ae3151d64cc562305718263`.
+
+Quality Gate run `34895092320` passed on that implementation head with:
+
+- 0 npm vulnerabilities;
+- clean HTML/CSS/JavaScript lint;
+- 52/52 unit tests;
+- 10/10 Playwright smoke/e2e tests;
+- successful production build and `dist/_headers` security verification;
+- NAV Lighthouse `0.98 / 0.98 / 0.98`, median `0.98`, max CLS `0.0264`;
+- TDR Lighthouse `0.99 / 1.00 / 0.99`, median `0.99`, max CLS `0.0000`.
+
+The Phase 4 implementation diff is NAV-scoped. It adds/changes only NAV accessibility/metadata code and its browser test; it does not change GroupGuard bot source, Games presentation, the NAV resource catalog, dependencies, workflows or deployment configuration.
+
+## Completed Phase 3 — NAV human-directory redesign
+
+Phase 3 intentionally changed only the NAV page presentation. Games remains on the shared resource-page shell and is protected by regression tests.
 
 The design direction is a maintained resource directory rather than a generic AI/SaaS dashboard:
 
@@ -22,34 +52,17 @@ The design direction is a maintained resource directory rather than a generic AI
 - the top area is a compact utility bar plus one plain page heading;
 - Chinese/English switching, theme controls, search, sidebar navigation, version metadata and the existing resource catalog remain functional.
 
-Phase 3 also fixes a first-paint mobile CLS regression exposed by the redesign. At widths `<= 820px`, CSS now keeps the NAV category menu hidden during the initial paint and `resource-sidebar.js` releases that temporary guard only after it has applied the real `resource-sidebar-closed` state. This prevents the main content from first rendering below an expanded menu and then jumping upward.
+Phase 3 also fixed a first-paint mobile CLS regression exposed by the redesign. At widths `<= 820px`, CSS keeps the NAV category menu hidden during initial paint until the authoritative runtime sidebar state is applied.
 
-Validated implementation head before documentation closeout: `812e28c104d71e4d1cee7274905615c6bf007c45`.
+Phase 3 final head: `f117f9df1612015f906d79b0e59d1fcbea453523`.
 
-Quality Gate run `34886369318` passed on that implementation head with:
-
-- 0 npm vulnerabilities;
-- clean HTML/CSS/JavaScript lint;
-- 52/52 unit tests;
-- 7/7 Playwright smoke/e2e tests;
-- successful production build and `dist/_headers` security verification;
-- NAV Lighthouse `0.98 / 0.98 / 0.98`, median `0.98`, max CLS `0.0264`;
-- TDR Lighthouse `0.99 / 0.99 / 0.99`, max CLS `0.0000`.
-
-The Phase 3 comparison against the Phase 2 finalization head contains only six implementation/test files:
-
-1. `src/assets/css/nav-visual-enhance.css`
-2. `src/assets/js/nav-i18n.js`
-3. `src/pages/nav/index.html`
-4. `src/pages/nav/nav-visual.js`
-5. `tests/down.spec.ts`
-6. `tests/e2e/nav-version-lifecycle.spec.ts`
+Final Phase 3 Quality Gate run `34887851851` passed with 52/52 unit tests, 7/7 Playwright tests, NAV Lighthouse median `0.98` with max CLS `0.0264`, and TDR median `0.99` with CLS `0`.
 
 Temporary CLS-diagnostic changes were isolated to `tmp/phase3-nav-cls-diagnose-20260915` and are not part of the formal Phase 3 diff.
 
 ## Completed Phase 2 — quality, security and ownership cleanup
 
-Phase 2 closed the low-risk maintenance debt before intentional visual redesign:
+Phase 2 closed low-risk maintenance debt before intentional visual redesign:
 
 - GroupGuard's static `public/groupguard/manual.html` now passes the normal repository-wide HTML validation baseline. This is only a static manual shipped from the website repository; no GroupGuard bot/source repository was modified.
 - `DEVELOPER_GUIDE.md` and `SECURITY.md` reflect the current Vite + Cloudflare Pages architecture rather than retired Rust/WASM, frontend encryption/obfuscation, key-splitting or anti-debug designs.
@@ -93,4 +106,4 @@ Required checks are blocking. Do not lower performance/CLS thresholds or use `co
 
 ## Next step
 
-After the latest Phase 3 documentation-closeout head passes the full Quality Gate, the branch is ready for review. Do not merge to `source` or deploy without explicit authorization.
+After the latest Phase 4 documentation-closeout head passes the full Quality Gate, the stacked branch is ready for review. Do not merge to `source` or deploy without explicit authorization.
