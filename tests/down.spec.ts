@@ -83,9 +83,13 @@ test('Nav category drawer is open on desktop, collapsed on mobile, and remains u
   const mobileMenu = await menu.evaluate((element) => ({
     clientHeight: element.clientHeight,
     scrollHeight: element.scrollHeight,
+    display: getComputedStyle(element).display,
+    overflowX: getComputedStyle(element).overflowX,
     overflowY: getComputedStyle(element).overflowY,
   }))
   expect(mobileMenu.scrollHeight).toBeGreaterThan(mobileMenu.clientHeight)
+  expect(mobileMenu.display).toBe('block')
+  expect(mobileMenu.overflowX).toBe('hidden')
   expect(mobileMenu.overflowY).toBe('auto')
 
   await mobileToggle.click()
