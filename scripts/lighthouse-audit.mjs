@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import lighthouse from 'lighthouse'
-import chromeLauncher from 'chrome-launcher'
+import * as chromeLauncher from 'chrome-launcher'
 
 const baseUrl = (process.env.BASE_URL || 'http://127.0.0.1:4173').replace(/\/+$/, '')
 const urls = [
