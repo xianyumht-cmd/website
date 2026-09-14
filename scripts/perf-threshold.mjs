@@ -66,16 +66,22 @@ function runAudit(nodeExe, env, only) {
       .map((n) => path.join(logsDir, n))
   )
 
+  const output = []
   const proc = spawn(nodeExe, ['scripts/lighthouse-audit.mjs'], {
     cwd: repoRoot,
     env: { ...process.env, ...env, ONLY: only },
-    stdio: 'ignore',
+    stdio: ['ignore', 'pipe', 'pipe'],
   })
+  proc.stdout.on('data', (chunk) => output.push(chunk.toString()))
+  proc.stderr.on('data', (chunk) => output.push(chunk.toString()))
 
   return new Promise((resolve, reject) => {
     proc.on('error', reject)
     proc.on('exit', (code) => {
-      if (code !== 0) return reject(new Error(`lighthouse exit code ${code}`))
+      if (code !== 0) {
+        const detail = output.join('').trim()
+        return reject(new Error(`lighthouse exit code ${code}${detail ? `\n${detail}` : ''}`))
+      }
       const out = newestLighthouseFile(before)
       if (!out) return reject(new Error('no lighthouse output file found'))
       const json = JSON.parse(fs.readFileSync(out, 'utf8'))
