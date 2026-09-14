@@ -37,6 +37,13 @@ if (!chromePath) {
   throw new Error('No Chromium-based browser found. Set CHROME_PATH.')
 }
 
+const chromeFlags = ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check']
+if (process.platform === 'linux') {
+  // GitHub-hosted Ubuntu runners disable the user namespaces Chromium's sandbox expects.
+  // Keep these CI/Linux-only so Windows local runs retain the normal browser sandbox.
+  chromeFlags.push('--no-sandbox', '--disable-dev-shm-usage')
+}
+
 const outDir = path.resolve('logs')
 fs.mkdirSync(outDir, { recursive: true })
 const outPath = path.join(outDir, `lighthouse-${Date.now()}.json`)
@@ -60,7 +67,7 @@ for (const entry of targets) {
   fs.appendFileSync(debugPath, `launch ${chromePath}\n`, 'utf8')
   const chrome = await chromeLauncher.launch({
     chromePath,
-    chromeFlags: ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check'],
+    chromeFlags,
     logLevel: 'error',
   })
 
