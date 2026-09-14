@@ -13,9 +13,13 @@
 - Baseline under Node 24/npm 11 was 56 npm advisories: 4 low, 24 moderate, 27 high, and 1 critical.
 - The critical path was transitive: unused `@lhci/cli@0.15.1` -> `proxy-agent` -> `pac-proxy-agent` -> `get-uri` -> vulnerable `basic-ftp@5.1.0`.
 - Repository performance scripts do not use LHCI; they import `lighthouse` directly, so `@lhci/cli` has been removed.
-- `lighthouse` is raised from `^13.0.1` to `^13.4.1`; the lockfile was refreshed with non-breaking npm operations rather than `npm audit fix --force`.
-- The validated remediation simulation reached `npm audit`: 0 vulnerabilities. The permanent quality, automatic deployment, and local deployment paths now block on `npm audit --audit-level=high`.
-- Final branch validation must still prove a clean install, dependency audit, lint, unit tests, Playwright smoke tests, production build, and Lighthouse compatibility before this task is ready for review.
+- `lighthouse` is raised from `^13.0.1` to `^13.4.1`; `chrome-launcher@^1.2.1` is now declared directly because the performance runner imports it directly. The lockfile was refreshed with non-breaking npm operations rather than `npm audit fix --force`.
+- A clean Node 24/npm 11 install on the remediation branch reports `0 vulnerabilities`. The permanent quality, automatic deployment, and local deployment paths block on `npm audit --audit-level=high`.
+- Final branch Quality Gate run `34848544601` passed clean install, dependency audit, lint, 50 unit tests, Playwright Chromium smoke tests, and production build at commit `21956021bec80cda859f9f836fe400497354b428`.
+- Lighthouse 13.4.1 and `chrome-launcher` now execute end-to-end under Node 24. Linux CI adds `--no-sandbox` and `--disable-dev-shm-usage` because GitHub-hosted Ubuntu 24.04/AppArmor blocks the Chromium user-namespace sandbox; Windows local behavior is unchanged.
+- The existing `npm run test:perf` contract still requires NAV and TDR performance scores >= 0.90. Shared-runner validation reached NAV 0.81 with Playwright Chrome for Testing and 0.80 with the runner's system Chrome, so the test correctly failed its existing threshold instead of being weakened.
+- A direct Phase 1 baseline comparison from commit `a3caa2f882835e5991c08527e11941b5ada61a93` measured NAV at 0.76 on the same class of GitHub-hosted runner. Therefore the current 0.80-0.81 result is not a dependency-remediation regression; the unstable/unmet shared-runner 0.90 performance gate is pre-existing performance-test debt and should be handled separately.
+- This dependency task is not merged or deployed. Its Draft PR should remain stacked on Phase 1 until review.
 
 ## Active quality-gate hardening
 
