@@ -8,6 +8,13 @@
     <!-- Allow Referer to be sent to 51.la for localhost/IP access -->
     <meta name="referrer" content="no-referrer-when-downgrade">
     <title>脚本.top - 纯净 免费 简洁</title>
+    <style>
+        @media (max-width: 820px) {
+            .nav-page.nav-mobile-drawer-pending #main-menu {
+                display: none !important;
+            }
+        }
+    </style>
 
     <script type="module" src="../../../shared/responsive-base.js"></script>
     <script type="module" src="../../assets/js/theme-mode.min.js"></script>
@@ -29,7 +36,7 @@
     <script type="module" src="../../../shared/page-guard.js"></script>
 </head>
 
-<body class="page-body nav-page">
+<body class="page-body nav-page nav-mobile-drawer-pending">
     <script type="module" src="./entry.js"></script>
     <script type="module" src="./nav-visual.js"></script>
 
