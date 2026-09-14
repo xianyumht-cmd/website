@@ -10,10 +10,6 @@
     "no-utf8-bom": "off",
     "no-script-style-type": "off",
     "require-sri": "off",
-    "void-style": "off",
-    "wcag/h30": "off",
-    "wcag/h37": "off",
-    "wcag/h67": "off"
+    "void-style": "off"
   }
 }
-

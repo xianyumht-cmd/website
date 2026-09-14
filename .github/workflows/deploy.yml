@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # 允许写入仓库（用于推送到 main 分支）
+      contents: write  # required to publish the generated site to main
 
     steps:
       - name: Checkout source code
@@ -28,11 +28,15 @@ jobs:
 
       - name: Lint
         run: npm run lint
-        continue-on-error: true
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
 
       - name: Smoke tests
         run: npm run test:smoke
-        continue-on-error: true
 
       - name: Build project
         run: npm run build
