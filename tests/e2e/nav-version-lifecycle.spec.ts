@@ -47,11 +47,8 @@ async function readVersionState(page) {
         nextUpdateDate: appWindow.navData?.gameInfo?.nextUpdateDate,
       },
       bulletin: document.getElementById('bulletin-content')?.textContent || '',
-      visual: {
-        version: document.getElementById('nav-visual-version')?.textContent || '',
-        updateDate: document.getElementById('nav-visual-update')?.textContent || '',
-        nextUpdateDate: document.getElementById('nav-visual-next')?.textContent || '',
-      },
+      heading: document.querySelector('.nav-directory-head h1')?.textContent || '',
+      intro: document.querySelector('.nav-directory-head p')?.textContent || '',
     }
   })
 }
@@ -66,7 +63,10 @@ async function expectCanonicalVersion(page, language: 'zh' | 'en') {
   expect(state.bulletin).toContain(expected.version)
   expect(state.bulletin).toContain(expected.updateDate)
   expect(state.bulletin).toContain(expected.nextUpdateDate)
-  expect(state.visual).toEqual(expected)
+  expect(state.heading).toBe(language === 'en' ? 'Resource directory' : '资源导航')
+  expect(state.intro).toBe(language === 'en'
+    ? 'Browse by category or search names and descriptions.'
+    : '按分类浏览，或直接搜索名称与说明。')
 }
 
 test('NAV version data remains canonical through loading, language changes, and navDataUpdated', async ({ page, baseURL }) => {
@@ -76,7 +76,7 @@ test('NAV version data remains canonical through loading, language changes, and 
   })
 
   await page.goto(`${baseURL}/down/nav/index.html`, { waitUntil: 'load' })
-  await page.waitForSelector('#nav-visual-status-grid')
+  await page.waitForSelector('#bulletin-content li')
   await expectCanonicalVersion(page, 'zh')
 
   await page.locator('.fk_service_bx').click()
