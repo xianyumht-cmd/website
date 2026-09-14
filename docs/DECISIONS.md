@@ -6,7 +6,9 @@ High- and critical-severity npm audit findings are blocking in pull-request/task
 
 Dependency remediation must prefer removing unused direct dependencies and applying non-breaking lockfile updates. Do not use a blind `npm audit fix --force` merely to make audit output green.
 
-The unused `@lhci/cli` dependency was removed because repository performance auditing imports `lighthouse` directly. `lighthouse` was raised from `^13.0.1` to `^13.4.1`, and the lockfile was refreshed with non-breaking npm operations. This removed the vulnerable LHCI/proxy/basic-ftp chain and the remaining vulnerable Lighthouse/ws chain in the validated audit.
+The unused `@lhci/cli` dependency was removed because repository performance auditing imports `lighthouse` directly. `lighthouse` was raised from `^13.0.1` to `^13.4.1`, `chrome-launcher` is now declared directly, and the lockfile was refreshed with non-breaking npm operations. This removed the vulnerable LHCI/proxy/basic-ftp chain and the remaining vulnerable Lighthouse/ws chain in the validated audit.
+
+The existing NAV/TDR Lighthouse threshold must not be lowered merely to make a shared CI runner green. The Phase 1 baseline measured NAV at 0.76 on a GitHub-hosted runner, while the remediated dependency stack measured 0.80-0.81. Treat the unmet 0.90 shared-runner threshold as separate performance-test debt, not as a dependency-remediation regression.
 
 ## 2026-09-14 — Required quality checks block production deployment
 
