@@ -96,3 +96,36 @@ test('Nav category drawer is open on desktop, collapsed on mobile, and remains u
   await expect(menu).toBeHidden()
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
 })
+
+test('Games category drawer uses the shared vertical mobile layout', async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 375, height: 667 })
+  await page.goto(`${baseURL}/down/games/index.html`, { waitUntil: 'load' })
+  await page.waitForSelector('#main-menu li', { state: 'attached' })
+
+  const pageContainer = page.locator('.page-container')
+  const mobileToggle = page.locator('[data-toggle="mobile-menu"]')
+  const menu = page.locator('#main-menu')
+
+  await expect(mobileToggle).toBeVisible()
+  await expect(pageContainer).toHaveClass(/resource-sidebar-closed/)
+  await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
+  await expect(menu).toBeHidden()
+
+  await mobileToggle.click()
+  await expect(pageContainer).not.toHaveClass(/resource-sidebar-closed/)
+  await expect(mobileToggle).toHaveAttribute('aria-expanded', 'true')
+  await expect(menu).toBeVisible()
+
+  const mobileMenu = await menu.evaluate((element) => ({
+    display: getComputedStyle(element).display,
+    overflowX: getComputedStyle(element).overflowX,
+    overflowY: getComputedStyle(element).overflowY,
+  }))
+  expect(mobileMenu.display).toBe('block')
+  expect(mobileMenu.overflowX).toBe('hidden')
+  expect(mobileMenu.overflowY).toBe('auto')
+
+  await mobileToggle.click()
+  await expect(menu).toBeHidden()
+  await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
+})
