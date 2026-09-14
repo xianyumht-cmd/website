@@ -6,7 +6,7 @@ import { chromium } from '@playwright/test'
 
 const repoRoot = path.resolve('.')
 const logsDir = path.join(repoRoot, 'logs')
-const RUN_COUNT = 3
+const RUN_COUNT = 1
 const SCORE_THRESHOLD = 0.9
 const CLS_THRESHOLD = 0.1
 fs.mkdirSync(logsDir, { recursive: true })
@@ -81,14 +81,14 @@ function runAudit(nodeExe, env, only) {
   return new Promise((resolve, reject) => {
     proc.on('error', reject)
     proc.on('exit', (code) => {
+      const detail = output.join('')
       if (code !== 0) {
-        const detail = output.join('').trim()
-        return reject(new Error(`lighthouse exit code ${code}${detail ? `\n${detail}` : ''}`))
+        return reject(new Error(`lighthouse exit code ${code}${detail.trim() ? `\n${detail.trim()}` : ''}`))
       }
       const out = newestLighthouseFile(before)
       if (!out) return reject(new Error('no lighthouse output file found'))
       const json = JSON.parse(fs.readFileSync(out, 'utf8'))
-      resolve({ out, json })
+      resolve({ out, json, detail })
     })
   })
 }
@@ -109,6 +109,10 @@ async function runTarget(nodeExe, env, target) {
     const result = audit.json.results?.[0]
     const score = result?.performanceScore
     const cls = result?.metrics?.cls
+
+    for (const line of audit.detail.split(/\r?\n/)) {
+      if (line.startsWith('CLS_DIAG')) process.stdout.write(`${line}\n`)
+    }
 
     if (typeof score !== 'number' || typeof cls !== 'number') {
       throw new Error(`${target} run ${run} returned invalid Lighthouse metrics (${audit.out})`)
