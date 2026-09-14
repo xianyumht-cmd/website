@@ -1,109 +1,69 @@
 # Project State
 
-## Current development state
+## Production status
 
 - Canonical development branch: `source`.
-- Current task branch: `test/phase4-nav-release-hardening-20260915`.
-- Phase 4 is stacked directly on the completed Phase 3 head `f117f9df1612015f906d79b0e59d1fcbea453523`.
-- No Phase 1, Phase 2, Phase 3, or Phase 4 branch in this stack has been merged or deployed by this task.
-- Production baseline still includes performance PR #3, squash-merged into `source` on 2026-08-09 as `996d26afc2d7a78925cd937bbe6dcdaf08389d13`.
+- Phase 1–4 integration PR #10, `release: finalize website hardening and NAV redesign`, was squash-merged to `source` on 2026-09-15.
+- Released source commit: `fc00ad5924fc6ba2213769a51edda6b7fd7c8244`.
+- Production artifact branch `main` was published from that source commit as `28af653ccc3ea3e2d6674e8aa46598e117379b9a`.
+- Production deployment workflow run `34898994403` completed successfully.
+- Earlier stacked draft PRs #7, #8 and #9 were superseded by PR #10 and are closed without separate merges.
+- PR #4 (`fix: restore native links and align resource breakpoint`) remains a separate, older unmerged follow-up. It is not part of the Phase 1–4 release and must be reviewed/rebased independently before any future merge.
 
-## Active Phase 4 — NAV release hardening
+## Released Phase 1–4 scope
 
-Phase 4 hardens the redesigned NAV for release without changing the resource catalog or redesigning other pages.
+The completed release includes:
 
-Implemented on this branch:
+- blocking dependency audit, HTML/CSS/authored-JavaScript lint, Jest, Playwright, production build and Lighthouse quality gates;
+- dependency remediation from the previous vulnerable baseline to 0 known npm audit vulnerabilities;
+- repeated NAV/TDR Lighthouse checks using median performance `>= 0.90` and hard max CLS `<= 0.10`;
+- Cloudflare Pages response-security headers plus build verification that `dist/_headers` contains the required baseline;
+- current `SECURITY.md` and `DEVELOPER_GUIDE.md` aligned with the actual Vite/static-site architecture;
+- GroupGuard static manual HTML conformance fixes only; no GroupGuard bot/source repository was modified;
+- resource-sidebar/CSS ownership cleanup backed by browser regressions;
+- NAV redesign from a dashboard/AI-template presentation to a restrained human-maintained resource directory;
+- mobile first-paint drawer/CLS stabilization;
+- NAV SEO metadata, native keyboard controls, skip link, accessible search naming, touch-target sizing and mobile overflow protection;
+- a regression for the 375px `#notice` horizontal-overflow bug.
 
-- NAV now exposes useful search/social metadata: a descriptive page title, meta description, robots directive and Open Graph title/description/locale.
-- Chinese/English switching keeps the document title, description, Open Graph text/locale and accessibility labels synchronized with the active language.
-- A keyboard-visible skip link targets the main content.
-- The search field has an explicit accessible name.
-- The mobile theme control and the three floating utility actions use native buttons instead of click-only anchor/div controls.
-- NAV-only `:focus-visible` treatment covers utility controls, search, sidebar links, cards and the skip link.
-- Mobile theme/menu controls are locked to at least `40x40` CSS pixels.
-- Playwright now exercises realistic keyboard and search workflows rather than only checking element presence: skip-link navigation, keyboard language switching, search/filter/clear focus behavior, mobile Enter/Escape drawer behavior, touch-target sizing and horizontal-overflow detection.
-- The overflow assertion found a real 375px bug in `#notice`: its legacy width/box model extended from `left=15` to `right=388`, making a 375px viewport scroll to 388px. NAV mobile CSS now constrains the notice/search notice wrapper with border-box sizing and the test keeps element-level overflow diagnostics for future regressions.
+## Final production validation
 
-Validated implementation head before documentation closeout: `eb0be2e2df1e3f653ae3151d64cc562305718263`.
+Deployment run `34898994403` validated the exact merged `source` commit before publishing `main`:
 
-Quality Gate run `34895092320` passed on that implementation head with:
-
-- 0 npm vulnerabilities;
-- clean HTML/CSS/JavaScript lint;
-- 52/52 unit tests;
-- 10/10 Playwright smoke/e2e tests;
-- successful production build and `dist/_headers` security verification;
-- NAV Lighthouse `0.98 / 0.98 / 0.98`, median `0.98`, max CLS `0.0264`;
-- TDR Lighthouse `0.99 / 1.00 / 0.99`, median `0.99`, max CLS `0.0000`.
-
-The Phase 4 implementation diff is NAV-scoped. It adds/changes only NAV accessibility/metadata code and its browser test; it does not change GroupGuard bot source, Games presentation, the NAV resource catalog, dependencies, workflows or deployment configuration.
-
-## Completed Phase 3 — NAV human-directory redesign
-
-Phase 3 intentionally changed only the NAV page presentation. Games remains on the shared resource-page shell and is protected by regression tests.
-
-The design direction is a maintained resource directory rather than a generic AI/SaaS dashboard:
-
-- search, categories and resource entries are the primary hierarchy;
-- the old four-card visual status dashboard is retired;
-- automatically generated card pills such as category/resource-entry/extraction-code labels are retired;
-- version and feedback information remains available in a lightweight strip rather than competing with the directory;
-- resource cards use a restrained directory/list-card treatment with no hover lift or dashboard-style decoration;
-- the top area is a compact utility bar plus one plain page heading;
-- Chinese/English switching, theme controls, search, sidebar navigation, version metadata and the existing resource catalog remain functional.
-
-Phase 3 also fixed a first-paint mobile CLS regression exposed by the redesign. At widths `<= 820px`, CSS keeps the NAV category menu hidden during initial paint until the authoritative runtime sidebar state is applied.
-
-Phase 3 final head: `f117f9df1612015f906d79b0e59d1fcbea453523`.
-
-Final Phase 3 Quality Gate run `34887851851` passed with 52/52 unit tests, 7/7 Playwright tests, NAV Lighthouse median `0.98` with max CLS `0.0264`, and TDR median `0.99` with CLS `0`.
-
-Temporary CLS-diagnostic changes were isolated to `tmp/phase3-nav-cls-diagnose-20260915` and are not part of the formal Phase 3 diff.
-
-## Completed Phase 2 — quality, security and ownership cleanup
-
-Phase 2 closed low-risk maintenance debt before intentional visual redesign:
-
-- GroupGuard's static `public/groupguard/manual.html` now passes the normal repository-wide HTML validation baseline. This is only a static manual shipped from the website repository; no GroupGuard bot/source repository was modified.
-- `DEVELOPER_GUIDE.md` and `SECURITY.md` reflect the current Vite + Cloudflare Pages architecture rather than retired Rust/WASM, frontend encryption/obfuscation, key-splitting or anti-debug designs.
-- `public/_headers` defines the repository-managed Cloudflare Pages security baseline and the production build verifies that `dist/_headers` contains it.
-- resource sidebar runtime state is owned by `.page-container.resource-sidebar-closed`; obsolete horizontal mobile-menu ownership was removed where browser/performance evidence proved it safe.
-- dependency remediation removed the vulnerable unused LHCI chain and the repository remains at 0 npm vulnerabilities.
-- GroupGuard's former 27 HTML warnings were repaired in markup rather than hidden behind a local warning downgrade.
-
-Phase 2 finalization head: `a8e8b956f9be304816759ad1757bd41a7826a8bb`.
-
-## Phase 1 stacked predecessors
-
-The current stack builds on these unmerged review branches:
-
-- PR #7 / `chore/phase1-quality-gates-20260914`: blocking JS/HTML/CSS lint, unit, smoke and build gates; tracked test artifacts removed.
-- PR #8 / `fix/dependency-audit-20260914`: removed the vulnerable unused LHCI dependency chain, upgraded Lighthouse to 13.4.1, declared `chrome-launcher` directly, and reached 0 npm vulnerabilities.
-- PR #9 / `perf/phase1-6-nav-lighthouse-20260914`: fixed the original mobile NAV drawer CLS source and made Lighthouse a repeated 3-run gate using median performance `>= 0.90` plus hard max CLS `<= 0.10`.
-
-None of these PRs are treated as merged merely because later task branches are stacked on them.
+- `npm audit --audit-level=high`: 0 vulnerabilities;
+- HTML/CSS/JavaScript lint: PASS;
+- Jest: 52/52 tests PASS;
+- Playwright smoke/e2e: 10/10 tests PASS;
+- Vite production build: PASS;
+- `dist/_headers` security verification: PASS;
+- NAV Lighthouse: `0.98 / 0.98 / 0.98`, median `0.98`, max CLS `0.0264`;
+- TDR Lighthouse: `0.99 / 0.99 / 1.00`, median `0.99`, max CLS `0.0000`;
+- publish to `main`: PASS.
 
 ## Current quality contract
 
-Task/PR Quality Gate runs:
+Task/PR and production validation must continue to block on:
 
 1. clean dependency install;
 2. `npm audit --audit-level=high`;
 3. HTML, CSS and authored JavaScript lint;
 4. Jest unit tests;
 5. Playwright Chromium smoke/e2e tests;
-6. production build, including final `dist/_headers` security verification;
+6. production build, including final `dist/_headers` verification;
 7. repeated NAV/TDR Lighthouse thresholds.
 
-Required checks are blocking. Do not lower performance/CLS thresholds or use `continue-on-error` to make a branch green.
+Do not lower performance/CLS thresholds or add `continue-on-error` merely to make a change green.
 
 ## Known remaining debt
 
-- ESLint 8.57.1 is deprecated. Upgrade to ESLint 10 in a dedicated dependency migration with flat config and a genuine npm lockfile refresh.
-- Resource pages still import some legacy CSS layers. Their remaining declarations must be retired through controlled ownership/refactor work with browser and Lighthouse proof, not by selector-search alone.
-- A stricter CSP covering scripts/styles is deferred until inline and third-party resources are inventoried and migrated without breaking production behavior.
+- ESLint 8.57.1 is deprecated. Upgrade to ESLint 10 in a dedicated toolchain migration with flat config and a real npm lockfile refresh.
+- Resource pages still include legacy CSS layers. Remaining cleanup must use browser and Lighthouse proof rather than selector-search alone.
+- A stricter CSP covering scripts/styles is deferred until inline and third-party resources can be inventoried and migrated without breaking production behavior.
 - TDR legacy scripts under `src/pages/tdr/static/script/**` remain the only explicit authored-JavaScript lint exclusion.
+- npm reports install-script policy warnings for `esbuild@0.27.2` and `unrs-resolver@1.11.1`; these are not audit vulnerabilities and remain a separate supply-chain policy decision.
 
-## Next step
+## Release closeout
 
-After the latest Phase 4 documentation-closeout head passes the full Quality Gate, the stacked branch is ready for review. Do not merge to `source` or deploy without explicit authorization.
+Phase 1–4 is merged, validated and deployed. Treat `fc00ad5924fc6ba2213769a51edda6b7fd7c8244` as the released source baseline and `28af653ccc3ea3e2d6674e8aa46598e117379b9a` as its generated production artifact commit.
+
+Future work should start from current `source` on a new task branch. Do not fold PR #4 or other historical branches into the released baseline without a fresh review and full Quality Gate.
