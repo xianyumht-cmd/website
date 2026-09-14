@@ -59,9 +59,17 @@ function scheduleRun() {
     });
 }
 
+function releaseMobileDrawerGuard() {
+    const pageContainer = document.querySelector('.page-container');
+    if (pageContainer?.dataset.sidebarReady === '1') {
+        document.body.classList.remove('nav-mobile-drawer-pending');
+    }
+}
+
 function init() {
     enhanceSections();
     document.documentElement.dataset.navVisual = 'directory';
+    releaseMobileDrawerGuard();
 
     const container = document.getElementById('content-sections');
     if (container && container.dataset.navVisualObserver !== '1') {
