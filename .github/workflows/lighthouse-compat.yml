@@ -32,5 +32,22 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Run Lighthouse performance thresholds
+      - name: Run Lighthouse directly with visible errors
+        shell: bash
+        run: |
+          CHROME_PATH=$(node -e "console.log(require('@playwright/test').chromium.executablePath())")
+          export CHROME_PATH
+          node node_modules/http-server/bin/http-server -p 4173 -c-1 dist >/tmp/http-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:4173/down/nav/index.html >/dev/null; then
+              break
+            fi
+            sleep 0.25
+          done
+          ONLY=nav node scripts/lighthouse-audit.mjs
+          cat logs/lighthouse-debug.log
+
+      - name: Run repository performance threshold wrapper
         run: npm run test:perf
