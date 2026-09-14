@@ -19,7 +19,7 @@
         meta.setAttribute('content', content);
 
         var lastW = 0;
-        function updateRem() {
+        var updateRem = function () {
             var w = root.clientWidth || window.innerWidth || 375;
             if (!w || w === lastW) return;
             lastW = w;
@@ -27,7 +27,7 @@
             var rem = (w / 375) * base;
             rem = Math.max(14, Math.min(18, rem));
             root.style.setProperty('--rem', rem + 'px');
-        }
+        };
         updateRem();
         window.addEventListener(
             'resize',
@@ -38,4 +38,3 @@
         );
     } catch (e) {}
 })();
-

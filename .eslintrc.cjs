@@ -16,7 +16,8 @@ module.exports = {
     'node_modules/',
     'test-results/',
     'playwright-report/',
-    '**/*.min.js'
+    '**/*.min.js',
+    'src/pages/tdr/static/script/**'
   ],
   rules: {
     'no-empty': ['error', { allowEmptyCatch: true }],
