@@ -1,0 +1,122 @@
+name: Phase 1.6 NAV Performance Verify
+
+on:
+  push:
+    branches:
+      - tmp/phase1-6-nav-perf-verify-20260914
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Dependency audit
+        run: npm audit --audit-level=high
+
+      - name: Build
+        run: npm run build
+
+      - name: Start local server
+        run: |
+          npx http-server dist -p 4173 -c-1 > /tmp/perf-http.log 2>&1 &
+          echo $! > /tmp/perf-http.pid
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:4173/down/nav/index.html >/dev/null; then
+              exit 0
+            fi
+            sleep 0.25
+          done
+          cat /tmp/perf-http.log
+          exit 1
+
+      - name: Run repeated Lighthouse validation
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          node --input-type=module <<'NODE'
+          import lighthouse from 'lighthouse';
+          import * as chromeLauncher from 'chrome-launcher';
+
+          const targets = [
+            { id: 'nav', url: 'http://127.0.0.1:4173/down/nav/index.html', runs: 5 },
+            { id: 'tdr', url: 'http://127.0.0.1:4173/down/tdr/index.html', runs: 3 },
+          ];
+
+          const all = {};
+          for (const target of targets) {
+            const rows = [];
+            for (let i = 1; i <= target.runs; i += 1) {
+              const chrome = await chromeLauncher.launch({
+                chromePath: process.env.CHROME_PATH,
+                chromeFlags: [
+                  '--headless=new',
+                  '--disable-gpu',
+                  '--no-first-run',
+                  '--no-default-browser-check',
+                  '--no-sandbox',
+                  '--disable-dev-shm-usage',
+                ],
+                logLevel: 'error',
+              });
+              try {
+                const result = await lighthouse(target.url, {
+                  port: chrome.port,
+                  output: 'json',
+                  onlyCategories: ['performance'],
+                  logLevel: 'error',
+                });
+                const audits = result.lhr.audits;
+                const row = {
+                  run: i,
+                  score: result.lhr.categories.performance.score,
+                  cls: audits['cumulative-layout-shift']?.numericValue ?? null,
+                  fcp: audits['first-contentful-paint']?.numericValue ?? null,
+                  lcp: audits['largest-contentful-paint']?.numericValue ?? null,
+                  tbt: audits['total-blocking-time']?.numericValue ?? null,
+                  speedIndex: audits['speed-index']?.numericValue ?? null,
+                };
+                rows.push(row);
+                console.log(`PERF_${target.id.toUpperCase()}_${i}=${JSON.stringify(row)}`);
+              } finally {
+                await chrome.kill();
+              }
+            }
+            all[target.id] = rows;
+          }
+
+          for (const [id, rows] of Object.entries(all)) {
+            const scores = rows.map((row) => row.score).sort((a, b) => a - b);
+            const median = scores[Math.floor(scores.length / 2)];
+            const min = Math.min(...scores);
+            const maxCls = Math.max(...rows.map((row) => row.cls ?? 0));
+            console.log(`PERF_SUMMARY_${id.toUpperCase()}=${JSON.stringify({ scores, median, min, maxCls })}`);
+            if (median < 0.9) throw new Error(`${id} median performance score below 0.90: ${median}`);
+            if (maxCls > 0.1) throw new Error(`${id} CLS above 0.10: ${maxCls}`);
+          }
+          NODE
+
+      - name: Run repository performance contract
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: npm run test:perf
+
+      - name: Stop local server
+        if: always()
+        run: |
+          if [ -f /tmp/perf-http.pid ]; then
+            kill "$(cat /tmp/perf-http.pid)" || true
+          fi
