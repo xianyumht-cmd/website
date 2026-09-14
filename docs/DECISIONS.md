@@ -1,5 +1,19 @@
 # Decisions
 
+## 2026-09-15 — ESLint 10 upgrade requires a dedicated dependency migration
+
+The repository still runs ESLint `8.57.1`. ESLint 10 is current and removes the legacy `.eslintrc.*` configuration system entirely, so the upgrade is not a safe one-line version bump.
+
+The project already satisfies ESLint 10's Node requirement because CI uses Node 24 and `package.json` requires Node `>=22.19`. The remaining migration work is configuration and dependency-tree work: move to flat config, declare the flat-config support packages directly, refresh `package-lock.json` through npm rather than by hand, then fix or explicitly review any new `eslint:recommended` findings.
+
+Do not hand-edit the ESLint 10 dependency tree merely to suppress npm's deprecation warning. Keep ESLint 8.57.1 pinned until a dedicated dependency task can perform a real lockfile refresh and run the full Quality Gate. The current JavaScript lint gate remains blocking in the meantime.
+
+## 2026-09-15 — GroupGuard HTML uses the normal global validation baseline
+
+`public/groupguard/manual.html` now gives every button an explicit `type="button"` and the search field an explicit `type="search"`. The local `public/groupguard/.htmlvalidate.json` warning downgrade is removed.
+
+GroupGuard therefore inherits the repository-wide HTML validation rules like every other page. Accessibility/HTML debt should be fixed in source when the change is mechanical and low risk; narrow warning baselines are only for debt that cannot safely be repaired in the same task.
+
 ## 2026-09-15 — Resource-page visual ownership and static security baseline
 
 `resource-pages.css` is the final visual/layout owner for the NAV and Games resource-page shell. Legacy imported styles may remain temporarily for compatibility, but current runtime state must use `.page-container.resource-sidebar-closed`; `.sidebar-menu.collapsed` is not a current control state. Playwright locks the final desktop Swiss-style computed values and the shared vertical mobile drawer behavior so import-order regressions fail CI.
@@ -44,7 +58,7 @@ Authored JavaScript is part of the lint gate. Any legacy exclusion must be expli
 
 Pull requests and task branches use `.github/workflows/quality-gate.yml` to run dependency audit, lint, unit tests, Playwright smoke tests, a production build, and the repeated NAV/TDR Lighthouse performance gate before merge. CI uses Node 24, while `package.json` declares Node `>=22.19` to satisfy current tooling requirements.
 
-Existing accessibility debt should be surfaced with a narrow warning baseline when it cannot safely be repaired in the same task. Do not globally disable a recommended accessibility rule merely to make CI green.
+Accessibility debt should not be globally disabled merely to make CI green. Use a narrow temporary warning baseline only when the underlying markup cannot safely be repaired in the same task; remove that baseline when the debt is fixed.
 
 ## 2026-09-10 — NAV resources use one canonical catalog
 
