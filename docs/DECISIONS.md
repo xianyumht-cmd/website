@@ -1,5 +1,13 @@
 # Decisions
 
+## 2026-09-14 — High and critical npm advisories block release paths
+
+High- and critical-severity npm audit findings are blocking in pull-request/task-branch quality checks, automatic `source` deployment, and the local PowerShell deployment path. The permanent gate is `npm audit --audit-level=high`.
+
+Dependency remediation must prefer removing unused direct dependencies and applying non-breaking lockfile updates. Do not use a blind `npm audit fix --force` merely to make audit output green.
+
+The unused `@lhci/cli` dependency was removed because repository performance auditing imports `lighthouse` directly. `lighthouse` was raised from `^13.0.1` to `^13.4.1`, and the lockfile was refreshed with non-breaking npm operations. This removed the vulnerable LHCI/proxy/basic-ftp chain and the remaining vulnerable Lighthouse/ws chain in the validated audit.
+
 ## 2026-09-14 — Required quality checks block production deployment
 
 The `source` deployment workflow must not publish when required lint, unit, or smoke checks fail. Required checks must not use `continue-on-error: true`.

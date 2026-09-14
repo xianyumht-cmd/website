@@ -7,16 +7,25 @@
 - Code merge commit: `996d26afc2d7a78925cd937bbe6dcdaf08389d13`.
 - The performance work targets normal visitor speed for the homepage/resource pages, especially mobile and lower-performance browsers.
 
+## Active dependency remediation
+
+- Active task branch: `fix/dependency-audit-20260914`, stacked on the Phase 1 quality-gate head.
+- Baseline under Node 24/npm 11 was 56 npm advisories: 4 low, 24 moderate, 27 high, and 1 critical.
+- The critical path was transitive: unused `@lhci/cli@0.15.1` -> `proxy-agent` -> `pac-proxy-agent` -> `get-uri` -> vulnerable `basic-ftp@5.1.0`.
+- Repository performance scripts do not use LHCI; they import `lighthouse` directly, so `@lhci/cli` has been removed.
+- `lighthouse` is raised from `^13.0.1` to `^13.4.1`; the lockfile was refreshed with non-breaking npm operations rather than `npm audit fix --force`.
+- The validated remediation simulation reached `npm audit`: 0 vulnerabilities. The permanent quality, automatic deployment, and local deployment paths now block on `npm audit --audit-level=high`.
+- Final branch validation must still prove a clean install, dependency audit, lint, unit tests, Playwright smoke tests, production build, and Lighthouse compatibility before this task is ready for review.
+
 ## Active quality-gate hardening
 
 - Active task branch: `chore/phase1-quality-gates-20260914`.
 - Draft PR: #7 `ci: establish phase-one quality gates`.
 - The task adds JavaScript ESLint coverage for authored project code, keeps legacy TDR game scripts as an explicit narrow exclusion, and makes production lint/unit/smoke failures blocking.
-- Pull requests and non-production task branches run the same Quality Gate before merge: lint, unit tests, Playwright Chromium smoke tests, then a production build.
+- Pull requests and non-production task branches run the same Quality Gate before merge: dependency audit, lint, unit tests, Playwright Chromium smoke tests, then a production build.
 - CI uses Node 24; `package.json` requires Node `>=22.19` to match the Lighthouse 13 engine requirement.
 - Recommended HTML link-text accessibility checks are enforced again; existing implicit button/input type debt in `public/groupguard/manual.html` remains visible as warnings instead of being globally disabled.
 - `test-results/`, `playwright-report/`, coverage output, and ESLint cache are ignored; the previously tracked `test-results/.last-run.json` is removed on the task branch.
-- During CI verification, `npm ci` reported 56 dependency vulnerabilities (4 low, 24 moderate, 27 high, 1 critical). Dependency remediation is a separate follow-up and must not use a blind breaking `npm audit fix --force` as part of this quality-gate task.
 - This task is not merged or deployed yet. Final PR checks must remain green before it is considered ready to merge.
 
 ## Active NAV catalog cleanup
