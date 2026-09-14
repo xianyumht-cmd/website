@@ -23,14 +23,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Simulate removal of unused LHCI and safe lockfile refresh
+      - name: Simulate final dependency remediation
         shell: bash
         run: |
           npm pkg delete devDependencies.@lhci/cli
+          npm pkg set devDependencies.lighthouse='^13.4.1'
           npm install --package-lock-only --ignore-scripts
           npm audit fix --package-lock-only --ignore-scripts || true
 
-          npm ls basic-ftp ws lighthouse @lhci/cli --all || true
+          npm ls basic-ftp ws lighthouse @lhci/cli axios vite rollup --all || true
 
           set +e
           npm audit --json > audit-final.json
