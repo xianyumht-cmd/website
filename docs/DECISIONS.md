@@ -1,5 +1,21 @@
 # Decisions
 
+## 2026-09-15 — NAV is a maintained resource directory, not a dashboard
+
+The NAV page should present search, categories and resource entries as its primary hierarchy. It should not imitate a generic AI/SaaS dashboard merely to make the page look feature-rich.
+
+Phase 3 therefore retires the four-card visual status dashboard and automatically generated card pills such as category/resource-entry/extraction-code labels. Version and feedback data remains available in a lightweight strip, while the main content uses restrained directory cards, one plain page heading, a compact utility bar and no hover-lift dashboard treatment.
+
+The redesign is NAV-specific. Games continues to use the shared resource-page shell and must not inherit NAV-only visual changes. Existing functional behavior remains in scope: Chinese/English switching, theme controls, search, category navigation, resource catalog data, version information and sidebar controls.
+
+Browser tests lock the intended outcome rather than a screenshot-only implementation detail: the retired dashboard/tag artifacts must stay absent, the directory grid and flat card behavior must remain, NAV version/language lifecycle must continue working, and Games sidebar behavior must remain unaffected.
+
+The redesign exposed a mobile first-paint CLS source. At widths `<= 820px`, shared CSS would initially render the category menu as `display:block`; JavaScript then applied `resource-sidebar-closed`, moving the whole `.main-content` upward. Lighthouse attributed about `0.09366` CLS to `.main-content` and another `0.01962` to the first resource card, producing a repeatable total of `0.113287806`.
+
+Do not lower the `0.10` CLS gate to accommodate this. NAV now carries a first-paint mobile drawer guard in the static page/CSS path, and `resource-sidebar.js` removes that temporary guard only after it has applied the authoritative runtime state. The validated result is NAV performance `0.98 / 0.98 / 0.98` with max CLS `0.0264` on Quality Gate run `34886369318`.
+
+Temporary diagnostic instrumentation belongs only on temporary diagnostic branches. The formal Phase 3 comparison against the Phase 2 finalization head must not include Lighthouse diagnostic changes.
+
 ## 2026-09-15 — ESLint 10 upgrade requires a dedicated dependency migration
 
 The repository still runs ESLint `8.57.1`. ESLint 10 is current and removes the legacy `.eslintrc.*` configuration system entirely, so the upgrade is not a safe one-line version bump.
