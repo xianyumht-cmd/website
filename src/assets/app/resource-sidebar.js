@@ -100,7 +100,11 @@ function initResourceSidebar() {
   document.addEventListener('navDataUpdated', updateControls);
   document.addEventListener('navLanguageChanged', updateControls);
 
-  setClosed(false);
+  // The mobile category list is a drawer above the main content. Keeping it
+  // expanded while nav-core populates its items pushes the entire page down and
+  // creates a large layout shift. Desktop keeps the persistent sidebar open;
+  // mobile starts collapsed and remains available through the existing toggle.
+  setClosed(window.innerWidth <= DESKTOP_BREAKPOINT);
 }
 
 if (document.readyState === 'loading') {
