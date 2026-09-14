@@ -39,7 +39,7 @@ test('down/tdr 控制台零报错且无 4xx/5xx', async ({ page, baseURL }) => {
   await assertNoIssues(page, `${baseURL}/down/tdr/index.html`)
 })
 
-test('Nav category drawer is open by default, scrollable, and collapsible', async ({ page, baseURL }) => {
+test('Nav category drawer is open on desktop, collapsed on mobile, and remains usable', async ({ page, baseURL }) => {
   await page.setViewportSize({ width: 1256, height: 920 })
   await page.goto(`${baseURL}/down/nav/index.html`, { waitUntil: 'load' })
   await page.waitForSelector('#main-menu li')
@@ -67,11 +67,18 @@ test('Nav category drawer is open by default, scrollable, and collapsible', asyn
 
   await page.setViewportSize({ width: 375, height: 667 })
   await page.reload({ waitUntil: 'load' })
-  await page.waitForSelector('#main-menu li')
+  await page.waitForSelector('#main-menu li', { state: 'attached' })
 
   const mobileToggle = page.locator('[data-toggle="mobile-menu"]')
   await expect(mobileToggle).toBeVisible()
+  await expect(page.locator('.page-container')).toHaveClass(/resource-sidebar-closed/)
+  await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
+  await expect(menu).toBeHidden()
+
+  await mobileToggle.click()
+  await expect(page.locator('.page-container')).not.toHaveClass(/resource-sidebar-closed/)
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'true')
+  await expect(menu).toBeVisible()
 
   const mobileMenu = await menu.evaluate((element) => ({
     clientHeight: element.clientHeight,
@@ -85,4 +92,3 @@ test('Nav category drawer is open by default, scrollable, and collapsible', asyn
   await expect(menu).toBeHidden()
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
 })
-
