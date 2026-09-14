@@ -50,3 +50,6 @@ jobs:
 
       - name: Production build
         run: npm run build
+
+      - name: Lighthouse performance thresholds
+        run: npm run test:perf
