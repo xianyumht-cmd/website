@@ -39,8 +39,6 @@ if (!chromePath) {
 
 const chromeFlags = ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check']
 if (process.platform === 'linux') {
-  // GitHub-hosted Ubuntu runners disable the user namespaces Chromium's sandbox expects.
-  // Keep these CI/Linux-only so Windows local runs retain the normal browser sandbox.
   chromeFlags.push('--no-sandbox', '--disable-dev-shm-usage')
 }
 
@@ -59,6 +57,17 @@ function pickList(audit) {
 
 function metric(audits, id) {
   return audits?.[id]?.numericValue ?? null
+}
+
+function printLayoutShiftDiagnostics(audits) {
+  const ids = Object.keys(audits).filter((id) => /layout|shift|cls/i.test(id))
+  process.stderr.write(`CLS_DIAG audit_ids=${JSON.stringify(ids)}\n`)
+  for (const id of ids) {
+    const audit = audits[id]
+    const items = audit?.details?.items
+    if (!Array.isArray(items) || items.length === 0) continue
+    process.stderr.write(`CLS_DIAG ${id}=${JSON.stringify(items.slice(0, 10))}\n`)
+  }
 }
 
 const results = []
@@ -91,6 +100,7 @@ for (const entry of targets) {
 
     const audits = runnerResult?.lhr?.audits || {}
     const perf = runnerResult?.lhr?.categories?.performance?.score ?? null
+    if (entry.id === 'nav') printLayoutShiftDiagnostics(audits)
 
     results.push({
       id: entry.id,
