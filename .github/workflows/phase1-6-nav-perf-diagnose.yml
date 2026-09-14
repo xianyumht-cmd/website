@@ -1,0 +1,158 @@
+name: Phase 1.6 NAV Performance Diagnose
+
+on:
+  push:
+    branches:
+      - tmp/phase1-6-nav-perf-diagnose-20260914
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start local server
+        run: |
+          npx http-server dist -p 4173 -c-1 > /tmp/nav-http.log 2>&1 &
+          echo $! > /tmp/nav-http.pid
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:4173/down/nav/index.html >/dev/null; then
+              exit 0
+            fi
+            sleep 0.25
+          done
+          cat /tmp/nav-http.log
+          exit 1
+
+      - name: Run three NAV Lighthouse diagnostics
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          node --input-type=module <<'NODE'
+          import lighthouse from 'lighthouse';
+          import * as chromeLauncher from 'chrome-launcher';
+
+          const url = 'http://127.0.0.1:4173/down/nav/index.html';
+          const auditValue = (audits, id) => audits[id]?.numericValue ?? null;
+          const details = (audits, id) => audits[id]?.details?.items ?? [];
+          const score = (audits, id) => audits[id]?.score ?? null;
+          const display = (audits, id) => audits[id]?.displayValue ?? null;
+
+          for (let run = 1; run <= 3; run += 1) {
+            const chrome = await chromeLauncher.launch({
+              chromePath: process.env.CHROME_PATH,
+              chromeFlags: [
+                '--headless=new',
+                '--disable-gpu',
+                '--no-first-run',
+                '--no-default-browser-check',
+                '--no-sandbox',
+                '--disable-dev-shm-usage',
+              ],
+              logLevel: 'error',
+            });
+
+            try {
+              const result = await lighthouse(url, {
+                port: chrome.port,
+                output: 'json',
+                onlyCategories: ['performance'],
+                logLevel: 'error',
+              });
+
+              const lhr = result.lhr;
+              const audits = lhr.audits;
+              const diagnostics = details(audits, 'diagnostics')[0] || {};
+              const mainThread = details(audits, 'mainthread-work-breakdown')
+                .slice(0, 12)
+                .map((item) => ({ group: item.groupLabel || item.group, duration: item.duration }));
+              const bootup = details(audits, 'bootup-time')
+                .slice(0, 12)
+                .map((item) => ({ url: item.url, total: item.total, scripting: item.scripting, scriptParseCompile: item.scriptParseCompile }));
+              const longTasks = details(audits, 'long-tasks')
+                .slice(0, 12)
+                .map((item) => ({ url: item.url, duration: item.duration, startTime: item.startTime }));
+              const network = details(audits, 'network-requests')
+                .slice()
+                .sort((a, b) => (b.transferSize || 0) - (a.transferSize || 0))
+                .slice(0, 15)
+                .map((item) => ({ url: item.url, resourceType: item.resourceType, transferSize: item.transferSize, duration: item.networkEndTime && item.networkRequestTime ? item.networkEndTime - item.networkRequestTime : null }));
+              const unusedCss = details(audits, 'unused-css-rules')
+                .slice(0, 12)
+                .map((item) => ({ url: item.url, wastedBytes: item.wastedBytes, wastedPercent: item.wastedPercent }));
+              const unusedJs = details(audits, 'unused-javascript')
+                .slice(0, 12)
+                .map((item) => ({ url: item.url, wastedBytes: item.wastedBytes, wastedPercent: item.wastedPercent }));
+
+              const insightIds = Object.keys(audits).filter((id) =>
+                /render-blocking|lcp|font-display|network-dependency|document-latency|third-parties|legacy-javascript/.test(id)
+              );
+              const insights = Object.fromEntries(insightIds.map((id) => [id, {
+                score: score(audits, id),
+                displayValue: display(audits, id),
+                numericValue: auditValue(audits, id),
+              }]));
+
+              console.log(`PERF_DIAG_RUN_${run}=${JSON.stringify({
+                lighthouseVersion: lhr.lighthouseVersion,
+                userAgent: lhr.userAgent,
+                performanceScore: lhr.categories.performance.score,
+                metrics: {
+                  fcp: auditValue(audits, 'first-contentful-paint'),
+                  lcp: auditValue(audits, 'largest-contentful-paint'),
+                  tbt: auditValue(audits, 'total-blocking-time'),
+                  cls: auditValue(audits, 'cumulative-layout-shift'),
+                  speedIndex: auditValue(audits, 'speed-index'),
+                  interactive: auditValue(audits, 'interactive'),
+                  maxPotentialFid: auditValue(audits, 'max-potential-fid'),
+                },
+                diagnostics: {
+                  numRequests: diagnostics.numRequests,
+                  numScripts: diagnostics.numScripts,
+                  numStylesheets: diagnostics.numStylesheets,
+                  numFonts: diagnostics.numFonts,
+                  numTasks: diagnostics.numTasks,
+                  numTasksOver10ms: diagnostics.numTasksOver10ms,
+                  numTasksOver25ms: diagnostics.numTasksOver25ms,
+                  numTasksOver50ms: diagnostics.numTasksOver50ms,
+                  maxRtt: diagnostics.maxRtt,
+                  maxServerLatency: diagnostics.maxServerLatency,
+                  totalByteWeight: diagnostics.totalByteWeight,
+                  mainDocumentTransferSize: diagnostics.mainDocumentTransferSize,
+                },
+                mainThread,
+                bootup,
+                longTasks,
+                network,
+                unusedCss,
+                unusedJs,
+                insights,
+              })}`);
+            } finally {
+              await chrome.kill();
+            }
+          }
+          NODE
+
+      - name: Stop local server
+        if: always()
+        run: |
+          if [ -f /tmp/nav-http.pid ]; then
+            kill "$(cat /tmp/nav-http.pid)" || true
+          fi
