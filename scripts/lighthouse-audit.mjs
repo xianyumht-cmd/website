@@ -61,6 +61,7 @@ for (const entry of targets) {
   const chrome = await chromeLauncher.launch({
     chromePath,
     chromeFlags: ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check'],
+    logLevel: 'error',
   })
 
   try {
