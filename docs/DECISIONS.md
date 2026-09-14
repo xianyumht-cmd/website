@@ -1,5 +1,17 @@
 # Decisions
 
+## 2026-09-15 — NAV release hardening uses native controls and real interaction tests
+
+Release-readiness checks for NAV must exercise real user interaction rather than treating a rendered page as sufficient. Phase 4 therefore keeps the Phase 3 visual design intact while strengthening semantics, keyboard behavior, mobile touch sizing, metadata and end-to-end coverage.
+
+Click-only anchors/divs are not acceptable for primary utility actions when a native control fits the behavior. The mobile theme action and the floating top/theme/language actions use native buttons, and NAV provides visible `:focus-visible` treatment plus a skip link to the main content. Search and utility controls carry explicit accessible names that stay synchronized when the user switches between Chinese and English.
+
+NAV metadata should describe the directory rather than use a generic page title. The document title, description and Open Graph title/description/locale are initialized in HTML and kept synchronized with the active NAV language. The resource catalog remains separate from this metadata work.
+
+Mobile release tests must fail on horizontal document overflow instead of hiding it with a global overflow rule. The Phase 4 375px test found `#notice` extending from `left=15` to `right=388`, making a 375px viewport scroll to 388px. The fix is local box-model containment on the NAV search notice; the test permanently reports offending element rectangles when overflow returns. Do not weaken this assertion or mask future overflow with body-level clipping.
+
+The validated Phase 4 implementation head `eb0be2e2df1e3f653ae3151d64cc562305718263` passed Quality Gate run `34895092320`: 0 npm vulnerabilities, 52/52 unit tests, 10/10 Playwright tests, successful production build/security-header verification, NAV Lighthouse `0.98 / 0.98 / 0.98` with max CLS `0.0264`, and TDR median `0.99` with CLS `0`.
+
 ## 2026-09-15 — NAV is a maintained resource directory, not a dashboard
 
 The NAV page should present search, categories and resource entries as its primary hierarchy. It should not imitate a generic AI/SaaS dashboard merely to make the page look feature-rich.
