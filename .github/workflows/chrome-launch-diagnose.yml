@@ -1,0 +1,91 @@
+name: Chrome Launch Diagnose
+
+on:
+  push:
+    branches:
+      - tmp/chrome-launch-diagnose-20260914
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Diagnose Chrome launch modes
+        shell: bash
+        run: |
+          set -u
+          CFT=$(node -e "console.log(require('@playwright/test').chromium.executablePath())")
+          SYSTEM_CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || true)
+          echo "CFT=$CFT"
+          echo "SYSTEM_CHROME=$SYSTEM_CHROME"
+          "$CFT" --version || true
+          if [ -n "$SYSTEM_CHROME" ]; then "$SYSTEM_CHROME" --version || true; fi
+
+          test_launch() {
+            local label="$1"
+            local bin="$2"
+            shift 2
+            local profile="$RUNNER_TEMP/chrome-$label"
+            local out="$RUNNER_TEMP/chrome-$label.out"
+            local err="$RUNNER_TEMP/chrome-$label.err"
+            rm -rf "$profile"
+            mkdir -p "$profile"
+            echo "=== $label ==="
+            "$bin" --headless --remote-debugging-port=9222 --user-data-dir="$profile" --no-first-run --no-default-browser-check "$@" about:blank >"$out" 2>"$err" &
+            local pid=$!
+            for i in {1..20}; do
+              if curl -fsS http://127.0.0.1:9222/json/version >"$RUNNER_TEMP/chrome-$label.json" 2>/dev/null; then
+                echo "RESULT|$label|PASS"
+                cat "$RUNNER_TEMP/chrome-$label.json"
+                kill "$pid" 2>/dev/null || true
+                wait "$pid" 2>/dev/null || true
+                return 0
+              fi
+              if ! kill -0 "$pid" 2>/dev/null; then
+                break
+              fi
+              sleep 0.25
+            done
+            echo "RESULT|$label|FAIL"
+            echo "--- stdout ---"
+            cat "$out" || true
+            echo "--- stderr ---"
+            cat "$err" || true
+            kill "$pid" 2>/dev/null || true
+            wait "$pid" 2>/dev/null || true
+            return 1
+          }
+
+          CURRENT_OK=0
+          test_launch cft-current "$CFT" --disable-gpu || CURRENT_OK=$?
+
+          CI_OK=0
+          test_launch cft-ci-flags "$CFT" --disable-gpu --no-sandbox --disable-dev-shm-usage || CI_OK=$?
+
+          SYSTEM_OK=99
+          if [ -n "$SYSTEM_CHROME" ]; then
+            SYSTEM_OK=0
+            test_launch system-current "$SYSTEM_CHROME" --disable-gpu || SYSTEM_OK=$?
+          fi
+
+          echo "SUMMARY|cft-current=$CURRENT_OK|cft-ci-flags=$CI_OK|system-current=$SYSTEM_OK"
+          if [ "$CURRENT_OK" -eq 0 ] || [ "$CI_OK" -eq 0 ] || [ "$SYSTEM_OK" -eq 0 ]; then
+            exit 0
+          fi
+          exit 1
