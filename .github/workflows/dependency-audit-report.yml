@@ -23,57 +23,31 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Show vulnerable dependency chains
+      - name: Simulate removal of unused LHCI and safe lockfile refresh
         shell: bash
         run: |
-          npm ls basic-ftp axios vite rollup lighthouse @lhci/cli --all || true
-
-      - name: Compare current audit with non-breaking npm audit fix
-        shell: bash
-        run: |
-          set +e
-          npm audit --json > audit-before.json
-          BEFORE_EXIT=$?
-          set -e
-
-          node - <<'NODE'
-          const fs = require('fs');
-          const report = JSON.parse(fs.readFileSync('audit-before.json', 'utf8'));
-          console.log('AUDIT_BEFORE=' + JSON.stringify(report.metadata?.vulnerabilities || {}));
-          NODE
-
+          npm pkg delete devDependencies.@lhci/cli
+          npm install --package-lock-only --ignore-scripts
           npm audit fix --package-lock-only --ignore-scripts || true
 
+          npm ls basic-ftp ws lighthouse @lhci/cli --all || true
+
           set +e
-          npm audit --json > audit-after.json
-          AFTER_EXIT=$?
+          npm audit --json > audit-final.json
+          AUDIT_EXIT=$?
           set -e
 
           node - <<'NODE'
           const fs = require('fs');
-          const report = JSON.parse(fs.readFileSync('audit-after.json', 'utf8'));
-          console.log('AUDIT_AFTER=' + JSON.stringify(report.metadata?.vulnerabilities || {}));
+          const report = JSON.parse(fs.readFileSync('audit-final.json', 'utf8'));
+          console.log('SIMULATED_AUDIT=' + JSON.stringify(report.metadata?.vulnerabilities || {}));
           const vulnerabilities = report.vulnerabilities || {};
-          const rows = Object.entries(vulnerabilities)
-            .map(([name, v]) => ({
-              name,
-              severity: v.severity,
-              direct: Boolean(v.isDirect),
-              range: v.range,
-              effects: Array.isArray(v.effects) ? v.effects.join(',') : '',
-              fix: v.fixAvailable === false ? 'none' : JSON.stringify(v.fixAvailable),
-              via: Array.isArray(v.via) ? v.via.map(x => typeof x === 'string' ? x : `${x.source}:${x.title}`).join(' | ') : String(v.via)
-            }))
-            .sort((a, b) => {
-              const rank = { critical: 0, high: 1, moderate: 2, low: 3, info: 4 };
-              return (rank[a.severity] ?? 9) - (rank[b.severity] ?? 9) || Number(b.direct) - Number(a.direct) || a.name.localeCompare(b.name);
-            });
-          for (const r of rows) {
-            console.log(`REMAINING|${r.severity}|${r.direct ? 'direct' : 'transitive'}|${r.name}|range=${r.range}|fix=${r.fix}|effects=${r.effects}|via=${r.via}`);
+          for (const [name, v] of Object.entries(vulnerabilities)) {
+            console.log(`SIM_REMAINING|${v.severity}|${v.isDirect ? 'direct' : 'transitive'}|${name}|range=${v.range}|fix=${JSON.stringify(v.fixAvailable)}|via=${JSON.stringify(v.via)}`);
           }
           NODE
 
-          echo "LOCKFILE_DIFF_START"
-          git diff --stat -- package-lock.json
-          echo "LOCKFILE_DIFF_END"
-          exit $AFTER_EXIT
+          echo "PACKAGE_DIFF_START"
+          git diff --stat -- package.json package-lock.json
+          echo "PACKAGE_DIFF_END"
+          exit $AUDIT_EXIT
