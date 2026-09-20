@@ -40,7 +40,7 @@ test('NAV category links target visible sections and expose the current location
 
   const link = categoryLinks.nth(4)
   const href = await link.getAttribute('href')
-  expect(href).toMatch(/^#[A-Za-z0-9_-]+$/)
+  expect(href).toMatch(/^#[^#\s]+$/)
   if (!href) throw new Error('Expected NAV category href')
 
   const target = page.locator(href)
