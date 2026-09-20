@@ -30,6 +30,63 @@ test('NAV exposes useful metadata and keyboard-accessible utility controls', asy
   await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute('content', 'en_US')
 })
 
+
+test('NAV category links target visible sections and expose the current location', async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 1256, height: 720 })
+  await page.goto(`${baseURL}/down/nav/index.html`, { waitUntil: 'load' })
+  await page.waitForSelector('#content-sections .resource-section')
+
+  const categoryLinks = page.locator('#main-menu a.smooth')
+  expect(await categoryLinks.count()).toBeGreaterThan(4)
+
+  const link = categoryLinks.nth(4)
+  const href = await link.getAttribute('href')
+  expect(href).toMatch(/^#[A-Za-z0-9_-]+$/)
+
+  const target = page.locator(href || '')
+  await expect(target).toHaveClass(/resource-section/)
+  await expect(target).toBeVisible()
+  await expect(target.locator('h4.text-gray > i')).not.toHaveAttribute('id')
+
+  await link.click()
+
+  await expect(page).toHaveURL(new RegExp(`${href}import { test, expect } from '@playwright/test'
+
+test('NAV exposes useful metadata and keyboard-accessible utility controls', async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 1256, height: 920 })
+  await page.goto(`${baseURL}/down/nav/index.html`, { waitUntil: 'load' })
+  await page.waitForSelector('#content-sections .xe-widget')
+
+  await expect(page).toHaveTitle('脚本.top 资源导航 - 工具与实用资源')
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /资源导航/)
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'index,follow,max-image-preview:large')
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', '脚本.top 资源导航 - 工具与实用资源')
+
+  const skipLink = page.locator('.nav-skip-link')
+  await page.keyboard.press('Tab')
+  await expect(skipLink).toBeFocused()
+  await expect(skipLink).toBeVisible()
+  await page.keyboard.press('Enter')
+  await expect(page).toHaveURL(/#main-content$/)
+
+  await expect(page.locator('#search-text')).toHaveAttribute('aria-label', '搜索资源')
+  await expect(page.locator('.fk_service button.fk_service_box')).toHaveCount(3)
+
+  const languageButton = page.locator('.fk_service_bx')
+  await languageButton.focus()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+  await expect(page.locator('.nav-directory-head h1')).toHaveText('Resource directory')
+  await expect(page.locator('#search-text')).toHaveAttribute('aria-label', 'Search resources')
+  await expect(page).toHaveTitle('Script.top Resource Directory - Tools and Useful Resources')
+  await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute('content', 'en_US')
+})
+))
+  await expect(target).toBeInViewport()
+  await expect(link).toHaveAttribute('aria-current', 'location')
+  await expect(link.locator('..')).toHaveClass(/active/)
+})
+
 test('NAV search behaves like a real filter and can be cleared without losing focus', async ({ page, baseURL }) => {
   await page.goto(`${baseURL}/down/nav/index.html`, { waitUntil: 'load' })
   await page.waitForSelector('#content-sections .xe-widget')
