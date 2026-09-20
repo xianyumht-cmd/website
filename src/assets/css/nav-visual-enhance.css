@@ -25,6 +25,8 @@
 }
 
 .nav-page .sidebar-menu .sidebar-menu-inner {
+  box-sizing: border-box;
+  min-width: 0;
   padding: 0 10px 18px;
 }
 
@@ -667,5 +669,12 @@
   .nav-page .xe-widget,
   .nav-page .box2.label-info.xe-conversations.xe-widget {
     min-height: 96px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-page .sidebar-menu .main-menu > li > a,
+  .nav-page .sidebar-menu .main-menu > li > a i {
+    transition: none !important;
   }
 }
