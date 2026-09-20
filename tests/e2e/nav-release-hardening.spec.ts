@@ -50,7 +50,7 @@ test('NAV category links target visible sections and expose the current location
 
   await link.click()
 
-  await expect(page).toHaveURL(new RegExp(`${href}$`))
+  await expect.poll(() => page.evaluate(() => decodeURIComponent(window.location.hash))).toBe(href)
   await expect(target).toBeInViewport()
   await expect(link).toHaveAttribute('aria-current', 'location')
   await expect(link.locator('xpath=..')).toHaveClass(/active/)
