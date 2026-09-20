@@ -39,15 +39,18 @@ function removeDashboardArtifacts() {
 
 let sectionObserver = null;
 
-function sectionIdFromLink(link) {
-    const href = link?.getAttribute('href') || '';
-    if (!href.startsWith('#') || href.length === 1) return '';
+function sectionIdFromHash(hash) {
+    if (!hash.startsWith('#') || hash.length === 1) return '';
 
     try {
-        return decodeURIComponent(href.slice(1));
+        return decodeURIComponent(hash.slice(1));
     } catch {
-        return href.slice(1);
+        return hash.slice(1);
     }
+}
+
+function sectionIdFromLink(link) {
+    return sectionIdFromHash(link?.getAttribute('href') || '');
 }
 
 function setCurrentSection(sectionId) {
@@ -69,7 +72,7 @@ function observeSections() {
     const sections = Array.from(document.querySelectorAll('#content-sections .resource-section[id]'));
     if (!sections.length) return;
 
-    const hashId = window.location.hash ? sectionIdFromLink({ getAttribute: () => window.location.hash }) : '';
+    const hashId = sectionIdFromHash(window.location.hash);
     const hashTarget = hashId ? document.getElementById(hashId) : null;
     setCurrentSection(hashTarget?.classList.contains('resource-section') ? hashId : sections[0].id);
 
@@ -109,7 +112,7 @@ function bindSidebarCurrentState() {
     });
 
     window.addEventListener('hashchange', () => {
-        const hashId = window.location.hash ? sectionIdFromLink({ getAttribute: () => window.location.hash }) : '';
+        const hashId = sectionIdFromHash(window.location.hash);
         const section = hashId ? document.getElementById(hashId) : null;
         if (section?.classList.contains('resource-section')) setCurrentSection(hashId);
     });
