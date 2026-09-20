@@ -335,6 +335,7 @@ function generateContentSafe(retryCount = 0) {
         const tasks = navData.sections.filter(section => section.items && section.items.length > 0).map(section => () => {
             const sectionElement = document.createElement('section');
             sectionElement.className = 'resource-section';
+            sectionElement.id = section.id;
             sectionElement.dataset.sectionId = section.id;
 
             const sectionHeader = document.createElement('h4');
@@ -343,8 +344,7 @@ function generateContentSafe(retryCount = 0) {
             const icon = document.createElement('i');
             icon.className = 'fa-solid fa-tags';
             icon.style.marginRight = '7px';
-            icon.id = section.id;
-            
+
             sectionHeader.appendChild(icon);
             sectionHeader.appendChild(document.createTextNode(section.title));
             
