@@ -68,14 +68,14 @@ Phase 1–4 is merged, validated and deployed. Treat `fc00ad5924fc6ba2213769a51e
 
 Future work should start from current `source` on a new task branch. Do not fold PR #4 or other historical branches into the released baseline without a fresh review and full Quality Gate.
 
-## Active NAV sidebar follow-up
+## NAV sidebar follow-up closeout
 
-- Task branch: `fix/nav-sidebar-polish-20260920`.
-- Scope: repair category fragment navigation and refine the NAV-only sidebar without changing Games or the shared catalog.
+- PR #12, `fix: restore NAV category navigation and refine sidebar`, was squash-merged to `source` on 2026-09-22.
+- Merged source commit: `8ecf4cfafe0d2be3277d8e61c2204cc8561aa155`.
+- PR Quality Gate run `35640610807` passed dependency audit, lint, unit tests, Playwright smoke/e2e, production build, and repeated Lighthouse performance thresholds.
 - The category fragment target now belongs to the visible `.resource-section`, not the hidden heading icon.
 - NAV tracks the current category with `aria-current="location"` and an active sidebar state while scrolling or navigating by hash.
-- The NAV-only sidebar uses a restrained compact directory treatment, an integrated desktop collapse control, and mobile width containment.
-- Regression coverage now verifies real category navigation, localized hash IDs, current-location state, and existing 375px overflow protection.
-- Quality Gate run `35515188062` passed dependency audit, lint, unit tests, Playwright smoke tests, production build, and repeated Lighthouse thresholds.
-- This work is not merged or deployed yet.
+- The NAV-only sidebar now uses the refined compact directory treatment and mobile width containment; Games remains unchanged.
+- Regression coverage verifies real category navigation, localized hash IDs, current-location state, and existing 375px overflow protection.
+- Production `main` has not been published from this merge yet.
 
