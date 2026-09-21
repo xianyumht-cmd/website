@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-14T21:35:36.043Z",
+  "generatedAt": "2026-09-21T18:51:13.999Z",
   "totals": {
     "js": {
-      "raw": 232382,
-      "gzip": 75125,
-      "brotli": 62041,
+      "raw": 233929,
+      "gzip": 75629,
+      "brotli": 62533,
       "count": 12
     },
     "css": {
-      "raw": 88598,
-      "gzip": 17870,
-      "brotli": 15491,
+      "raw": 91863,
+      "gzip": 18279,
+      "brotli": 15858,
       "count": 4
     },
     "html": {
       "raw": 105665,
-      "gzip": 33827,
-      "brotli": 25904,
+      "gzip": 33830,
+      "brotli": 25903,
       "count": 9
     },
     "images": {
@@ -44,10 +44,10 @@
       "brotli": 4025
     },
     {
-      "file": "assets/nav-2wlyqZde.js",
-      "raw": 22334,
-      "gzip": 8172,
-      "brotli": 6528
+      "file": "assets/nav-danFLw2Z.js",
+      "raw": 23881,
+      "gzip": 8676,
+      "brotli": 7011
     },
     {
       "file": "groupguard/manual.html",
@@ -62,10 +62,10 @@
       "brotli": 4256
     },
     {
-      "file": "assets/error-guard-Hh4poCup.js",
+      "file": "assets/error-guard-BhWC7iGS.js",
       "raw": 17935,
-      "gzip": 6489,
-      "brotli": 5291
+      "gzip": 6488,
+      "brotli": 5295
     },
     {
       "file": "lol-helper.html",
@@ -74,22 +74,22 @@
       "brotli": 3849
     },
     {
+      "file": "assets/nav-DEy6M6dL.css",
+      "raw": 14714,
+      "gzip": 2888,
+      "brotli": 2488
+    },
+    {
       "file": "index.html",
       "raw": 13233,
       "gzip": 3619,
       "brotli": 2882
     },
     {
-      "file": "assets/nav-CNXURCQW.css",
-      "raw": 11449,
-      "gzip": 2479,
-      "brotli": 2121
-    },
-    {
-      "file": "assets/games-Dzra66JW.js",
+      "file": "assets/games-BAY2ewvZ.js",
       "raw": 11105,
-      "gzip": 4242,
-      "brotli": 3384
+      "gzip": 4243,
+      "brotli": 3389
     },
     {
       "file": "assets/theme-mode.min-cIjd2nug.js",
@@ -100,14 +100,14 @@
     {
       "file": "down/nav/index.html",
       "raw": 9555,
-      "gzip": 3039,
-      "brotli": 2214
+      "gzip": 3040,
+      "brotli": 2216
     },
     {
       "file": "down/games/index.html",
       "raw": 9316,
-      "gzip": 3009,
-      "brotli": 2220
+      "gzip": 3011,
+      "brotli": 2217
     },
     {
       "file": "privacy.html",
