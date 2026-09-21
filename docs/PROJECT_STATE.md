@@ -67,3 +67,15 @@ Do not lower performance/CLS thresholds or add `continue-on-error` merely to mak
 Phase 1–4 is merged, validated and deployed. Treat `fc00ad5924fc6ba2213769a51edda6b7fd7c8244` as the released source baseline and `28af653ccc3ea3e2d6674e8aa46598e117379b9a` as its generated production artifact commit.
 
 Future work should start from current `source` on a new task branch. Do not fold PR #4 or other historical branches into the released baseline without a fresh review and full Quality Gate.
+
+## Active NAV sidebar follow-up
+
+- Task branch: `fix/nav-sidebar-polish-20260920`.
+- Scope: repair category fragment navigation and refine the NAV-only sidebar without changing Games or the shared catalog.
+- The category fragment target now belongs to the visible `.resource-section`, not the hidden heading icon.
+- NAV tracks the current category with `aria-current="location"` and an active sidebar state while scrolling or navigating by hash.
+- The NAV-only sidebar uses a restrained compact directory treatment, an integrated desktop collapse control, and mobile width containment.
+- Regression coverage now verifies real category navigation, localized hash IDs, current-location state, and existing 375px overflow protection.
+- Quality Gate run `35515188062` passed dependency audit, lint, unit tests, Playwright smoke tests, production build, and repeated Lighthouse thresholds.
+- This work is not merged or deployed yet.
+
