@@ -77,5 +77,6 @@ Future work should start from current `source` on a new task branch. Do not fold
 - NAV tracks the current category with `aria-current="location"` and an active sidebar state while scrolling or navigating by hash.
 - The NAV-only sidebar now uses the refined compact directory treatment and mobile width containment; Games remains unchanged.
 - Regression coverage verifies real category navigation, localized hash IDs, current-location state, and existing 375px overflow protection.
-- Production `main` has not been published from this merge yet.
+- Production artifact branch `main` was published from merged source commit `8ecf4cfafe0d2be3277d8e61c2204cc8561aa155` as `7fd1c70d8472c06ed74f97a181e3431fce060710` on 2026-09-22.
+- The published NAV bundle contains the repaired section-target navigation and current-category state; the later source commit `a810fc2ba57c4f2b5aa5766a03619fcb6e31f485` only closes out documentation.
 
