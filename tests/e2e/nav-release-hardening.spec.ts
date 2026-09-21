@@ -30,6 +30,32 @@ test('NAV exposes useful metadata and keyboard-accessible utility controls', asy
   await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute('content', 'en_US')
 })
 
+test('NAV category links target visible sections and expose the current location', async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 1256, height: 720 })
+  await page.goto(`${baseURL}/down/nav/index.html`, { waitUntil: 'load' })
+  await page.waitForSelector('#content-sections .resource-section')
+
+  const categoryLinks = page.locator('#main-menu a.smooth')
+  expect(await categoryLinks.count()).toBeGreaterThan(4)
+
+  const link = categoryLinks.nth(4)
+  const href = await link.getAttribute('href')
+  expect(href).toMatch(/^#[^#\s]+$/)
+  if (!href) throw new Error('Expected NAV category href')
+
+  const target = page.locator(href)
+  await expect(target).toHaveClass(/resource-section/)
+  await expect(target).toBeVisible()
+  await expect(target.locator('h4.text-gray > i')).not.toHaveAttribute('id')
+
+  await link.click()
+
+  await expect.poll(() => page.evaluate(() => decodeURIComponent(window.location.hash))).toBe(href)
+  await expect(target).toBeInViewport()
+  await expect(link).toHaveAttribute('aria-current', 'location')
+  await expect(link.locator('xpath=..')).toHaveClass(/active/)
+})
+
 test('NAV search behaves like a real filter and can be cleared without losing focus', async ({ page, baseURL }) => {
   await page.goto(`${baseURL}/down/nav/index.html`, { waitUntil: 'load' })
   await page.waitForSelector('#content-sections .xe-widget')

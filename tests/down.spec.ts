@@ -82,10 +82,10 @@ test('Nav category drawer is open on desktop, collapsed on mobile, and remains u
   })
   expect(desktopVisualOwnership.sidebarBoxShadow).toBe('none')
   expect(desktopVisualOwnership.sidebarBackdropFilter).toBe('none')
-  expect(desktopVisualOwnership.linkBorderRadius).toBe('0px')
+  expect(desktopVisualOwnership.linkBorderRadius).toBe('4px')
   expect(desktopVisualOwnership.linkMarginLeft).toBe('0px')
   expect(desktopVisualOwnership.linkFontSize).toBe('13px')
-  expect(desktopVisualOwnership.logoMinHeight).toBe('84px')
+  expect(desktopVisualOwnership.logoMinHeight).toBe('76px')
 
   await desktopToggle.click()
   await expect(pageContainer).toHaveClass(/resource-sidebar-closed/)
