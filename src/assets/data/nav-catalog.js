@@ -40,8 +40,10 @@ zh: {
       i("acme","密码：8888","https://wwer.ysupan.com","A"),
       i("如意","如意","https://wwbuq.lanzouu.com/b00jf03wja","如"),
       i("DC","提取码：DC66","https://share.feijipan.com/s/xiark1VW?code=DC66","DC"),
+      i("KK","密码：123","https://wwarw.lanzn.com/s/KKNB2","KK"),
       i("SPOT","密码：123","https://wwavz.lanzout.com/s/Spotyyds","SP"),
-      i("SF","天卡资源","https://wwbuq.lanzouu.com/b00jfjslcb","SF")
+      i("SF","天卡资源","https://wwbuq.lanzouu.com/b00jfjslcb","SF"),
+      i("MAX","MAX网盘","https://wwalp.lanzout.com/s/MAXniubi","MAX")
     ]),
     s("周卡专区","周卡专区","fa fa-google-wallet",[
       i("LTY","密码：f4sv","https://wwauv.lanzout.com/b00yb1z1od","L"),
@@ -88,6 +90,7 @@ zh: {
     s("三角洲专区","三角洲专区","fa fa-crosshairs",[
       i("正版无双","正版无双最新下载地址，密码：6666","https://wwazv.lanzout.com/b0he1s4te","无"),
       i("战神","下载地址","https://yituoshi.lanzouw.com/b023nn2x3g","战"),
+      i("天神","密码：2026","https://langzijie.lanzoub.com/s/sjzTianShen","天"),
     ]),
     s("PUBG专区","PUBG专区","fa fa-gamepad",[
       i("绝影","PUBG资源","https://wwas.lanzouj.com/b00xq0uaf","绝"),
@@ -150,8 +153,10 @@ zh: {
       i("acme","Password: 8888","https://wwer.ysupan.com","A"),
       i("Ruyi","Ruyi","https://wwbuq.lanzouu.com/b00jf03wja","R"),
       i("DC","Code: DC66","https://share.feijipan.com/s/xiark1VW?code=DC66","DC"),
+      i("KK","Password: 123","https://wwarw.lanzn.com/s/KKNB2","KK"),
       i("SPOT","Password: 123","https://wwavz.lanzout.com/s/Spotyyds","SP"),
-      i("SF","Daily-card resource","https://wwbuq.lanzouu.com/b00jfjslcb","SF")
+      i("SF","Daily-card resource","https://wwbuq.lanzouu.com/b00jfjslcb","SF"),
+      i("MAX","MAX download","https://wwalp.lanzout.com/s/MAXniubi","MAX")
     ]),
     s("周卡专区","Weekly Card Zone","fa fa-google-wallet",[
       i("LTY","Password: f4sv","https://wwauv.lanzout.com/b00yb1z1od","L"),
@@ -194,6 +199,7 @@ zh: {
     s("三角洲专区","Delta Force Zone","fa fa-crosshairs",[
       i("正版无双","Latest download, password: 6666","https://wwazv.lanzout.com/b0he1s4te","无"),
       i("战神","Download","https://yituoshi.lanzouw.com/b023nn2x3g","战"),
+      i("天神","Password: 2026","https://langzijie.lanzoub.com/s/sjzTianShen","天"),
     ]),
     s("瓦洛兰特专区","VALORANT Zone","fa fa-bolt",[
       i("RK","Password: 0000","https://wwaly.lanzouq.com/b011m5h4gd","RK"),
