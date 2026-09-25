@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-25T11:55:16.898Z",
+  "generatedAt": "2026-09-25T12:03:51.162Z",
   "totals": {
     "js": {
-      "raw": 233929,
-      "gzip": 75631,
-      "brotli": 62549,
+      "raw": 231385,
+      "gzip": 74857,
+      "brotli": 61909,
       "count": 12
     },
     "css": {
@@ -15,7 +15,7 @@
     },
     "html": {
       "raw": 105665,
-      "gzip": 33829,
+      "gzip": 33831,
       "brotli": 25916,
       "count": 9
     },
@@ -44,10 +44,10 @@
       "brotli": 4025
     },
     {
-      "file": "assets/nav-DOQ8h4xt.js",
-      "raw": 23881,
-      "gzip": 8676,
-      "brotli": 7018
+      "file": "assets/nav-DuLIWGED.js",
+      "raw": 21337,
+      "gzip": 7902,
+      "brotli": 6378
     },
     {
       "file": "groupguard/manual.html",
@@ -100,7 +100,7 @@
     {
       "file": "down/nav/index.html",
       "raw": 9555,
-      "gzip": 3038,
+      "gzip": 3040,
       "brotli": 2220
     },
     {
