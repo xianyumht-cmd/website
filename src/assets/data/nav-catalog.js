@@ -39,22 +39,16 @@ zh: {
       i("KDA","天卡资源","http://49.235.141.222:1000","KDA"),
       i("acme","密码：8888","https://wwer.ysupan.com","A"),
       i("如意","如意","https://wwbuq.lanzouu.com/b00jf03wja","如"),
-      i("yun","密码：yun","https://wwus.lanzouu.com/s/yunnb","云"),
       i("DC","提取码：DC66","https://share.feijipan.com/s/xiark1VW?code=DC66","DC"),
-      i("FE","密码：bp03","https://wwarw.lanzn.com/b00l2sy5re","FE"),
       i("SPOT","密码：123","https://wwavz.lanzout.com/s/Spotyyds","SP"),
       i("SF","天卡资源","https://wwbuq.lanzouu.com/b00jfjslcb","SF")
     ]),
     s("周卡专区","周卡专区","fa fa-google-wallet",[
-      i("Gulf","不三年，强烈推荐","https://wwme.lanzoui.com/b00od4rd1e","G"),
       i("LTY","密码：f4sv","https://wwauv.lanzout.com/b00yb1z1od","L"),
       i("TSL","密码：d5y7","https://wwauv.lanzn.com/b00ybc9xsj","TSL"),
       i("时光","密码：btqo","https://wwarw.lanzn.com/b00l2sy5gd","时"),
-      i("海豹","海豹","https://wwbuq.lanzouu.com/b00jezzfoj","海"),
       i("TAB","密码：tab11","https://wwus.lanzouu.com/s/TAB1","TAB"),
-      i("B5","飞鸡盘下载","https://share.feijipan.com/s/xScahwCk","B5"),
       i("VK","提取码：1234","https://share.feijipan.com/s/TU6XC6Li?code=1234","VK"),
-      i("ADS","飞鸡盘下载","https://share.feijipan.com/s/jBdy32yE","ADS"),
       i("SOL","下载地址","https://share.feijipan.com/s/CN55YlBQ","SOL"),
       i("TEST","密码：123","https://wwavz.lanzout.com/b00v08n3ah","TEST")
     ]),
@@ -94,15 +88,6 @@ zh: {
     s("三角洲专区","三角洲专区","fa fa-crosshairs",[
       i("正版无双","正版无双最新下载地址，密码：6666","https://wwazv.lanzout.com/b0he1s4te","无"),
       i("战神","下载地址","https://yituoshi.lanzouw.com/b023nn2x3g","战"),
-      i("BACK","密码：6666","https://wwbgw.lanzouv.com/s/back66","BACK"),
-      i("救世主","密码：6688","https://wwbox.lanzn.com/b00v06922h","救"),
-      i("KKB","KKB卡密下载地址","http://45.125.46.238:16001/user","KKB"),
-      i("AA","AA卡密验证地址","https://www.aawg.one/","AA"),
-      i("GS","密码：6666","http://vc-rom.uupan.net/","GS"),
-      i("金色传说","密码：6666","https://wwbfa.lanzoub.com/b014xfvrkd","金"),
-      i("NN","下载地址","https://link.3ceng.cn/view/48763698","NN"),
-      i("VX","需要下载最新版微信，登录成功后微信窗口不要关闭。","http://www.vxsjz.cc/","VX"),
-      i("HN","密码：6666","https://wwbls.lanzn.com/b014xgdecf","HN")
     ]),
     s("PUBG专区","PUBG专区","fa fa-gamepad",[
       i("绝影","PUBG资源","https://wwas.lanzouj.com/b00xq0uaf","绝"),
@@ -164,26 +149,14 @@ zh: {
       i("KDA","Daily-card resource","http://49.235.141.222:1000","KDA"),
       i("acme","Password: 8888","https://wwer.ysupan.com","A"),
       i("Ruyi","Ruyi","https://wwbuq.lanzouu.com/b00jf03wja","R"),
-      i("yun","Password: yun","https://wwus.lanzouu.com/s/yunnb","Y"),
       i("DC","Code: DC66","https://share.feijipan.com/s/xiark1VW?code=DC66","DC"),
       i("SPOT","Password: 123","https://wwavz.lanzout.com/s/Spotyyds","SP"),
-      i("FE","Password: bp03","https://wwarw.lanzn.com/b00l2sy5re","FE"),
       i("SF","Daily-card resource","https://wwbuq.lanzouu.com/b00jfjslcb","SF")
     ]),
     s("周卡专区","Weekly Card Zone","fa fa-google-wallet",[
-      i("GUF","Recommended","https://wwme.lanzoui.com/b00od4rd1e","G"),
       i("LTY","Password: f4sv","https://wwauv.lanzout.com/b00yb1z1od","L"),
-      i("LO","Password: 123","https://wwash.lanzouw.com/b019vvm2ve","LO"),
-      i("Viega","Password: 123","https://wwbku.lanzoub.com/b0pndjqmj","V"),
-      i("Dawn","Download","https://wwbpx.lanzoum.com/b00mqeda6d","D"),
       i("Time","Password: btqo","https://wwarw.lanzn.com/b00l2sy5gd","T"),
-      i("Seal","Seal","https://wwbuq.lanzouu.com/b00jezzfoj","S"),
-      i("FJ","Password: 123","https://wwaym.lanzoub.com/s/QiHang","FJ"),
-      i("Cherry","Password: 123","https://wwbgz.lanzouu.com/b019vx8h5g","C"),
-      i("Lingying","Password: 0ying","https://wwus.lanzouu.com/b0zkvz7la","L"),
       i("TAB","Password: tab11","https://wwus.lanzouu.com/s/TAB1","TAB"),
-      i("ADS","Feijipan download","https://share.feijipan.com/s/jBdy32yE","ADS"),
-      i("Xingchen","Password: 123","https://wwbgz.lanzouu.com/b019w076jg","X")
     ]),
     s("月卡专区","Monthly Card Zone","fa fa-delicious",[
       i("KS","KS with built-in hamburger, supports BGX - Registration open during holidays - Password: 112233","https://wwer.lanzouw.com/b00y9snm5i","K"),
@@ -217,15 +190,6 @@ zh: {
     s("三角洲专区","Delta Force Zone","fa fa-crosshairs",[
       i("正版无双","Latest download, password: 6666","https://wwazv.lanzout.com/b0he1s4te","无"),
       i("战神","Download","https://yituoshi.lanzouw.com/b023nn2x3g","战"),
-      i("BACK","Password: 6666","https://wwbgw.lanzouv.com/s/back66","BACK"),
-      i("救世主","Password: 6688","https://wwbox.lanzn.com/b00v06922h","救"),
-      i("KKB","KKB license download","http://45.125.46.238:16001/user","KKB"),
-      i("AA","AA license verification","https://www.aawg.one/","AA"),
-      i("GS","Password: 6666","http://vc-rom.uupan.net/","GS"),
-      i("金色传说","Password: 6666","https://wwbfa.lanzoub.com/b014xfvrkd","金"),
-      i("NN","Download","https://link.3ceng.cn/view/48763698","NN"),
-      i("VX","Install the latest WeChat and keep its window open after signing in.","http://www.vxsjz.cc/","VX"),
-      i("HN","Password: 6666","https://wwbls.lanzn.com/b014xgdecf","HN")
     ]),
     s("瓦洛兰特专区","VALORANT Zone","fa fa-bolt",[
       i("RK","Password: 0000","https://wwaly.lanzouq.com/b011m5h4gd","RK"),
