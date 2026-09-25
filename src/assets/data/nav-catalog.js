@@ -155,8 +155,12 @@ zh: {
     ]),
     s("周卡专区","Weekly Card Zone","fa fa-google-wallet",[
       i("LTY","Password: f4sv","https://wwauv.lanzout.com/b00yb1z1od","L"),
+      i("TSL","Password: d5y7","https://wwauv.lanzn.com/b00ybc9xsj","TSL"),
       i("Time","Password: btqo","https://wwarw.lanzn.com/b00l2sy5gd","T"),
       i("TAB","Password: tab11","https://wwus.lanzouu.com/s/TAB1","TAB"),
+      i("VK","Code: 1234","https://share.feijipan.com/s/TU6XC6Li?code=1234","VK"),
+      i("SOL","Download","https://share.feijipan.com/s/CN55YlBQ","SOL"),
+      i("TEST","Password: 123","https://wwavz.lanzout.com/b00v08n3ah","TEST")
     ]),
     s("月卡专区","Monthly Card Zone","fa fa-delicious",[
       i("KS","KS with built-in hamburger, supports BGX - Registration open during holidays - Password: 112233","https://wwer.lanzouw.com/b00y9snm5i","K"),
