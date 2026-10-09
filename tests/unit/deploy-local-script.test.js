@@ -69,7 +69,7 @@ describe('local deployment safety contract', () => {
 
     test('keeps the legacy production workflow manual-only and retains quality gates', () => {
         expect(deployWorkflow).toContain('workflow_dispatch:');
-        expect(deployWorkflow).not.toMatch(/^  push:/m);
+        expect(deployWorkflow).not.toMatch(/^ {2}push:/m);
         expect(deployWorkflow).not.toContain('      - source');
         expect(deployWorkflow).not.toContain('continue-on-error: true');
         expect(deployWorkflow).toContain('run: npm run audit:gate');
