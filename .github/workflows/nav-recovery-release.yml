@@ -1,0 +1,65 @@
+name: One-time NAV recovery release
+
+on:
+  push:
+    branches:
+      - source
+
+concurrency:
+  group: one-time-nav-recovery
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: contains(github.event.head_commit.message, '[release-nav-recovery-20261009]')
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout merged source
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Dependency audit
+        run: npm run audit:gate
+      - name: Lint
+        run: npm run lint
+      - name: Unit tests
+        run: npm run test:unit
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Smoke and NAV lifecycle tests
+        run: npm run test:smoke
+      - name: Build static production bundle
+        run: npm run build
+      - name: Lighthouse thresholds
+        run: npm run test:perf
+      - name: Publish generated bundle without force push
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          deploy_dir="$RUNNER_TEMP/website-nav-recovery"
+          test ! -e "$deploy_dir"
+          git worktree add --detach "$deploy_dir" origin/main
+          rsync -a --delete --exclude='.git' dist/ "$deploy_dir/"
+          touch "$deploy_dir/.nojekyll"
+          git -C "$deploy_dir" add --all
+          if git -C "$deploy_dir" diff --cached --quiet; then
+            echo "Production bundle already matches main; no empty commit."
+          else
+            git -C "$deploy_dir" config user.name "github-actions[bot]"
+            git -C "$deploy_dir" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            short_source="${GITHUB_SHA:0:7}"
+            git -C "$deploy_dir" commit -m "Deploy source ${short_source}" -m "Source SHA: ${GITHUB_SHA}"
+            git -C "$deploy_dir" push origin HEAD:refs/heads/main
+          fi
+          git worktree remove --force "$deploy_dir"
