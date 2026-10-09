@@ -67,10 +67,10 @@ describe('local deployment safety contract', () => {
         expect(deployScript).toContain('No production changes to deploy; no empty commit was created.');
     });
 
-    test('keeps automatic source deployment behind required quality gates', () => {
+    test('keeps the legacy production workflow manual-only and retains quality gates', () => {
         expect(deployWorkflow).toContain('workflow_dispatch:');
-        expect(deployWorkflow).toContain('  push:');
-        expect(deployWorkflow).toContain('      - source');
+        expect(deployWorkflow).not.toMatch(/^  push:/m);
+        expect(deployWorkflow).not.toContain('      - source');
         expect(deployWorkflow).not.toContain('continue-on-error: true');
         expect(deployWorkflow).toContain('run: npm audit --audit-level=high');
         expect(deployWorkflow).toContain('run: npm run lint');
