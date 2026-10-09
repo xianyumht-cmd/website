@@ -398,8 +398,8 @@ try {
     }
 
     Remove-StaleBuildOutput
-    Write-DeployStatus 'Checking dependency advisories at high severity and above.'
-    Invoke-Npm -Arguments @('audit', '--audit-level=high') | Out-Null
+    Write-DeployStatus 'Checking dependency advisories with the documented development-only exception.'
+    Invoke-Npm -Arguments @('run', 'audit:gate') | Out-Null
     Write-DeployStatus 'Running mandatory local unit tests.'
     Invoke-Npm -Arguments @('run', 'test:unit') | Out-Null
     Write-DeployStatus 'Running the production build.'
