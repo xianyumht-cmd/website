@@ -31,7 +31,7 @@ describe('local deployment safety contract', () => {
     });
 
     test('runs the mandatory validation and rejects incomplete dist', () => {
-        expect(deployScript).toContain("@('audit', '--audit-level=high')");
+        expect(deployScript).toContain("@('run', 'audit:gate')");
         expect(deployScript).toContain("@('run', 'test:unit')");
         expect(deployScript).toContain("@('run', 'build')");
         expect(deployScript).toContain('Build output directory was not generated');
@@ -72,7 +72,7 @@ describe('local deployment safety contract', () => {
         expect(deployWorkflow).not.toMatch(/^  push:/m);
         expect(deployWorkflow).not.toContain('      - source');
         expect(deployWorkflow).not.toContain('continue-on-error: true');
-        expect(deployWorkflow).toContain('run: npm audit --audit-level=high');
+        expect(deployWorkflow).toContain('run: npm run audit:gate');
         expect(deployWorkflow).toContain('run: npm run lint');
         expect(deployWorkflow).toContain('run: npm run test:unit');
         expect(deployWorkflow).toContain('run: npm run test:smoke');
