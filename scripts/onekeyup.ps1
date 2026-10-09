@@ -373,8 +373,11 @@ function Run-NormalMaintenance {
         throw 'origin/source does not equal local source HEAD after push'
     }
     } else {
-        # A retry must not create another source commit or rewrite the canonical JSON.
+        # A retry must validate the existing source before deploying and never create another commit.
+        Invoke-RequiredCommand 'Unit tests' 'npm.cmd' @('run', 'test:unit')
+        Invoke-RequiredCommand 'Production build' 'npm.cmd' @('run', 'build')
         Invoke-RequiredCommand 'NAV lifecycle Playwright' 'npx.cmd' @('playwright', 'test', 'tests/e2e/nav-version-lifecycle.spec.ts')
+        Invoke-RequiredCommand 'Diff check' 'git.exe' @('diff', '--check')
     }
 
     $script:Stage = 'deployment dry-run'
