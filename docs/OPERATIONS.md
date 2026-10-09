@@ -129,6 +129,8 @@ onekeyup.cmd --dry-run --no-pause
 
 Normal mode requires the `source` branch, a clean tracked source tree, and local `HEAD` equal to `origin/source`. It runs the updater dry-run first, then the real updater, and accepts only `src/assets/data/lol-version.json` as the maintenance change. It validates the new JSON, runs unit tests, builds, runs the NAV lifecycle Playwright test, checks the diff, commits the actual version, performs a second remote check, pushes `source` normally, runs the deployment dry-run, and finally reuses `npm run deploy:local` for production publication.
 
+An unchanged LOL version is not by itself proof of a successful publication. The one-click command checks the source SHA recorded by `origin/main`; if it is missing or different, the command retries its checked local deployment path without creating another source commit. The recovery path still runs the NAV lifecycle test and does not bypass the dependency audit.
+
 The command exits `0` for a successful dry-run, an already-current version, or a completed maintenance cycle. It exits nonzero for blocked or failed stages. It never stages `design-previews/` or `output/`, never uses `git clean`, never resets source automatically, never force-pushes, and never disables TLS verification. If source is pushed but main deployment fails, it reports the partial state and does not roll source backward.
 
 The lower-level manual commands documented above remain the recovery path when a maintainer needs to inspect or operate each stage separately.
@@ -216,3 +218,7 @@ Only `src/assets/data/lol-version.json` owns the NAV version, update date, and n
 `npm run deploy:local` is the primary deployment path. It builds from `source`, fetches a fresh `origin/main`, uses a temporary production worktree, and pushes a traceable `Deploy source <short-sha>` commit. Never deploy from local `main` and never run `git push --force origin main`.
 
 `.github/workflows/deploy.yml` remains manual-only and is not required for publication. `deploy_to_github.ps1` remains only as a compatibility wrapper around the local deployment script. No embedded API credential, committed `.env`, TLS bypass, or secret logging is permitted. Historical Git credential exposure is out of scope for this workflow and must not be rewritten here.
+
+## Dependency audit gate — 2026-10-09
+
+Run `npm run audit:gate` to check the full npm audit. A documented exception through 2026-11-30 applies only to high-severity findings transitively caused by unpatched development dependency `braces` (GHSA-vfj7-8cjw-p6xm). All other high/critical findings still block local deployment and CI; the checker also blocks audit transport and parse errors. This is not a claim of zero vulnerabilities. See `docs/DECISIONS.md` and `tests/unit/audit-dependencies.test.js`.

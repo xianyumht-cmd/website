@@ -287,6 +287,20 @@ function Run-DryRun {
     Write-Host '========================================'
 }
 
+function Test-ProductionMatchesSource {
+    param([Parameter(Mandatory = $true)][string]$SourceSha)
+
+    $subject = Get-GitValue @('log', '-1', '--format=%s', 'origin/main')
+    if ($subject -eq ('deploy: ' + $SourceSha)) { return $true }
+
+    $shortSource = $SourceSha.Substring(0, 7)
+    if ($subject -ne ('Deploy source ' + $shortSource)) { return $false }
+
+    $message = Get-GitValue @('log', '-1', '--format=%B', 'origin/main')
+    $exactMetadataLine = 'Source SHA: ' + $SourceSha
+    return @($message -split "[\r\n]+" | Where-Object { $_ -eq $exactMetadataLine }).Count -eq 1
+}
+
 function Run-NormalMaintenance {
     Assert-RepositoryPreflight
     $baseSource = $script:ExpectedSourceBase
@@ -299,22 +313,27 @@ function Run-NormalMaintenance {
     }
 
     Invoke-RequiredCommand 'Real LOL updater' 'npm.cmd' @('run', 'update:lol-version')
-    if (-not (Assert-CanonicalOnlyChanged)) {
-        $current = Read-Canonical
-        Write-Host '========================================'
-        Write-Host 'ONEKEYUP COMPLETE'
-        Write-Host 'LOL version is already current.'
-        Write-Host 'No commit or deployment was required.'
-        Write-Host ('Version: ' + [string]$current.version)
-        Write-Host '========================================'
-        return
-    }
-
+    $hasCanonicalUpdate = Assert-CanonicalOnlyChanged
+    $localSource = Get-GitValue @('rev-parse', 'HEAD')
     $current = Read-Canonical
     $version = [string]$current.version
     $update = [string]$current.update
     $next = [string]$current.next
 
+    if (-not $hasCanonicalUpdate) {
+        if (Test-ProductionMatchesSource -SourceSha $localSource) {
+            Write-Host '========================================'
+            Write-Host 'ONEKEYUP COMPLETE'
+            Write-Host 'LOL version is already current.'
+            Write-Host 'Production is already deployed.'
+            Write-Host ('Version: ' + [string]$current.version)
+            Write-Host '========================================'
+            return
+        }
+        Write-Stage 'LOL version is current, but production is behind source; retrying deployment'
+    }
+
+    if ($hasCanonicalUpdate) {
     Invoke-RequiredCommand 'Unit tests' 'npm.cmd' @('run', 'test:unit')
     Invoke-RequiredCommand 'Production build' 'npm.cmd' @('run', 'build')
     Invoke-RequiredCommand 'NAV lifecycle Playwright' 'npx.cmd' @('playwright', 'test', 'tests/e2e/nav-version-lifecycle.spec.ts')
@@ -352,12 +371,20 @@ function Run-NormalMaintenance {
     if ((Get-GitValue @('rev-parse', 'origin/source')) -ne $localSource) {
         throw 'origin/source does not equal local source HEAD after push'
     }
+    } else {
+        # A retry must validate the existing source before deploying and never create another commit.
+        Invoke-RequiredCommand 'Unit tests' 'npm.cmd' @('run', 'test:unit')
+        Invoke-RequiredCommand 'Production build' 'npm.cmd' @('run', 'build')
+        Invoke-RequiredCommand 'NAV lifecycle Playwright' 'npx.cmd' @('playwright', 'test', 'tests/e2e/nav-version-lifecycle.spec.ts')
+        Invoke-RequiredCommand 'Diff check' 'git.exe' @('diff', '--check')
+    }
 
     $script:Stage = 'deployment dry-run'
     Invoke-NativeCommand -FilePath 'npm.cmd' -NativeArguments @('run', 'deploy:local', '--', '--dry-run') -AllowFailure
     $deployDryRunCode = $script:LastNativeExitCode
     if ($deployDryRunCode -ne 0) {
-        Write-Host 'SOURCE UPDATE WAS PUSHED'
+        if ($hasCanonicalUpdate) { Write-Host 'SOURCE UPDATE WAS PUSHED' }
+        else { Write-Host 'SOURCE WAS ALREADY PUSHED' }
         Write-Host 'MAIN NOT DEPLOYED'
         throw 'Deployment dry-run failed'
     }
@@ -366,7 +393,8 @@ function Run-NormalMaintenance {
     Invoke-NativeCommand -FilePath 'npm.cmd' -NativeArguments @('run', 'deploy:local') -AllowFailure
     $deployCode = $script:LastNativeExitCode
     if ($deployCode -ne 0) {
-        Write-Host 'SOURCE UPDATE WAS PUSHED'
+        if ($hasCanonicalUpdate) { Write-Host 'SOURCE UPDATE WAS PUSHED' }
+        else { Write-Host 'SOURCE WAS ALREADY PUSHED' }
         Write-Host 'PRODUCTION MAIN DEPLOYMENT FAILED'
         throw 'Production deployment failed'
     }
@@ -377,14 +405,8 @@ function Run-NormalMaintenance {
     $finalMain = Get-GitValue @('rev-parse', 'origin/main')
     if ($finalSource -ne $localSource) { throw 'Final origin/source verification failed' }
 
-    $shortSource = $localSource.Substring(0, 7)
-    $mainSubject = Get-GitValue @('log', '-1', '--format=%s', 'origin/main')
-    if ($mainSubject -ne ('Deploy source ' + $shortSource)) {
-        throw ('Unexpected latest main subject: ' + $mainSubject)
-    }
-    $mainMetadata = Get-GitValue @('show', '-s', '--format=%B', 'origin/main')
-    if ($mainMetadata.IndexOf($localSource, [StringComparison]::OrdinalIgnoreCase) -lt 0) {
-        throw 'Production deployment metadata does not contain the full source SHA'
+    if (-not (Test-ProductionMatchesSource -SourceSha $localSource)) {
+        throw ('Production main does not identify source ' + $localSource)
     }
 
     $branch = Get-GitValue @('branch', '--show-current')

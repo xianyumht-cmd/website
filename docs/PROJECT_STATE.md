@@ -80,3 +80,12 @@ Future work should start from current `source` on a new task branch. Do not fold
 - Production artifact branch `main` was published from merged source commit `8ecf4cfafe0d2be3277d8e61c2204cc8561aa155` as `7fd1c70d8472c06ed74f97a181e3431fce060710` on 2026-09-22.
 - The published NAV bundle contains the repaired section-target navigation and current-category state; the later source commit `a810fc2ba57c4f2b5aa5766a03619fcb6e31f485` only closes out documentation.
 
+
+## 2026-10-09 — LOL 26.20 deployment recovery in progress
+
+- Source commit `a541944dd6c54686b41cb30576f9db8ceb5dd51a` contains patch `26.20` with dates 2026-10-06 / 2026-10-21.
+- Production `main` at `57ea364f082e66f4ba12169dfcc3a96f5ebae19f` was still built from source `114b3b37ec419f0cb0e1dad26d6c7925048d9f26`.
+- GitHub Actions deployment run 37770013669 failed before build at `npm audit --audit-level=high`. The local deployment script uses the same blocking audit gate.
+- Recovery work preserves the already-pushed source change and makes the legacy workflow manual-only; this is not yet evidence of a successful production release.
+
+- Compatible lockfile remediation reduced the original 36 high-severity audit findings to 7. The remaining high-severity chain is development-only `braces` with no official patch as of 2026-10-09. A narrowly constrained, expiring security exception is under CI validation (see `docs/DECISIONS.md`); no production deployment is confirmed by this statement.

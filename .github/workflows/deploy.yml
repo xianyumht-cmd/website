@@ -1,9 +1,6 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches:
-      - source
   workflow_dispatch:
 
 jobs:
@@ -27,7 +24,7 @@ jobs:
         run: npm ci
 
       - name: Dependency audit
-        run: npm audit --audit-level=high
+        run: npm run audit:gate
 
       - name: Lint
         run: npm run lint

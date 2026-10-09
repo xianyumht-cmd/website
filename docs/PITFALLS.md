@@ -16,3 +16,11 @@
 
 **Prevention:** Put each category ID on the visible `.resource-section` element itself. Decorative heading icons must not own navigation targets. Keep an end-to-end test that clicks a real sidebar category, verifies the section is visible/in viewport, and checks the current-location state.
 
+
+## One-click update pushed but production stayed stale
+
+**Symptom:** The canonical LOL version in `source` is newer than the NAV page, and rerunning the updater exits early without deploying.
+
+**Cause:** A validation failure after pushing source can prevent publication, but the original no-change branch treated the current JSON as proof that `main` had been deployed. The legacy workflow also still listened for source pushes despite local deployment being authoritative.
+
+**Prevention:** Check the source SHA recorded in `origin/main` before a no-op. When production is behind, reuse the same guarded deployment path without a duplicate source commit. Keep the legacy deploy workflow manual-only; do not ignore dependency-audit failures.

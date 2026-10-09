@@ -77,8 +77,22 @@ describe('Windows one-click LOL maintenance entrypoint', () => {
         expect(powershell).toContain('NO SOURCE OR MAIN PUSH WAS PERFORMED');
         expect(powershell).toContain('Dry-run changed lol-version.json');
         expect(powershell).toContain('LOL version is already current.');
+        expect(powershell).toContain('Production is already deployed.');
         expect(powershell).toContain("$script:DryRun");
         expect(powershell).toContain("$script:NoPause");
+    });
+
+    test('recovers a pending production deployment without a duplicate version commit', () => {
+        expect(powershell).toContain('function Test-ProductionMatchesSource');
+        expect(powershell).toContain("('deploy: ' + $SourceSha)");
+        expect(powershell).toContain("('Deploy source ' + $shortSource)");
+        expect(powershell).toContain("'Source SHA: ' + $SourceSha");
+        expect(powershell).toContain('$hasCanonicalUpdate = Assert-CanonicalOnlyChanged');
+        expect(powershell).toContain('if (-not $hasCanonicalUpdate)');
+        expect(powershell).toContain('Test-ProductionMatchesSource -SourceSha $localSource');
+        expect(powershell).toContain('retrying deployment');
+        expect(powershell).toContain('SOURCE WAS ALREADY PUSHED');
+        expect(powershell).not.toContain('No commit or deployment was required.');
     });
 
     test('reports a pushed-source and failed-main partial state', () => {

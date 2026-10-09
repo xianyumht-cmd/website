@@ -23,7 +23,8 @@
     "test:e2e": "npm run test:smoke",
     "test:perf": "node scripts/perf-threshold.mjs",
     "test:perf:prod": "node scripts/perf-production.mjs",
-    "test": "npm run lint && npm run test:unit && npm run test:e2e && npm run test:perf"
+    "test": "npm run lint && npm run test:unit && npm run test:e2e && npm run test:perf",
+    "audit:gate": "node scripts/audit-dependencies.js"
   },
   "keywords": [],
   "author": "",
