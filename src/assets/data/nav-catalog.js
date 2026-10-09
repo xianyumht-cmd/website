@@ -35,7 +35,6 @@ zh: {
     s("天卡专区","天卡专区","fa fa-book",[
       i("Space","Space","https://wwayq.lanzouq.com/b00odtjzsf","S"),
       i("MD","天卡资源","https://wwbls.lanzouq.com/b0rbeyvra","MD"),
-      i("LSC","天卡资源","https://wwbnl.lanzouw.com/b0mcskk9c","LSC"),
       i("KDA","天卡资源","http://49.235.141.222:1000","KDA"),
       i("acme","密码：8888","https://wwer.ysupan.com","A"),
       i("如意","如意","https://wwbuq.lanzouu.com/b00jf03wja","如"),
@@ -43,16 +42,19 @@ zh: {
       i("KK","密码：123","https://wwarw.lanzn.com/s/KKNB2","KK"),
       i("SPOT","密码：123","https://wwavz.lanzout.com/s/Spotyyds","SP"),
       i("SF","天卡资源","https://wwbuq.lanzouu.com/b00jfjslcb","SF"),
-      i("MAX","MAX网盘","https://wwalp.lanzout.com/s/MAXniubi","MAX")
+      i("MAX","MAX网盘","https://wwalp.lanzout.com/s/MAXniubi","MAX"),
+      i("龙珠","天卡资源","https://share.feijipan.com/s/9pv2ylg9","龙")
     ]),
     s("周卡专区","周卡专区","fa fa-google-wallet",[
       i("LTY","密码：f4sv","https://wwauv.lanzout.com/b00yb1z1od","L"),
       i("TSL","密码：d5y7","https://wwauv.lanzn.com/b00ybc9xsj","TSL"),
       i("时光","密码：btqo","https://wwarw.lanzn.com/b00l2sy5gd","时"),
       i("TAB","密码：tab11","https://wwus.lanzouu.com/s/TAB1","TAB"),
-      i("VK","提取码：1234","https://share.feijipan.com/s/TU6XC6Li?code=1234","VK"),
       i("SOL","下载地址","https://share.feijipan.com/s/CN55YlBQ","SOL"),
-      i("TEST","密码：123","https://wwavz.lanzout.com/b00v08n3ah","TEST")
+      i("TEST","密码：123","https://wwavz.lanzout.com/b00v08n3ah","TEST"),
+      i("FJ","密码：JF11","https://wwaym.lanzoub.com/s/JFYYDS","FJ"),
+      i("viperlite","密码：123","https://wwarw.lanzn.com/b00l34qjlg","V"),
+      i("app","周卡资源","https://wwbuq.lanzouu.com/b00jfkosle","App")
     ]),
     s("月卡专区","月卡专区","fa fa-delicious",[
       i("Noble","需要请联系微信客服，强烈推荐","https://install.noble.vin/","N",{"tooltip":"NS"}),
@@ -148,7 +150,6 @@ zh: {
     s("天卡专区","Daily Card Zone","fa fa-book",[
       i("Space","Space","https://wwayq.lanzouq.com/b00odtjzsf","S"),
       i("MD","Daily-card resource","https://wwbls.lanzouq.com/b0rbeyvra","MD"),
-      i("LSC","Daily-card resource","https://wwbnl.lanzouw.com/b0mcskk9c","LSC"),
       i("KDA","Daily-card resource","http://49.235.141.222:1000","KDA"),
       i("acme","Password: 8888","https://wwer.ysupan.com","A"),
       i("Ruyi","Ruyi","https://wwbuq.lanzouu.com/b00jf03wja","R"),
@@ -156,16 +157,19 @@ zh: {
       i("KK","Password: 123","https://wwarw.lanzn.com/s/KKNB2","KK"),
       i("SPOT","Password: 123","https://wwavz.lanzout.com/s/Spotyyds","SP"),
       i("SF","Daily-card resource","https://wwbuq.lanzouu.com/b00jfjslcb","SF"),
-      i("MAX","MAX download","https://wwalp.lanzout.com/s/MAXniubi","MAX")
+      i("MAX","MAX download","https://wwalp.lanzout.com/s/MAXniubi","MAX"),
+      i("龙珠","Daily-card resource","https://share.feijipan.com/s/9pv2ylg9","龙")
     ]),
     s("周卡专区","Weekly Card Zone","fa fa-google-wallet",[
       i("LTY","Password: f4sv","https://wwauv.lanzout.com/b00yb1z1od","L"),
       i("TSL","Password: d5y7","https://wwauv.lanzn.com/b00ybc9xsj","TSL"),
       i("Time","Password: btqo","https://wwarw.lanzn.com/b00l2sy5gd","T"),
       i("TAB","Password: tab11","https://wwus.lanzouu.com/s/TAB1","TAB"),
-      i("VK","Code: 1234","https://share.feijipan.com/s/TU6XC6Li?code=1234","VK"),
       i("SOL","Download","https://share.feijipan.com/s/CN55YlBQ","SOL"),
-      i("TEST","Password: 123","https://wwavz.lanzout.com/b00v08n3ah","TEST")
+      i("TEST","Password: 123","https://wwavz.lanzout.com/b00v08n3ah","TEST"),
+      i("FJ","Password: JF11","https://wwaym.lanzoub.com/s/JFYYDS","FJ"),
+      i("viperlite","Password: 123","https://wwarw.lanzn.com/b00l34qjlg","V"),
+      i("app","Weekly-card resource","https://wwbuq.lanzouu.com/b00jfkosle","App")
     ]),
     s("月卡专区","Monthly Card Zone","fa fa-delicious",[
       i("KS","KS with built-in hamburger, supports BGX - Registration open during holidays - Password: 112233","https://wwer.lanzouw.com/b00y9snm5i","K"),

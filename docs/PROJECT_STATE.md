@@ -81,11 +81,17 @@ Future work should start from current `source` on a new task branch. Do not fold
 - The published NAV bundle contains the repaired section-target navigation and current-category state; the later source commit `a810fc2ba57c4f2b5aa5766a03619fcb6e31f485` only closes out documentation.
 
 
-## 2026-10-09 — LOL 26.20 deployment recovery in progress
+## 2026-10-09 — LOL 26.20 deployment recovered
 
-- Source commit `a541944dd6c54686b41cb30576f9db8ceb5dd51a` contains patch `26.20` with dates 2026-10-06 / 2026-10-21.
-- Production `main` at `57ea364f082e66f4ba12169dfcc3a96f5ebae19f` was still built from source `114b3b37ec419f0cb0e1dad26d6c7925048d9f26`.
-- GitHub Actions deployment run 37770013669 failed before build at `npm audit --audit-level=high`. The local deployment script uses the same blocking audit gate.
-- Recovery work preserves the already-pushed source change and makes the legacy workflow manual-only; this is not yet evidence of a successful production release.
+- PR #15 merged to canonical `source` as `9598063b2a912e27000870939595ca1116905d6b`.
+- Recovery release run [37906865585](https://github.com/xianyumht-cmd/website/actions/runs/37906865585) passed dependency audit gate, lint, unit tests, Playwright, production build, Lighthouse and safe publication.
+- Production `main` artifact commit `d65bfb0ae5395d6ed89f1845b6395b12bbed1916` records the exact merged source SHA and contains LOL 26.20 with canonical update dates 2026-10-06 / 2026-10-21.
+- The local one-click maintenance command now retries production publication when the version file is already current but `main` is behind `source`. The legacy deployment workflow is manual-only.
+- The time-limited development-only `braces` advisory exception is documented in `docs/DECISIONS.md` and expires 2026-11-30.
 
-- Compatible lockfile remediation reduced the original 36 high-severity audit findings to 7. The remaining high-severity chain is development-only `braces` with no official patch as of 2026-10-09. A narrowly constrained, expiring security exception is under CI validation (see `docs/DECISIONS.md`); no production deployment is confirmed by this statement.
+## 2026-10-09 — NAV daily/weekly card maintenance
+
+- Retire explicitly discontinued `LSC` (daily) and `VK` (weekly) cards.
+- Add `龙珠` to the daily section and `FJ`, `viperlite`, `app` to the weekly section. All four use user-supplied links; supplied access codes remain visible in the appropriate catalog descriptions.
+- Apply the same membership and links to the Chinese and English catalogs in `src/assets/data/nav-catalog.js`. Other sections and cards remain unchanged.
+- Catalog unit coverage and NAV browser language-switch coverage ensure deprecated cards stay absent and replacement entries persist across locales. Production publication requires the normal quality/deploy verification.
