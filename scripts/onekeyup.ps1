@@ -315,8 +315,12 @@ function Run-NormalMaintenance {
     Invoke-RequiredCommand 'Real LOL updater' 'npm.cmd' @('run', 'update:lol-version')
     $hasCanonicalUpdate = Assert-CanonicalOnlyChanged
     $localSource = Get-GitValue @('rev-parse', 'HEAD')
+    $current = Read-Canonical
+    $version = [string]$current.version
+    $update = [string]$current.update
+    $next = [string]$current.next
+
     if (-not $hasCanonicalUpdate) {
-        $current = Read-Canonical
         if (Test-ProductionMatchesSource -SourceSha $localSource) {
             Write-Host '========================================'
             Write-Host 'ONEKEYUP COMPLETE'
@@ -330,11 +334,6 @@ function Run-NormalMaintenance {
     }
 
     if ($hasCanonicalUpdate) {
-    $current = Read-Canonical
-    $version = [string]$current.version
-    $update = [string]$current.update
-    $next = [string]$current.next
-
     Invoke-RequiredCommand 'Unit tests' 'npm.cmd' @('run', 'test:unit')
     Invoke-RequiredCommand 'Production build' 'npm.cmd' @('run', 'build')
     Invoke-RequiredCommand 'NAV lifecycle Playwright' 'npx.cmd' @('playwright', 'test', 'tests/e2e/nav-version-lifecycle.spec.ts')
