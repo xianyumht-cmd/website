@@ -95,3 +95,9 @@ NAV resource sections, membership, titles/descriptions, avatars, and links are o
 Runtime section-replacement patch files are not used for catalog maintenance. The reason is to remove import-order overrides, stale hidden copies, and Chinese/English catalog drift.
 
 `src/assets/data/lol-version.json` remains separate and authoritative for LOL version metadata; it is not part of the resource catalog.
+
+## 2026-10-09 — Temporary exception for an unpatched build-tool vulnerability
+
+The compatible `npm audit fix --package-lock-only` refresh reduced high-severity findings from 36 to 7. The remaining high-severity chain originates from `braces@3.0.3` and advisory `GHSA-vfj7-8cjw-p6xm`, which has no published fixed release as of this date. All affected lockfile nodes must be development-only; the published static site does not bundle this package. An additional `sprintf-js` advisory (`GHSA-hp3w-g68c-fv3c`) is moderate and does not affect the existing high-severity threshold.
+
+The dependency gate invokes a full `npm audit --json --audit-level=high` and uses `scripts/audit-dependencies.js` to accept only dev-only high/critical findings rooted exclusively in this exact unpatched `braces` advisory, through 2026-11-30. Any other high/critical finding, production dependency exposure, invalid audit response, or expiry fails the release. It emits an explicit warning rather than claiming zero vulnerabilities. This is a time-limited risk exception, not a vulnerability fix. Recheck upstream and remove the exception when a patched version appears; do not downgrade Jest/Stylelint or force a breaking dependency migration merely to hide the advisory.
