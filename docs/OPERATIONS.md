@@ -218,3 +218,7 @@ Only `src/assets/data/lol-version.json` owns the NAV version, update date, and n
 `npm run deploy:local` is the primary deployment path. It builds from `source`, fetches a fresh `origin/main`, uses a temporary production worktree, and pushes a traceable `Deploy source <short-sha>` commit. Never deploy from local `main` and never run `git push --force origin main`.
 
 `.github/workflows/deploy.yml` remains manual-only and is not required for publication. `deploy_to_github.ps1` remains only as a compatibility wrapper around the local deployment script. No embedded API credential, committed `.env`, TLS bypass, or secret logging is permitted. Historical Git credential exposure is out of scope for this workflow and must not be rewritten here.
+
+## Dependency audit gate — 2026-10-09
+
+Run `npm run audit:gate` to check the full npm audit. A documented exception through 2026-11-30 applies only to high-severity findings transitively caused by unpatched development dependency `braces` (GHSA-vfj7-8cjw-p6xm). All other high/critical findings still block local deployment and CI; the checker also blocks audit transport and parse errors. This is not a claim of zero vulnerabilities. See `docs/DECISIONS.md` and `tests/unit/audit-dependencies.test.js`.
