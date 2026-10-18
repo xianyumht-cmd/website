@@ -50,3 +50,12 @@ describe('maintained daily and weekly NAV resources', () => {
         });
     }
 });
+
+describe('NAV dance resource link', () => {
+    test('Chinese catalog points to the current Feishu guide', () => {
+        const dance = items('zh', '过炫舞专区');
+        expect(dance).toHaveLength(1);
+        expect(dance[0].title).toBe('过炫舞');
+        expect(dance[0].url).toBe('https://tcnnh75d6cqg.feishu.cn/docx/FFkrdkvHZoCoAKxiYyGcxNMvnig');
+    });
+});
