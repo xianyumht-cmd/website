@@ -95,3 +95,8 @@ Future work should start from current `source` on a new task branch. Do not fold
 - Add `龙珠` to the daily section and `FJ`, `viperlite`, `app` to the weekly section. All four use user-supplied links; supplied access codes remain visible in the appropriate catalog descriptions.
 - Apply the same membership and links to the Chinese and English catalogs in `src/assets/data/nav-catalog.js`. Other sections and cards remain unchanged.
 - Catalog unit coverage and NAV browser language-switch coverage ensure deprecated cards stay absent and replacement entries persist across locales. Production publication requires the normal quality/deploy verification.
+
+## 2026-10-18 — NAV dance guide URL
+
+- The Chinese NAV `过炫舞专区` resource `过炫舞` points to the user-supplied Feishu document instead of its previous Yuque URL. Resource title, description, and section placement are unchanged.
+- `src/assets/data/nav-catalog.js` remains the canonical owner; the English catalog intentionally has no dance section. Regression coverage checks the exact destination. Production availability must be verified after publication.
