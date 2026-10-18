@@ -83,7 +83,7 @@ zh: {
     ]),
     s("过机器码专区","过机器码专区","fa fa-windows",[]),
     s("过炫舞专区","过炫舞专区","fa fa-music",[
-      i("过炫舞","过炫舞教程/资源","https://www.yuque.com/u64769050/mi2tlv/ylsvoeyxy4gz7abn","炫")
+      i("过炫舞","过炫舞教程/资源","https://tcnnh75d6cqg.feishu.cn/docx/FFkrdkvHZoCoAKxiYyGcxNMvnig","炫")
     ]),
     s("小工具专区","小工具专区","fa fa-toolbox",[
       i("亨特","小工具","https://a.hoisen.com/d9YgFh","亨"),
