@@ -142,8 +142,8 @@ export function applyNavStaticLanguage() {
         searchText.setAttribute('aria-label', navText('searchInputLabel'));
     }
 
-    const searchButton = document.querySelector('#ss button:not(.search-clear)');
-    if (searchButton) searchButton.setAttribute('aria-label', navText('searchLabel'));
+    const searchButton = document.querySelector('.resource-search-submit');
+    if (searchButton) searchButton.textContent = navText('searchLabel');
 
     const notice = document.querySelector('#notice li');
     if (notice) notice.textContent = navText('notice');

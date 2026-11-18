@@ -1,18 +1,18 @@
-const { evaluateAudit, UNPATCHED_DEV_ADVISORY } = require('../../scripts/audit-dependencies');
+const { evaluateAudit, UNPATCHED_DEV_ADVISORY, PICOMATCH_DEV_ADVISORY } = require('../../scripts/audit-dependencies');
 
-function scenario({ advisory = UNPATCHED_DEV_ADVISORY, dev = true } = {}) {
+function scenario({ root = 'braces', advisory = UNPATCHED_DEV_ADVISORY, dev = true } = {}) {
     return {
         report: {
             vulnerabilities: {
-                braces: {
+                [root]: {
                     severity: 'high',
-                    nodes: ['node_modules/braces'],
-                    via: [{ name: 'braces', severity: 'high', url: advisory }]
+                    nodes: ['node_modules/' + root],
+                    via: [{ name: root, severity: 'high', url: advisory }]
                 },
                 micromatch: {
                     severity: 'high',
                     nodes: ['node_modules/micromatch'],
-                    via: ['braces']
+                    via: [root]
                 },
                 stylelint: {
                     severity: 'high',
@@ -23,7 +23,7 @@ function scenario({ advisory = UNPATCHED_DEV_ADVISORY, dev = true } = {}) {
         },
         lock: {
             packages: {
-                'node_modules/braces': { dev },
+                ['node_modules/' + root]: { dev },
                 'node_modules/micromatch': { dev },
                 'node_modules/stylelint': { dev }
             }
@@ -63,6 +63,29 @@ describe('dependency audit exception boundary', () => {
     test('fails after the security exception expires', () => {
         const { report, lock } = scenario();
         expect(evaluateAudit(report, lock, new Date('2026-12-01T00:00:00Z')).ok).toBe(false);
+    });
+
+    test('accepts the approved picomatch advisory only through the development chain and deadline', () => {
+        const { report, lock } = scenario({ root: 'picomatch', advisory: PICOMATCH_DEV_ADVISORY });
+        const active = new Date('2026-11-30T15:59:59Z');
+        const result = evaluateAudit(report, lock, active);
+        expect(result.ok).toBe(true);
+        expect(result.exempted).toEqual(['micromatch', 'picomatch', 'stylelint']);
+        expect(evaluateAudit(report, lock, new Date('2026-11-30T16:00:00Z')).ok).toBe(false);
+
+        lock.packages['node_modules/micromatch'].dev = false;
+        expect(evaluateAudit(report, lock, active).blocked).toContain('micromatch');
+    });
+
+    test('blocks picomatch exposure in production or a severity increase', () => {
+        const { report, lock } = scenario({ root: 'picomatch', advisory: PICOMATCH_DEV_ADVISORY, dev: false });
+        const active = new Date('2026-11-18T00:00:00Z');
+        expect(evaluateAudit(report, lock, active).blocked).toContain('picomatch');
+
+        lock.packages['node_modules/picomatch'].dev = true;
+        report.vulnerabilities.picomatch.severity = 'critical';
+        report.vulnerabilities.picomatch.via[0].severity = 'critical';
+        expect(evaluateAudit(report, lock, active).blocked).toContain('picomatch');
     });
 
     test('fails on malformed audit data and allows a clean audit', () => {

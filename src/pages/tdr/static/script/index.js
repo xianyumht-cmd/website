@@ -1,4 +1,5 @@
 import { levels } from './levels.js';
+import pressStartFontUrl from '../font/PressStart2P.ttf?url';
 
 /*!
  * Pacman - HTML5 Game
@@ -569,7 +570,7 @@ import { levels } from './levels.js';
 		});
 	})();
 
-	const myFont = new FontFace('PressStart2P', 'url(./static/font/PressStart2P.ttf)');
+	const myFont = new FontFace('PressStart2P', `url("${pressStartFontUrl}")`);
 	myFont.load().then(font => {
 	  	document.fonts.add(font);
 		game.init();

@@ -3,7 +3,13 @@ const fs = require('fs');
 const path = require('path');
 
 const UNPATCHED_DEV_ADVISORY = 'https://github.com/advisories/GHSA-vfj7-8cjw-p6xm';
+const PICOMATCH_DEV_ADVISORY = 'https://github.com/advisories/GHSA-fc5q-39xc-vjpf';
 const EXCEPTION_END = '2026-11-30';
+const PICOMATCH_EXPIRES_AT = Date.parse('2026-12-01T00:00:00+08:00');
+const DEV_ADVISORIES = new Map([
+    ['braces', UNPATCHED_DEV_ADVISORY],
+    ['picomatch', PICOMATCH_DEV_ADVISORY]
+]);
 
 function isHigh(item) {
     return item && (item.severity === 'high' || item.severity === 'critical');
@@ -19,7 +25,7 @@ function evaluateAudit(report, lock, date = new Date()) {
     if (highNames.length === 0) return { ok: true, blocked: [], exempted: [] };
 
     if (date.toISOString().slice(0, 10) > EXCEPTION_END) {
-        return { ok: false, blocked: ['The development-only braces exception has expired'], exempted: [] };
+        return { ok: false, blocked: ['The time-limited development-only advisory exceptions have expired'], exempted: [] };
     }
 
     const recognized = new Set();
@@ -44,7 +50,9 @@ function evaluateAudit(report, lock, date = new Date()) {
                 }
             } else if (via && typeof via === 'object') {
                 if (isHigh(via)) {
-                    if (name !== 'braces' || via.name !== 'braces' || via.url !== UNPATCHED_DEV_ADVISORY) return false;
+                    const approvedUrl = DEV_ADVISORIES.get(name);
+                    if (!approvedUrl || via.name !== name || via.url !== approvedUrl) return false;
+                    if (name === 'picomatch' && (via.severity !== 'high' || date.getTime() >= PICOMATCH_EXPIRES_AT)) return false;
                     hasKnownRoot = true;
                 }
             } else {
@@ -99,9 +107,13 @@ function main() {
     }
 
     if (outcome.exempted.length > 0) {
-        console.warn('Time-limited development-only advisory exception:', UNPATCHED_DEV_ADVISORY);
+        for (const [name, url] of DEV_ADVISORIES) {
+            if (outcome.exempted.includes(name)) {
+                const expires = name === 'picomatch' ? EXCEPTION_END + ' (Asia/Shanghai)' : EXCEPTION_END + ' (UTC)';
+                console.warn('Time-limited development-only advisory exception:', url, 'through', expires);
+            }
+        }
         console.warn('Affected dev dependency chain:', outcome.exempted.join(', '));
-        console.warn('Exception expires:', EXCEPTION_END, '- unrelated high/critical advisories still fail.');
     } else {
         console.log('No high/critical dependency advisories found.');
     }
@@ -109,4 +121,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { evaluateAudit, UNPATCHED_DEV_ADVISORY, EXCEPTION_END };
+module.exports = { evaluateAudit, UNPATCHED_DEV_ADVISORY, PICOMATCH_DEV_ADVISORY, EXCEPTION_END };

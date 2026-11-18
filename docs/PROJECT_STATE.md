@@ -10,6 +10,13 @@
 - Earlier stacked draft PRs #7, #8 and #9 were superseded by PR #10 and are closed without separate merges.
 - PR #4 (`fix: restore native links and align resource breakpoint`) remains a separate, older unmerged follow-up. It is not part of the Phase 1–4 release and must be reviewed/rebased independently before any future merge.
 
+## 2026-11-18 — Home and resource directories
+
+- Home uses fluid service rows with visible descriptions and separate arrow tracks. The original service, backup and footer destinations remain available.
+- NAV and Games align the search field with their results, and NAV fits its first resource card above the fold at the 375 × 667 comparison size. Both pages keep the existing search, category drawers and version data.
+- The Pac-Man font is resolved as a Vite build asset so the production HTML can load it from the relocated game route.
+- Publication uses the existing local deployment procedure in [Operations](OPERATIONS.md#local-deployment). The deployment commit on `main` records its `Source SHA`.
+
 ## Released Phase 1–4 scope
 
 The completed release includes:

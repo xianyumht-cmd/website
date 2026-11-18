@@ -105,12 +105,9 @@
             </header>
 
             <section class="s-search nav-search-panel" id="search" aria-label="资源搜索">
-                <div class="hide-type-list" id="search-list"></div>
                 <div id="ss" class="nav-search-box">
                     <input type="search" autocomplete="off" id="search-text" onchange="txtSearch()" placeholder="输入关键词，筛选资源" aria-label="搜索资源" style="outline: 0;">
-                    <button type="button" aria-label="搜索" onclick="txtSearch()">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </button>
+                    <button class="resource-search-submit" type="button" onclick="txtSearch()">搜索</button>
                 </div>
 
                 <div class="gg" id="gg">
@@ -121,9 +118,10 @@
                         </ul>
                     </div>
                 </div>
+                <div id="search-result-status" class="search-result-status" role="status" aria-live="polite"></div>
             </section>
 
-            <section id="bulletin_box" class="alert alert-primary nav-version-strip" aria-label="版本信息" style="min-height: 74px;">
+            <section id="bulletin_box" class="alert alert-primary nav-version-strip" aria-label="版本信息">
                 <ul id="bulletin-content" class="bulletin-ul">
                     <li class="overflowClip_1 scrolltext-title" aria-hidden="true">&nbsp;</li>
                 </ul>

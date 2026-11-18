@@ -216,3 +216,56 @@ test('Games category drawer uses the shared vertical mobile layout', async ({ pa
   await expect(mobileToggle).toHaveAttribute('aria-expanded', 'false')
   await expect(sidebar).not.toHaveClass(/(?:^|\s)collapsed(?:\s|$)/)
 })
+
+test('Home keeps service actions in the row and exposes backup links on mobile', async ({ page }) => {
+  for (const width of [1080, 1081]) {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto('/')
+    const rows = page.locator('.service-row')
+    await expect(rows).toHaveCount(3)
+
+    for (const row of await rows.all()) {
+      await row.focus()
+      const withinRow = await row.evaluate((link) => {
+        const bounds = link.getBoundingClientRect()
+        const action = link.querySelector('.service-action')?.getBoundingClientRect()
+        return action && action.width > 0 && action.left >= bounds.left
+          && action.right <= bounds.right && action.right <= window.innerWidth
+      })
+      expect(withinRow).toBe(true)
+    }
+  }
+
+  await page.setViewportSize({ width: 375, height: 667 })
+  await page.goto('/')
+  await expect(page.locator('.service-copy')).toHaveCount(3)
+  await expect(page.locator('.support-links a')).toHaveCount(2)
+  for (const copy of await page.locator('.service-copy').all()) {
+    await expect(copy).toBeVisible()
+  }
+  for (const backup of await page.locator('.support-links a').all()) {
+    await expect(backup).toBeInViewport({ ratio: 1 })
+  }
+})
+
+test('Resource search aligns with its results and the first NAV card fits on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  for (const route of ['/down/nav/', '/down/games/']) {
+    await page.goto(route)
+    await expect(page.getByRole('button', { name: '搜索', exact: true })).toBeVisible()
+    const search = await page.locator('#ss').boundingBox()
+    const card = await page.locator('#content-sections .xe-widget').first().boundingBox()
+    expect(search).not.toBeNull()
+    expect(card).not.toBeNull()
+    expect(Math.abs(search!.x - card!.x)).toBeLessThan(1)
+  }
+
+  await page.setViewportSize({ width: 375, height: 667 })
+  await page.goto('/down/nav/')
+  await expect(page.locator('#search-result-status')).toContainText('已收录')
+  const firstCard = page.locator('#content-sections .xe-widget').first()
+  await expect(firstCard).toBeInViewport({ ratio: 1 })
+  const cardBounds = await firstCard.boundingBox()
+  const dockBounds = await page.locator('.fk_service').boundingBox()
+  expect(cardBounds!.y + cardBounds!.height).toBeLessThanOrEqual(dockBounds!.y)
+})
