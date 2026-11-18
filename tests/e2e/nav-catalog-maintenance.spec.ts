@@ -5,11 +5,14 @@ test('daily and weekly NAV cards reflect approved resources after language switc
   await page.waitForSelector('#content-sections .box2')
 
   const expectCards = async () => {
-    for (const name of ['龙珠', 'FJ', 'viperlite', 'app']) {
+    for (const name of ['HE B', 'EX', 'OFF', '乡里别', 'jinX', 'LX', 'LK', 'app']) {
       await expect(page.locator(`#content-sections .box2[aria-label^="${name}："]`)).toHaveCount(1)
     }
 
-    for (const name of ['LSC', 'VK']) {
+    await expect(page.locator('[id="周卡专区"] .box2[aria-label^="LEI："]')).toHaveCount(1)
+    await expect(page.locator('[id="月卡专区"] .box2[aria-label^="LEI："]')).toHaveCount(1)
+
+    for (const name of ['LSC', 'VK', 'DC', '龙珠', 'TSL', '时光', 'Time', 'TAB', 'TEST', 'FJ', 'viperlite']) {
       await expect(page.locator(`#content-sections .box2[aria-label^="${name}："]`)).toHaveCount(0)
     }
   }

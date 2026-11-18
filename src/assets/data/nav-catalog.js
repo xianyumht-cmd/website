@@ -33,28 +33,28 @@ zh: {
     ]),
     s("BGX专区","BGX专区","fa fa-xing-square",[]),
     s("天卡专区","天卡专区","fa fa-book",[
+      i("HE B","天卡资源","https://wwauv.lanzn.com/b00ybhuead","HEB"),
       i("Space","Space","https://wwayq.lanzouq.com/b00odtjzsf","S"),
       i("MD","天卡资源","https://wwbls.lanzouq.com/b0rbeyvra","MD"),
       i("KDA","天卡资源","http://49.235.141.222:1000","KDA"),
       i("acme","密码：8888","https://wwer.ysupan.com","A"),
       i("如意","如意","https://wwbuq.lanzouu.com/b00jf03wja","如"),
-      i("DC","提取码：DC66","https://share.feijipan.com/s/xiark1VW?code=DC66","DC"),
       i("KK","密码：123","https://wwarw.lanzn.com/s/KKNB2","KK"),
       i("SPOT","密码：123","https://wwavz.lanzout.com/s/Spotyyds","SP"),
       i("SF","天卡资源","https://wwbuq.lanzouu.com/b00jfjslcb","SF"),
       i("MAX","MAX网盘","https://wwalp.lanzout.com/s/MAXniubi","MAX"),
-      i("龙珠","天卡资源","https://share.feijipan.com/s/9pv2ylg9","龙")
+      i("EX","密码：123","https://wwus.lanzoum.com/b0zl8q8rg","EX")
     ]),
     s("周卡专区","周卡专区","fa fa-google-wallet",[
+      i("LEI","周卡资源","http://211.154.22.179:88/3","L"),
+      i("OFF","密码：123","https://wwash.lanzouw.com/b019vvm2ve","OFF"),
       i("LTY","密码：f4sv","https://wwauv.lanzout.com/b00yb1z1od","L"),
-      i("TSL","密码：d5y7","https://wwauv.lanzn.com/b00ybc9xsj","TSL"),
-      i("时光","密码：btqo","https://wwarw.lanzn.com/b00l2sy5gd","时"),
-      i("TAB","密码：tab11","https://wwus.lanzouu.com/s/TAB1","TAB"),
       i("SOL","下载地址","https://share.feijipan.com/s/CN55YlBQ","SOL"),
-      i("TEST","密码：123","https://wwavz.lanzout.com/b00v08n3ah","TEST"),
-      i("FJ","密码：JF11","https://wwaym.lanzoub.com/s/JFYYDS","FJ"),
-      i("viperlite","密码：123","https://wwarw.lanzn.com/b00l34qjlg","V"),
-      i("app","周卡资源","https://wwbuq.lanzouu.com/b00jfkosle","App")
+      i("app","周卡资源","https://wwbuq.lanzouu.com/b00jfkosle","App"),
+      i("乡里别","密码：xiang","https://wwus.lanzoum.com/s/xianglibie","乡"),
+      i("jinX","密码：JinXNB","https://wwavz.lanzout.com/s/baobaoniubi","JX"),
+      i("LX","密码：lx","https://wwus.lanzoum.com/b0zl9rp0d","LX"),
+      i("LK","周卡资源","https://zkgame.lanzoul.com/b00v0ctduh","LK")
     ]),
     s("月卡专区","月卡专区","fa fa-delicious",[
       i("Noble","需要请联系微信客服，强烈推荐","https://install.noble.vin/","N",{"tooltip":"NS"}),
@@ -83,7 +83,10 @@ zh: {
     ]),
     s("过机器码专区","过机器码专区","fa fa-windows",[]),
     s("过炫舞专区","过炫舞专区","fa fa-music",[
-      i("过炫舞","过炫舞教程/资源","https://tcnnh75d6cqg.feishu.cn/docx/FFkrdkvHZoCoAKxiYyGcxNMvnig","炫")
+      i("过炫舞","过炫舞教程/资源","https://tcnnh75d6cqg.feishu.cn/wiki/In0kwB2rliSIm2kTXxyc95Ssnwf","炫")
+    ]),
+    s("QQ飞车专区","QQ飞车专区","fa fa-flag-checkered",[
+      i("QQ飞车","QQ飞车教程/资源","https://tcnnh75d6cqg.feishu.cn/docx/EHV9dO3I0oEGmKx9McBcrD76ngc","飞")
     ]),
     s("小工具专区","小工具专区","fa fa-toolbox",[
       i("亨特","小工具","https://a.hoisen.com/d9YgFh","亨"),
@@ -148,28 +151,28 @@ zh: {
     ]),
     s("BGX专区","BGX Zone","fa fa-xing-square",[]),
     s("天卡专区","Daily Card Zone","fa fa-book",[
+      i("HE B","Daily-card resource","https://wwauv.lanzn.com/b00ybhuead","HEB"),
       i("Space","Space","https://wwayq.lanzouq.com/b00odtjzsf","S"),
       i("MD","Daily-card resource","https://wwbls.lanzouq.com/b0rbeyvra","MD"),
       i("KDA","Daily-card resource","http://49.235.141.222:1000","KDA"),
       i("acme","Password: 8888","https://wwer.ysupan.com","A"),
       i("Ruyi","Ruyi","https://wwbuq.lanzouu.com/b00jf03wja","R"),
-      i("DC","Code: DC66","https://share.feijipan.com/s/xiark1VW?code=DC66","DC"),
       i("KK","Password: 123","https://wwarw.lanzn.com/s/KKNB2","KK"),
       i("SPOT","Password: 123","https://wwavz.lanzout.com/s/Spotyyds","SP"),
       i("SF","Daily-card resource","https://wwbuq.lanzouu.com/b00jfjslcb","SF"),
       i("MAX","MAX download","https://wwalp.lanzout.com/s/MAXniubi","MAX"),
-      i("龙珠","Daily-card resource","https://share.feijipan.com/s/9pv2ylg9","龙")
+      i("EX","Password: 123","https://wwus.lanzoum.com/b0zl8q8rg","EX")
     ]),
     s("周卡专区","Weekly Card Zone","fa fa-google-wallet",[
+      i("LEI","Weekly-card resource","http://211.154.22.179:88/3","L"),
+      i("OFF","Password: 123","https://wwash.lanzouw.com/b019vvm2ve","OFF"),
       i("LTY","Password: f4sv","https://wwauv.lanzout.com/b00yb1z1od","L"),
-      i("TSL","Password: d5y7","https://wwauv.lanzn.com/b00ybc9xsj","TSL"),
-      i("Time","Password: btqo","https://wwarw.lanzn.com/b00l2sy5gd","T"),
-      i("TAB","Password: tab11","https://wwus.lanzouu.com/s/TAB1","TAB"),
       i("SOL","Download","https://share.feijipan.com/s/CN55YlBQ","SOL"),
-      i("TEST","Password: 123","https://wwavz.lanzout.com/b00v08n3ah","TEST"),
-      i("FJ","Password: JF11","https://wwaym.lanzoub.com/s/JFYYDS","FJ"),
-      i("viperlite","Password: 123","https://wwarw.lanzn.com/b00l34qjlg","V"),
-      i("app","Weekly-card resource","https://wwbuq.lanzouu.com/b00jfkosle","App")
+      i("app","Weekly-card resource","https://wwbuq.lanzouu.com/b00jfkosle","App"),
+      i("乡里别","Password: xiang","https://wwus.lanzoum.com/s/xianglibie","乡"),
+      i("jinX","Password: JinXNB","https://wwavz.lanzout.com/s/baobaoniubi","JX"),
+      i("LX","Password: lx","https://wwus.lanzoum.com/b0zl9rp0d","LX"),
+      i("LK","Weekly-card resource","https://zkgame.lanzoul.com/b00v0ctduh","LK")
     ]),
     s("月卡专区","Monthly Card Zone","fa fa-delicious",[
       i("KS","KS with built-in hamburger, supports BGX - Registration open during holidays - Password: 112233","https://wwer.lanzouw.com/b00y9snm5i","K"),
@@ -196,6 +199,9 @@ zh: {
       i("Panda Privilege","Panda Privilege is an accelerator for machines without internet cafe privileges","https://wwv.lanzouh.com/b00mone1bc","Panda")
     ]),
     s("过机器码专区","HWID Bypass Zone","fa fa-windows",[]),
+    s("QQ飞车专区","QQ Speed Zone","fa fa-flag-checkered",[
+      i("QQ Speed","QQ Speed guides and resources","https://tcnnh75d6cqg.feishu.cn/docx/EHV9dO3I0oEGmKx9McBcrD76ngc","QQ")
+    ]),
     s("小工具专区","Utilities","fa fa-toolbox",[
       i("Hunter","Utility","https://a.hoisen.com/d9YgFh","H"),
       i("Keyboard Warrior","Free tool for entering account credentials with one click","https://mybb.lanzn.com/illyB3p72wgb","K")

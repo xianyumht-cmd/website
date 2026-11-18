@@ -108,3 +108,15 @@ Future work should start from current `source` on a new task branch. Do not fold
 
 - The Chinese NAV `过炫舞专区` resource `过炫舞` points to the user-supplied Feishu document instead of its previous Yuque URL. Resource title, description, and section placement are unchanged.
 - `src/assets/data/nav-catalog.js` remains the canonical owner; the English catalog intentionally has no dance section. Regression coverage checks the exact destination. Production availability must be verified after publication.
+
+## 2026-11-19 — NAV guide links and confirmed card reconciliation
+
+- Local task branch `fix/nav-dance-qqspeed-20261119` starts from current `origin/source` at `f7dcc3a06a160d9d39b35d3b9ddb3a0f5ad04ef8`, in the isolated worktree `D:\project2\worktrees\website-nav-links`. The original worktree's untracked `design-previews/` and `output/` directories are untouched.
+- Replace the Chinese `过炫舞` destination with the user-supplied Feishu wiki `In0kwB2rliSIm2kTXxyc95Ssnwf`.
+- Add `QQ飞车专区` with one resource card pointing to the supplied Feishu document `EHV9dO3I0oEGmKx9McBcrD76ngc`, in both language catalogs. Preserve the intentional absence of an English dance section.
+- The user supplied eight new resource links and explicitly confirmed all eight removal candidates. Daily additions: `HE B`, `EX`; weekly additions: `LEI`, `OFF`, `乡里别`, `jinX`, `LX`, `LK`. Preserve access-code spelling and case in the catalog descriptions. The confirmed spelling `LK` supersedes the cropped-image guess `KL`; `KML` has no supplied link and is not added.
+- Remove daily `DC`, `龙珠` and weekly `TSL`, `时光`/`Time`, `TAB`, `TEST`, `FJ`, `viperlite` from both locales. Preserve other resource cards and intentional locale differences, including monthly `LEI`; only the newly added weekly `LEI` uses the newly supplied destination.
+- The user approved production publication of this NAV change. The preceding production build is `e41148bf6dddb8ae137df13ccd4f835bcf138b58` from source `f7dcc3a06a160d9d39b35d3b9ddb3a0f5ad04ef8`.
+- Validation: clean `npm ci`; dependency audit gate passed with no high/critical findings (19 moderate findings remain); HTML/CSS/JS lint passed; 68 unit tests and 14 Playwright smoke/e2e tests passed; production build and `_headers` verification passed. Three Lighthouse runs each: NAV performance 1.00/1.00/1.00, max CLS 0.0040; TDR 1.00/1.00/1.00, max CLS 0.0000.
+- After the confirmed additions/removals, lint, 68 unit tests, 14 browser tests, build/security-header verification, and the six performance runs were rerun successfully with the same scores/CLS above. Browser inspection checked all eight supplied destinations and confirmed unrelated sections, including monthly resources, stayed unchanged. Daily/weekly totals are 11/9 in both locales.
+- Additional browser inspection verified keyboard activation, Chinese/English search and switching, no page errors, and no horizontal overflow at 390px. Desktop/mobile screenshots and the confirmed change checklist are saved under the current chat's `outputs/nav-update/` directory. Only KML still lacks a supplied link; it is not a placeholder in the public catalog.

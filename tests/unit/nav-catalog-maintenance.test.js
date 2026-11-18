@@ -19,21 +19,28 @@ function items(language, category) {
 
 describe('maintained daily and weekly NAV resources', () => {
     for (const language of ['zh', 'en']) {
-        test(language + ' daily cards keep active links and exclude LSC', () => {
+        test(language + ' daily cards use approved replacements and remove retired resources', () => {
             const daily = items(language, '天卡专区');
-            const entries = daily.filter(item => item.title === '龙珠');
-            expect(entries).toHaveLength(1);
-            expect(entries[0].url).toBe('https://share.feijipan.com/s/9pv2ylg9');
-            expect(daily.some(item => item.title === 'LSC')).toBe(false);
+            expect(daily.find(item => item.title === 'HE B').url).toBe('https://wwauv.lanzn.com/b00ybhuead');
+            const ex = daily.find(item => item.title === 'EX');
+            expect(ex.url).toBe('https://wwus.lanzoum.com/b0zl8q8rg');
+            expect(ex.description).toContain('123');
+            for (const name of ['LSC', 'DC', '龙珠']) {
+                expect(daily.some(item => item.title === name)).toBe(false);
+            }
             expect(daily.some(item => item.title === 'MAX')).toBe(true);
             expect(daily.some(item => item.title === 'KK')).toBe(true);
         });
 
-        test(language + ' weekly cards keep exact links and passwords without VK', () => {
+        test(language + ' weekly cards keep approved links, password case, and removals', () => {
             const weekly = items(language, '周卡专区');
             const expected = [
-                ['FJ', 'https://wwaym.lanzoub.com/s/JFYYDS', 'JF11'],
-                ['viperlite', 'https://wwarw.lanzn.com/b00l34qjlg', '123'],
+                ['LEI', 'http://211.154.22.179:88/3', null],
+                ['OFF', 'https://wwash.lanzouw.com/b019vvm2ve', '123'],
+                ['乡里别', 'https://wwus.lanzoum.com/s/xianglibie', 'xiang'],
+                ['jinX', 'https://wwavz.lanzout.com/s/baobaoniubi', 'JinXNB'],
+                ['LX', 'https://wwus.lanzoum.com/b0zl9rp0d', 'lx'],
+                ['LK', 'https://zkgame.lanzoul.com/b00v0ctduh', null],
                 ['app', 'https://wwbuq.lanzouu.com/b00jfkosle', null]
             ];
 
@@ -44,9 +51,12 @@ describe('maintained daily and weekly NAV resources', () => {
                 if (password) expect(matches[0].description).toContain(password);
             }
 
-            expect(weekly.some(item => item.title === 'VK')).toBe(false);
-            expect(weekly.some(item => item.title === 'TEST')).toBe(true);
+            for (const name of ['VK', 'TSL', '时光', 'Time', 'TAB', 'TEST', 'FJ', 'viperlite', 'KL', 'KML']) {
+                expect(weekly.some(item => item.title === name)).toBe(false);
+            }
             expect(weekly.some(item => item.title === 'SOL')).toBe(true);
+            expect(weekly.some(item => item.title === 'LTY')).toBe(true);
+            expect(items(language, '月卡专区').some(item => item.title === 'LEI')).toBe(true);
         });
     }
 });
@@ -56,6 +66,16 @@ describe('NAV dance resource link', () => {
         const dance = items('zh', '过炫舞专区');
         expect(dance).toHaveLength(1);
         expect(dance[0].title).toBe('过炫舞');
-        expect(dance[0].url).toBe('https://tcnnh75d6cqg.feishu.cn/docx/FFkrdkvHZoCoAKxiYyGcxNMvnig');
+        expect(dance[0].url).toBe('https://tcnnh75d6cqg.feishu.cn/wiki/In0kwB2rliSIm2kTXxyc95Ssnwf');
     });
+});
+
+describe('NAV QQ Speed resource link', () => {
+    for (const language of ['zh', 'en']) {
+        test(language + ' catalog exposes the approved QQ Speed guide', () => {
+            const speed = items(language, 'QQ飞车专区');
+            expect(speed).toHaveLength(1);
+            expect(speed[0].url).toBe('https://tcnnh75d6cqg.feishu.cn/docx/EHV9dO3I0oEGmKx9McBcrD76ngc');
+        });
+    }
 });
