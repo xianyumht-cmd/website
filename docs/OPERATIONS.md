@@ -221,4 +221,4 @@ Only `src/assets/data/lol-version.json` owns the NAV version, update date, and n
 
 ## Dependency audit gate — 2026-10-09
 
-Run `npm run audit:gate` to check the full npm audit. A documented exception through 2026-11-30 applies only to high-severity findings transitively caused by unpatched development dependency `braces` (GHSA-vfj7-8cjw-p6xm). All other high/critical findings still block local deployment and CI; the checker also blocks audit transport and parse errors. This is not a claim of zero vulnerabilities. See `docs/DECISIONS.md` and `tests/unit/audit-dependencies.test.js`.
+Run `npm run audit:gate` to check the full npm audit. The development-only exceptions apply to high-severity findings caused by `braces` (GHSA-vfj7-8cjw-p6xm) or `picomatch` (GHSA-fc5q-39xc-vjpf) through 2026-11-30, in UTC and Asia/Shanghai respectively. All other high/critical findings still block local deployment and CI; the checker also blocks audit transport and parse errors. This is not a claim of zero vulnerabilities. See `docs/DECISIONS.md` and `tests/unit/audit-dependencies.test.js`.

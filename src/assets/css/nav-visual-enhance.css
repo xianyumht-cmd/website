@@ -492,6 +492,9 @@
 .nav-page .xe-widget,
 .nav-page .box2.label-info.xe-conversations.xe-widget {
   min-height: 104px;
+
+  /* Let min-height size unpainted cards instead of the legacy intrinsic height. */
+  contain-intrinsic-block-size: auto 0;
   padding: 14px !important;
   border-color: var(--resource-line) !important;
   border-radius: 4px !important;

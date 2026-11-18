@@ -83,6 +83,9 @@ describe('dependency audit exception boundary', () => {
         expect(evaluateAudit(report, lock, active).blocked).toContain('picomatch');
 
         lock.packages['node_modules/picomatch'].dev = true;
+        report.vulnerabilities.stylelint.severity = 'critical';
+        expect(evaluateAudit(report, lock, active).blocked).toContain('stylelint');
+
         report.vulnerabilities.picomatch.severity = 'critical';
         report.vulnerabilities.picomatch.via[0].severity = 'critical';
         expect(evaluateAudit(report, lock, active).blocked).toContain('picomatch');

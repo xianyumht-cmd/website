@@ -31,7 +31,7 @@ function evaluateAudit(report, lock, date = new Date()) {
     const recognized = new Set();
     function isKnownDevChain(name, ancestors = new Set()) {
         const vulnerability = vulnerabilities[name];
-        if (!isHigh(vulnerability) || ancestors.has(name)) return false;
+        if (vulnerability?.severity !== 'high' || ancestors.has(name)) return false;
 
         const nodes = vulnerability.nodes;
         if (!Array.isArray(nodes) || nodes.length === 0) return false;
@@ -51,8 +51,8 @@ function evaluateAudit(report, lock, date = new Date()) {
             } else if (via && typeof via === 'object') {
                 if (isHigh(via)) {
                     const approvedUrl = DEV_ADVISORIES.get(name);
-                    if (!approvedUrl || via.name !== name || via.url !== approvedUrl) return false;
-                    if (name === 'picomatch' && (via.severity !== 'high' || date.getTime() >= PICOMATCH_EXPIRES_AT)) return false;
+                    if (via.severity !== 'high' || !approvedUrl || via.name !== name || via.url !== approvedUrl) return false;
+                    if (name === 'picomatch' && date.getTime() >= PICOMATCH_EXPIRES_AT) return false;
                     hasKnownRoot = true;
                 }
             } else {

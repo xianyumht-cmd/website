@@ -14,6 +14,7 @@
 
 - Home uses fluid service rows with visible descriptions and separate arrow tracks. The original service, backup and footer destinations remain available.
 - NAV and Games align the search field with their results, and NAV fits its first resource card above the fold at the 375 × 667 comparison size. Both pages keep the existing search, category drawers and version data.
+- NAV uses the same card minimum height before and after offscreen content becomes visible to avoid layout shifts on initial load.
 - The Pac-Man font is resolved as a Vite build asset so the production HTML can load it from the relocated game route.
 - Publication uses the existing local deployment procedure in [Operations](OPERATIONS.md#local-deployment). The deployment commit on `main` records its `Source SHA`.
 
