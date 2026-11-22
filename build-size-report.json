@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-18T21:15:00.997Z",
+  "generatedAt": "2026-11-22T21:59:38.154Z",
   "totals": {
     "js": {
-      "raw": 235433,
+      "raw": 235392,
       "gzip": 75263,
-      "brotli": 62186,
+      "brotli": 62217,
       "count": 12
     },
     "css": {
@@ -14,9 +14,9 @@
       "count": 4
     },
     "html": {
-      "raw": 106252,
-      "gzip": 33937,
-      "brotli": 26016,
+      "raw": 106168,
+      "gzip": 33947,
+      "brotli": 26009,
       "count": 9
     },
     "images": {
@@ -44,10 +44,10 @@
       "brotli": 4058
     },
     {
-      "file": "assets/nav-DVfiTnhQ.js",
+      "file": "assets/nav-DSjBE_K8.js",
       "raw": 22650,
       "gzip": 8163,
-      "brotli": 6597
+      "brotli": 6612
     },
     {
       "file": "groupguard/manual.html",
@@ -57,21 +57,21 @@
     },
     {
       "file": "about.html",
-      "raw": 19257,
-      "gzip": 5545,
-      "brotli": 4275
+      "raw": 19248,
+      "gzip": 5541,
+      "brotli": 4273
     },
     {
-      "file": "assets/error-guard-7kO8F-be.js",
+      "file": "assets/error-guard-C315ur_e.js",
       "raw": 17916,
-      "gzip": 6482,
-      "brotli": 5290
+      "gzip": 6484,
+      "brotli": 5293
     },
     {
       "file": "lol-helper.html",
-      "raw": 16350,
-      "gzip": 4938,
-      "brotli": 3851
+      "raw": 16346,
+      "gzip": 4941,
+      "brotli": 3846
     },
     {
       "file": "assets/nav-9c5MB3zG.css",
@@ -86,10 +86,10 @@
       "brotli": 2830
     },
     {
-      "file": "assets/games-DNgLHUtu.js",
+      "file": "assets/games-sleFeZU0.js",
       "raw": 11105,
       "gzip": 4243,
-      "brotli": 3379
+      "brotli": 3384
     },
     {
       "file": "assets/theme-mode.min-cIjd2nug.js",
@@ -106,14 +106,14 @@
     {
       "file": "down/games/index.html",
       "raw": 9423,
-      "gzip": 3038,
-      "brotli": 2258
+      "gzip": 3035,
+      "brotli": 2234
     },
     {
       "file": "privacy.html",
-      "raw": 8138,
-      "gzip": 3037,
-      "brotli": 2229
+      "raw": 8129,
+      "gzip": 3040,
+      "brotli": 2243
     },
     {
       "file": "assets/tdr-B9NicexM.css",
@@ -129,9 +129,9 @@
     },
     {
       "file": "404.html",
-      "raw": 5216,
-      "gzip": 1806,
-      "brotli": 1405
+      "raw": 5207,
+      "gzip": 1805,
+      "brotli": 1406
     },
     {
       "file": "assets/main-Hae966Y7.js",
@@ -141,9 +141,9 @@
     },
     {
       "file": "down/tdr/index.html",
-      "raw": 4756,
-      "gzip": 1825,
-      "brotli": 1282
+      "raw": 4703,
+      "gzip": 1837,
+      "brotli": 1291
     }
   ],
   "warnings": []
