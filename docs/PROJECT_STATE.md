@@ -126,3 +126,4 @@ Future work should start from current `source` on a new task branch. Do not fold
 - Baseline for this change was remote `source` at `98383360cdd1246c4a591447906c2dac2db7ca4c`. Remote `main` commit `5712ff50cd0e40385c55c5d6ea75455c69afae88` records that source SHA.
 - The script fast-forwards a clean, behind-only checkout before updating the NAV version. Dry-run leaves the local branch in place. Local-only commits require reconciliation.
 - Windows PowerShell 5.1 passed seven local-remote CLI scenarios with real Git and stubbed updater/deployment commands. The 69 unit tests and the NAV version lifecycle browser test passed separately.
+- PR #18 also pins Quality Gate to Ubuntu 24.04 after the floating runner moved to an OS unsupported by locked Playwright 1.58.1.
