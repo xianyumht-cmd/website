@@ -24,3 +24,11 @@
 **Cause:** A validation failure after pushing source can prevent publication, but the original no-change branch treated the current JSON as proof that `main` had been deployed. The legacy workflow also still listened for source pushes despite local deployment being authoritative.
 
 **Prevention:** Check the source SHA recorded in `origin/main` before a no-op. When production is behind, reuse the same guarded deployment path without a duplicate source commit. Keep the legacy deploy workflow manual-only; do not ignore dependency-audit failures.
+
+## One-click update stopped on a safely behind checkout
+
+The old preflight treated every SHA mismatch as a conflict, including a clean checkout that only needed upstream commits. Check the commit relationship before running the updater. Fast-forward only, protect ignored files, and use the synchronized SHA for the later push check. Dry-run should report the pending sync without moving the local branch.
+
+## GitHub runner updates can break Chromium installation
+
+Quality Gate failed before browser tests when the runner selected by `ubuntu-latest` became Ubuntu 26.04. The locked Playwright 1.58.1 release could not install Chromium dependencies on that OS. Keep Quality Gate pinned to Ubuntu 24.04 until a tested Playwright upgrade supports the newer runner. Keep Chromium and Lighthouse checks enabled.

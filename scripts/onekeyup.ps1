@@ -167,14 +167,6 @@ function Assert-RepositoryPreflight {
         throw ('Current branch must be source; found ' + $branch)
     }
 
-    Invoke-SecureFetch
-    $head = Get-GitValue @('rev-parse', 'HEAD')
-    $remoteSource = Get-GitValue @('rev-parse', 'origin/source')
-    if ($head -ne $remoteSource) {
-        throw ('Local source is not equal to origin/source. HEAD=' + $head + '; origin/source=' + $remoteSource)
-    }
-    $script:ExpectedSourceBase = $remoteSource
-
     Assert-UntrackedMaterial
     $tracked = @(Get-TrackedStatusLines)
     if (-not $AllowTrackedChanges -and $tracked.Count -gt 0) {
@@ -184,6 +176,27 @@ function Assert-RepositoryPreflight {
     if ($AllowTrackedChanges -and $tracked.Count -gt 0) {
         Write-Stage ('Dry-run is preserving existing tracked changes: ' + $tracked.Count + ' line(s)')
     }
+
+    Invoke-SecureFetch
+    $head = Get-GitValue @('rev-parse', 'HEAD')
+    $remoteSource = Get-GitValue @('rev-parse', 'refs/remotes/origin/source')
+    if ($head -ne $remoteSource) {
+        $ahead, $behind = (Get-GitValue @('rev-list', '--left-right', '--count', ($head + '...' + $remoteSource))) -split '\s+'
+        if ([int]$ahead -gt 0) {
+            throw ('Local source cannot fast-forward. Local-only commits: ' + $ahead + '; remote-only commits: ' + $behind + '. Reconcile source before retrying. HEAD=' + $head + '; origin/source=' + $remoteSource)
+        }
+
+        if ($script:DryRun) {
+            Write-Stage ('DRY RUN: would fast-forward source by ' + $behind + ' commit(s). Validation uses the current local checkout.')
+        } else {
+            Invoke-RequiredCommand ('Fast-forward source by ' + $behind + ' commit(s)') 'git.exe' @('merge', '--ff-only', '--no-overwrite-ignore', $remoteSource)
+            if ((Get-GitValue @('rev-parse', 'HEAD')) -ne $remoteSource -or @(Get-TrackedStatusLines).Count -ne 0) {
+                throw 'Source did not match the fetched commit and a clean tracked tree after fast-forward'
+            }
+            Assert-UntrackedMaterial
+        }
+    }
+    $script:ExpectedSourceBase = $remoteSource
 }
 
 function Get-CanonicalHash {

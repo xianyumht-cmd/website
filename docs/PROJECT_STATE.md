@@ -120,3 +120,10 @@ Future work should start from current `source` on a new task branch. Do not fold
 - Validation: clean `npm ci`; dependency audit gate passed with no high/critical findings (19 moderate findings remain); HTML/CSS/JS lint passed; 68 unit tests and 14 Playwright smoke/e2e tests passed; production build and `_headers` verification passed. Three Lighthouse runs each: NAV performance 1.00/1.00/1.00, max CLS 0.0040; TDR 1.00/1.00/1.00, max CLS 0.0000.
 - After the confirmed additions/removals, lint, 68 unit tests, 14 browser tests, build/security-header verification, and the six performance runs were rerun successfully with the same scores/CLS above. Browser inspection checked all eight supplied destinations and confirmed unrelated sections, including monthly resources, stayed unchanged. Daily/weekly totals are 11/9 in both locales.
 - Additional browser inspection verified keyboard activation, Chinese/English search and switching, no page errors, and no horizontal overflow at 390px. Desktop/mobile screenshots and the confirmed change checklist are saved under the current chat's `outputs/nav-update/` directory. Only KML still lacks a supplied link; it is not a placeholder in the public catalog.
+
+## 2026-11-22 — One-click source synchronization
+
+- Baseline for this change was remote `source` at `98383360cdd1246c4a591447906c2dac2db7ca4c`. Remote `main` commit `5712ff50cd0e40385c55c5d6ea75455c69afae88` records that source SHA.
+- The script fast-forwards a clean, behind-only checkout before updating the NAV version. Dry-run leaves the local branch in place. Local-only commits require reconciliation.
+- Windows PowerShell 5.1 passed seven local-remote CLI scenarios with real Git and stubbed updater/deployment commands. The 69 unit tests and the NAV version lifecycle browser test passed separately.
+- PR #18 also pins Quality Gate to Ubuntu 24.04 after the floating runner moved to an OS unsupported by locked Playwright 1.58.1.
