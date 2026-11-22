@@ -127,7 +127,9 @@ Dry-run without the final console pause:
 onekeyup.cmd --dry-run --no-pause
 ```
 
-Normal mode requires the `source` branch, a clean tracked source tree, and local `HEAD` equal to `origin/source`. It runs the updater dry-run first, then the real updater, and accepts only `src/assets/data/lol-version.json` as the maintenance change. It validates the new JSON, runs unit tests, builds, runs the NAV lifecycle Playwright test, checks the diff, commits the actual version, performs a second remote check, pushes `source` normally, runs the deployment dry-run, and finally reuses `npm run deploy:local` for production publication.
+Normal mode requires the `source` branch and a clean tracked source tree. It fetches `origin/source` and fast-forwards automatically when the local branch is only behind. Git protects untracked and ignored files if they overlap incoming paths. Local-only commits or divergent history stop the run with commit counts so the maintainer can reconcile them. Dry-run mode reports a pending fast-forward and validates the current local checkout without moving `source`.
+
+After synchronization, the command runs the updater dry-run and the real updater. It accepts only `src/assets/data/lol-version.json` as the maintenance change, validates the new JSON, runs unit tests, builds, runs the NAV lifecycle Playwright test, and checks the diff. It commits the version, checks that remote `source` has stayed at the synchronized base, pushes `source` normally, previews deployment, and reuses `npm run deploy:local` for publication.
 
 An unchanged LOL version is not by itself proof of a successful publication. The one-click command checks the source SHA recorded by `origin/main`; if it is missing or different, the command retries its checked local deployment path without creating another source commit. The recovery path still runs the NAV lifecycle test and does not bypass the dependency audit.
 

@@ -32,6 +32,25 @@ describe('Windows one-click LOL maintenance entrypoint', () => {
         expect(powershell).not.toContain('git reset --hard');
     });
 
+    test('fast-forwards only a clean checkout that is behind and protects local files', () => {
+        const preflight = powershell.slice(
+            powershell.indexOf('function Assert-RepositoryPreflight'),
+            powershell.indexOf('function Get-CanonicalHash')
+        );
+        const fastForward = preflight.indexOf("@('merge', '--ff-only', '--no-overwrite-ignore', $remoteSource)");
+        expect(fastForward).toBeGreaterThan(0);
+        for (const step of [
+            'Working tree contains tracked changes',
+            'if ([int]$ahead -gt 0)',
+            'DRY RUN: would fast-forward'
+        ]) {
+            const stepIndex = preflight.indexOf(step);
+            expect(stepIndex).toBeGreaterThan(0);
+            expect(stepIndex).toBeLessThan(fastForward);
+        }
+        expect(preflight.indexOf('$script:ExpectedSourceBase = $remoteSource')).toBeGreaterThan(fastForward);
+    });
+
     test('runs updater dry-run before real update and enforces the canonical allowlist', () => {
         const dryRunIndex = powershell.indexOf("@('run', 'update:lol-version', '--', '--dry-run')");
         const realUpdateIndex = powershell.indexOf("@('run', 'update:lol-version')");
