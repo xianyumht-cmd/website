@@ -1,5 +1,14 @@
 # Project State
 
+## 2026-11-23 — NAV and home visual refinement
+
+- NAV light mode uses the home palette; the dark theme is preserved.
+- The existing sidebar, search, compact resource cards and loading placeholder are refined without changing resource data, translations, deployment architecture, or adding assets.
+- NAV keeps 104px desktop and 96px mobile card heights and 3/2/1 columns; Games retains its own presentation.
+- Home typography, service-row padding and utility controls receive a restrained polish.
+- Existing Playwright style assertions are updated for the intentional changes. All performance, CLS, audit and functional gates remain unchanged.
+
+
 ## Production status
 
 - Canonical development branch: `source`.
