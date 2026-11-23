@@ -153,7 +153,8 @@
       gap: 7px;
       min-height: 40px;
       padding: 0 11px;
-      border: 1px solid transparent;
+      border: 1px solid var(--line);
+      border-radius: 6px;
       background: transparent;
       color: var(--muted);
       cursor: pointer;
@@ -219,9 +220,9 @@
     h1 {
       margin: 0;
       font-size: clamp(58px, 19cqw, 136px);
-      font-weight: 950;
+      font-weight: 800;
       line-height: 1;
-      letter-spacing: -.085em;
+      letter-spacing: -.05em;
     }
 
     .directory-head {
@@ -243,7 +244,7 @@
       align-content: center;
       gap: 5px 16px;
       min-height: 98px;
-      padding: 12px 4px;
+      padding: 12px 12px;
       border-top: 1px solid var(--line);
       transition: color .16s ease, background .16s ease;
     }
@@ -263,9 +264,9 @@
       min-width: 0;
       overflow-wrap: anywhere;
       font-size: clamp(25px, 2.7vw, 42px);
-      font-weight: 900;
+      font-weight: 800;
       line-height: 1.12;
-      letter-spacing: -.045em;
+      letter-spacing: -.035em;
     }
 
     .service-copy {
@@ -447,6 +448,6 @@
 
     <div class="home-footer" data-site-footer></div>
   </main>
-
+
 </body>
 </html>
